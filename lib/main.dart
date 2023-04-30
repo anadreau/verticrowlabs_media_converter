@@ -9,7 +9,7 @@ void main() {
   //const command = 'ping google.com | ConvertTo-Json';
   const outputScale = '720';
   const ffmpegCmd =
-      'ffmpeg -i $inputString -vf scale=$outputScale:-2 -c:v libx264 $outputString | Write-Verbose | ConvertTo-Json';
+      'ffmpeg -i $inputString -vf scale=$outputScale:-2 -c:v libx264 $outputString | ConvertTo-Json';
   final result = Process.runSync('powershell.exe', ['-Command', ffmpegCmd]);
 
   if (result.exitCode == 0) {
