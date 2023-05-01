@@ -1,43 +1,39 @@
-import 'dart:developer';
-import 'dart:io';
+import 'package:creator/creator.dart';
+import 'package:ffmpeg_converter/converter.dart';
+import 'package:flutter/material.dart';
 
 void main() {
-  const inputString =
-      '"C:/Users/anadr/Videos/Convert/Puss.in.Boots.The.Last.Wish.2022.1080p.WEBRip.x264-RARBG.mp4"';
-  const outputString =
-      'C:/Users/anadr/Videos/Convert/Puss.in.Boots.The.Last.Wish.720.mp4';
-  //const command = 'ping google.com | ConvertTo-Json';
-  const outputScale = '720';
-  const ffmpegCmd =
-      'ffmpeg -i $inputString -vf scale=$outputScale:-2 -c:v libx264 $outputString | ConvertTo-Json';
-  final result = Process.runSync('powershell.exe', ['-Command', ffmpegCmd]);
+  runApp(CreatorGraph(child: const MainApp()));
+}
 
-  if (result.exitCode == 0) {
-    log(result.stdout);
-    log('Finished');
-  } else {
-    log(result.stderr);
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Watcher((context, ref, child) => Column(
+                children: [
+                  Text(ref.watch(inputStringCreator)),
+                  Text(ref.watch(outputStringCreator)),
+                  Watcher(
+                    (context, ref, child) => Text(ref.watch(statusCreator)),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      ref.set(conversionStatusCreator, Status.inProgress);
+                      ref.read(convertMediaCreator);
+                    },
+                    child: const Text('Convert'),
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
   }
 }
 
-
-// import 'package:flutter/material.dart';
-
-// void main() {
-//   runApp(const MainApp());
-// }
-
-// class MainApp extends StatelessWidget {
-//   const MainApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       home: Scaffold(
-//         body: Center(
-//           child: Text('Hello World!'),
-//         ),
-//       ),
-//     );
-//   }
-// }
+//TODO: #1 add file picker @anadreau
