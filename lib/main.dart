@@ -1,8 +1,9 @@
+import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/converter.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(CreatorGraph(child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -13,19 +14,19 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Column(
-            children: [
-              const Text('Selected file'),
-              const Text('Output file'),
-              const Text('Conversion status'),
-              MaterialButton(
-                onPressed: () {
-                  mediaConverter();
-                },
-                child: const Text('Convert'),
-              ),
-            ],
-          ),
+          child: Watcher((context, ref, child) => Column(
+                children: [
+                  Text(ref.watch(inputStringCreator)),
+                  Text(ref.watch(outputStringCreator)),
+                  Text(ref.watch(conversionStatusCreator).toString()),
+                  MaterialButton(
+                    onPressed: () {
+                      ref.read(convertMediaEmitter);
+                    },
+                    child: const Text('Convert'),
+                  ),
+                ],
+              )),
         ),
       ),
     );
