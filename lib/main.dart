@@ -18,10 +18,13 @@ class MainApp extends StatelessWidget {
                 children: [
                   Text(ref.watch(inputStringCreator)),
                   Text(ref.watch(outputStringCreator)),
-                  Text(ref.watch(conversionStatusCreator).toString()),
+                  Watcher(
+                    (context, ref, child) => Text(ref.watch(statusCreator)),
+                  ),
                   MaterialButton(
                     onPressed: () {
-                      ref.read(convertMediaEmitter);
+                      ref.set(conversionStatusCreator, Status.inProgress);
+                      ref.read(convertMediaCreator);
                     },
                     child: const Text('Convert'),
                   ),

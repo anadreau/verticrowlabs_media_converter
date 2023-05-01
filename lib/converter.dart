@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:creator/creator.dart';
 
@@ -12,16 +13,55 @@ final outputStringCreator = Creator.value(
 //const command = 'ping google.com | ConvertTo-Json';
 final outputScaleCreator = Creator.value('720');
 final conversionStatusCreator = Creator.value(Status.notStarted);
+final statusCreator = Creator((ref) {
+  var status = ref.watch(conversionStatusCreator);
+  String statusString;
+  switch (status) {
+    case Status.notStarted:
+      statusString = 'notStarted';
+      break;
+    case Status.inProgress:
+      statusString = 'inProgress';
+      break;
+    case Status.done:
+      statusString = 'done';
+      break;
+    case Status.error:
+      statusString = 'error';
+      break;
+  }
+  return statusString;
+});
+final statusEmitter = Emitter<String>((ref, emit) {
+  var status = ref.watch(conversionStatusCreator);
+  String statusString;
+  switch (status) {
+    case Status.notStarted:
+      statusString = 'notStarted';
+      break;
+    case Status.inProgress:
+      statusString = 'inProgress';
+      break;
+    case Status.done:
+      statusString = 'done';
+      break;
+    case Status.error:
+      statusString = 'error';
+      break;
+  }
+  emit(statusString);
+});
 
-final convertMediaEmitter = Emitter((ref, emit) {
+final convertMediaCreator = Creator<void>((ref) async {
   var input = ref.read(inputStringCreator);
   var output = ref.read(outputStringCreator);
   var scale = ref.read(outputScaleCreator);
 
   final ffmpegCmd =
-      'ffmpeg -i $input -vf scale=$scale:-2 -c:v libx264 $output | ConvertTo-Json';
-  ref.set(conversionStatusCreator, Status.inProgress);
-  final result = Process.runSync('powershell.exe', ['-Command', ffmpegCmd]);
+      'ffmpeg -i $input -vf scale=$scale:-2 -c:v libx264 $output | ConvertTo-Json | echo';
+
+  final result = await Isolate.run(
+      () => Process.runSync('powershell.exe', ['-Command', ffmpegCmd]));
 
   if (result.exitCode == 0) {
     log(result.stdout);
