@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/converter.dart';
 import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,8 +22,13 @@ class MainApp extends StatelessWidget {
           child: Watcher((context, ref, child) => Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(ref.watch(inputStringCreator)),
+                      Text(
+                        ref.watch(inputStringCreator),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                      ),
                       MaterialButton(
                         onPressed: () async {
                           var result = Process.runSync('powershell.exe',
@@ -33,19 +39,20 @@ class MainApp extends StatelessWidget {
                           log(removeNewlineCode[0]);
                           log(removeNewlineCode.toString());
                           String videoFolder = removeNewlineCode[0];
-                          String videoString = '\\Videos';
                           String videoPath = videoFolder;
                           log('VideoPath: $videoPath');
 
-                          var file = await FilePicker.platform.getDirectoryPath(
-                              initialDirectory: '/Users/anadr/Videos/');
-                          log(file.toString());
+                          var file = await FilePicker.platform
+                              .pickFiles(initialDirectory: videoPath);
+                          ref.set(inputStringCreator, file!.paths.toString());
+                          log('FilePath: ${file.paths.toString()}');
+                          log('FileName: ${file.names}');
                         },
                         child: const Icon(Icons.folder),
                       )
                     ],
                   ),
-                  Text(ref.watch(outputStringCreator)),
+                  Text(ref.watch(outputStringCreator).toString()),
                   Watcher(
                     (context, ref, child) => Text(ref.watch(statusCreator)),
                   ),
