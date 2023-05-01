@@ -1,5 +1,9 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/converter.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +20,31 @@ class MainApp extends StatelessWidget {
         body: Center(
           child: Watcher((context, ref, child) => Column(
                 children: [
-                  Text(ref.watch(inputStringCreator)),
+                  Row(
+                    children: [
+                      Text(ref.watch(inputStringCreator)),
+                      MaterialButton(
+                        onPressed: () async {
+                          var result = Process.runSync('powershell.exe',
+                              ['-Command', '\$env:USERPROFILE']);
+                          //var dir = await getDownloadsDirectory();
+                          var removeNewlineCode =
+                              result.stdout.toString().split('\n');
+                          log(removeNewlineCode[0]);
+                          log(removeNewlineCode.toString());
+                          String videoFolder = removeNewlineCode[0];
+                          String videoString = '\\Videos';
+                          String videoPath = videoFolder;
+                          log('VideoPath: $videoPath');
+
+                          var file = await FilePicker.platform.getDirectoryPath(
+                              initialDirectory: '/Users/anadr/Videos/');
+                          log(file.toString());
+                        },
+                        child: const Icon(Icons.folder),
+                      )
+                    ],
+                  ),
                   Text(ref.watch(outputStringCreator)),
                   Watcher(
                     (context, ref, child) => Text(ref.watch(statusCreator)),
