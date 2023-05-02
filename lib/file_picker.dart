@@ -16,8 +16,16 @@ final filePickerCreator = Creator((ref) async {
   String videoPath = videoFolder;
   log('VideoPath: $videoPath');
 
-  var file = await FilePicker.platform.pickFiles(initialDirectory: videoPath);
-  ref.set(inputStringCreator, file!.paths[0].toString());
-  log('FilePath: ${file.paths[0].toString()}');
-  log('FileName: ${file.names}');
+  var file = await FilePicker.platform.pickFiles(
+      initialDirectory: videoPath,
+      dialogTitle: 'Chosose Media File to Convert.',
+      allowMultiple: false,
+      type: FileType.media);
+  if (file != null) {
+    ref.set(inputStringCreator, file.paths[0].toString());
+    log('FilePath: ${file.paths[0].toString()}');
+    log('FileName: ${file.names}');
+  } else {
+    ref.set(inputStringCreator, 'No File Selected to Convert');
+  }
 });
