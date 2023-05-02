@@ -44,8 +44,9 @@ class MainApp extends StatelessWidget {
 
                           var file = await FilePicker.platform
                               .pickFiles(initialDirectory: videoPath);
-                          ref.set(inputStringCreator, file!.paths.toString());
-                          log('FilePath: ${file.paths.toString()}');
+                          ref.set(
+                              inputStringCreator, file!.paths[0].toString());
+                          log('FilePath: ${file.paths[0].toString()}');
                           log('FileName: ${file.names}');
                         },
                         child: const Icon(Icons.folder),

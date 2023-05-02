@@ -11,16 +11,22 @@ final inputStringCreator = Creator.value(
 final outputStringCreator = Creator((ref) {
   var input = ref.watch(inputStringCreator);
   var output = input.split('/');
-  var oldFileName = output.removeLast();
+
   List newOutput = output;
+  var oldFileName = output.removeLast();
   newOutput.removeRange(output.length, output.length);
   var joinedOutput = newOutput.join('/');
+  //var test = joinedOutput.substring(1);
   var filetypeIndex = oldFileName.lastIndexOf('.');
   var newFileName = '${oldFileName.substring(0, filetypeIndex)}720.mp4';
-  log(joinedOutput);
+  log('Joined: $joinedOutput');
   log('old: $oldFileName');
   log('new: $newFileName');
-  return '$joinedOutput/$newFileName';
+  String result = '$joinedOutput/$newFileName';
+  String finalResult = result.substring(1);
+  log('result: $result');
+  log('result: $finalResult');
+  return finalResult;
 });
 //const command = 'ping google.com | ConvertTo-Json';
 final outputScaleCreator = Creator.value('720');
