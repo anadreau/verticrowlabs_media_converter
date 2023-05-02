@@ -1,9 +1,6 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/converter.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:ffmpeg_converter/file_picker.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,52 +14,61 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.pink),
       home: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Center(
           child: Watcher((context, ref, child) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        ref.watch(inputStringCreator),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          ref.watch(inputStringCreator),
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                        ),
                       ),
                       MaterialButton(
-                        onPressed: () async {
-                          var result = Process.runSync('powershell.exe',
-                              ['-Command', '\$env:USERPROFILE']);
-                          //var dir = await getDownloadsDirectory();
-                          var removeNewlineCode =
-                              result.stdout.toString().split('\n');
-                          log(removeNewlineCode[0]);
-                          log(removeNewlineCode.toString());
-                          String videoFolder = removeNewlineCode[0];
-                          String videoPath = videoFolder;
-                          log('VideoPath: $videoPath');
-
-                          var file = await FilePicker.platform
-                              .pickFiles(initialDirectory: videoPath);
-                          ref.set(
-                              inputStringCreator, file!.paths[0].toString());
-                          log('FilePath: ${file.paths[0].toString()}');
-                          log('FileName: ${file.names}');
+                        onPressed: () {
+                          ref.read(filePickerCreator);
                         },
-                        child: const Icon(Icons.folder),
-                      )
+                        child: Icon(
+                          Icons.folder,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ),
                     ],
                   ),
-                  Text(ref.watch(outputStringCreator).toString()),
-                  Watcher(
-                    (context, ref, child) => Text(ref.watch(statusCreator)),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(ref.watch(outputStringCreator).toString()),
                   ),
-                  MaterialButton(
-                    onPressed: () {
-                      ref.set(conversionStatusCreator, Status.inProgress);
-                      ref.read(convertMediaCreator);
-                    },
-                    child: const Text('Convert'),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Watcher(
+                      (context, ref, child) => Text(ref.watch(statusCreator)),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MaterialButton(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          onPressed: () {
+                            ref.set(conversionStatusCreator, Status.inProgress);
+                            ref.read(convertMediaCreator);
+                          },
+                          child: const Text('Convert'),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )),

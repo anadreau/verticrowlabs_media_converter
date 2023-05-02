@@ -6,6 +6,8 @@ import 'package:creator/creator.dart';
 
 enum Status { notStarted, inProgress, done, error }
 
+enum MediaScale { low, medium, high }
+
 final inputStringCreator = Creator.value(
     '"C:/Users/anadr/Videos/Convert/Puss.in.Boots.The.Last.Wish.2022.1080p.WEBRip.x264-RARBG.mp4"');
 final outputStringCreator = Creator((ref) {
@@ -29,7 +31,23 @@ final outputStringCreator = Creator((ref) {
   return finalResult;
 });
 //const command = 'ping google.com | ConvertTo-Json';
-final outputScaleCreator = Creator.value('720');
+final outputScaleSelector = Creator.value(MediaScale.medium);
+final outputScaleCreator = Creator((ref) {
+  var scale = ref.watch(outputScaleSelector);
+  String resultString;
+  switch (scale) {
+    case MediaScale.low:
+      resultString = '480';
+      break;
+    case MediaScale.medium:
+      resultString = '720';
+      break;
+    case MediaScale.high:
+      resultString = '1080';
+      break;
+  }
+  return resultString;
+});
 final conversionStatusCreator = Creator.value(Status.notStarted);
 final statusCreator = Creator((ref) {
   var status = ref.watch(conversionStatusCreator);
@@ -49,25 +67,6 @@ final statusCreator = Creator((ref) {
       break;
   }
   return statusString;
-});
-final statusEmitter = Emitter<String>((ref, emit) {
-  var status = ref.watch(conversionStatusCreator);
-  String statusString;
-  switch (status) {
-    case Status.notStarted:
-      statusString = 'notStarted';
-      break;
-    case Status.inProgress:
-      statusString = 'inProgress';
-      break;
-    case Status.done:
-      statusString = 'done';
-      break;
-    case Status.error:
-      statusString = 'error';
-      break;
-  }
-  emit(statusString);
 });
 
 final convertMediaCreator = Creator<void>((ref) async {
