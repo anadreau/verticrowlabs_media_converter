@@ -14,7 +14,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dropdownValue = 1;
     return MaterialApp(
       theme: ThemeData(
           useMaterial3: true,
