@@ -1,6 +1,7 @@
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/converter.dart';
 import 'package:ffmpeg_converter/file_picker.dart';
+import 'package:ffmpeg_converter/utils/drop_down.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var dropdownValue = 1;
     return MaterialApp(
       theme: ThemeData(
           useMaterial3: true,
@@ -61,6 +63,7 @@ class MainApp extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const MediaDropDown(),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: MaterialButton(

@@ -20,7 +20,7 @@ final outputStringCreator = Creator((ref) {
   var joinedOutput = newOutput.join('/');
   //var test = joinedOutput.substring(1);
   var filetypeIndex = oldFileName.lastIndexOf('.');
-  var newFileName = '${oldFileName.substring(0, filetypeIndex)}720.mp4';
+  var newFileName = '${oldFileName.substring(0, filetypeIndex)}.converted.mp4';
   log('Joined: $joinedOutput');
   log('old: $oldFileName');
   log('new: $newFileName');
