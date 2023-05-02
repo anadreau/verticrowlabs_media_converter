@@ -14,9 +14,13 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.pink),
+      theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red)),
       home: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: ThemeData.from(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.red))
+            .secondaryHeaderColor,
         body: Center(
           child: Watcher((context, ref, child) => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
