@@ -31,28 +31,34 @@ class MainApp extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      Expanded(
+                        flex: 1,
                         child: Text(
                           ref.watch(inputStringCreator),
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
                         ),
                       ),
-                      MaterialButton(
-                        onPressed: () {
-                          ref.read(filePickerCreator);
-                        },
-                        child: Icon(
-                          Icons.folder,
-                          color: Theme.of(context).colorScheme.onBackground,
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: MaterialButton(
+                          onPressed: () {
+                            ref.read(filePickerCreator);
+                          },
+                          child: Icon(
+                            Icons.folder,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(ref.watch(outputStringCreator).toString()),
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      ref.watch(outputStringCreator).toString(),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
