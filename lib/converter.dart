@@ -8,26 +8,32 @@ enum Status { notStarted, inProgress, done, error }
 
 enum MediaScale { low, medium, high }
 
-final inputStringCreator = Creator.value(
-    '"C:/Users/anadr/Videos/Convert/Puss.in.Boots.The.Last.Wish.2022.1080p.WEBRip.x264-RARBG.mp4"');
+final inputStringCreator = Creator.value('');
 final outputStringCreator = Creator((ref) {
   var input = ref.watch(inputStringCreator);
   var output = input.split('/');
+  String? finalResult;
 
-  List newOutput = output;
-  var oldFileName = output.removeLast();
-  newOutput.removeRange(output.length, output.length);
-  var joinedOutput = newOutput.join('/');
-  //var test = joinedOutput.substring(1);
-  var filetypeIndex = oldFileName.lastIndexOf('.');
-  var newFileName = '${oldFileName.substring(0, filetypeIndex)}.converted.mp4';
-  log('Joined: $joinedOutput');
-  log('old: $oldFileName');
-  log('new: $newFileName');
-  String result = '$joinedOutput/$newFileName';
-  String finalResult = result.substring(1);
-  log('result: $result');
-  log('result: $finalResult');
+  if (ref.read(inputStringCreator) != '') {
+    List newOutput = output;
+    var oldFileName = output.removeLast();
+    newOutput.removeRange(output.length, output.length);
+    var joinedOutput = newOutput.join('/');
+    //var test = joinedOutput.substring(1);
+    var filetypeIndex = oldFileName.lastIndexOf('.');
+    var newFileName =
+        '${oldFileName.substring(0, filetypeIndex)}.converted.mp4';
+    log('Joined: $joinedOutput');
+    log('old: $oldFileName');
+    log('new: $newFileName');
+    String result = '$joinedOutput/$newFileName';
+    finalResult = result.substring(1);
+    log('result: $result');
+    log('result: $finalResult');
+  } else {
+    finalResult = null;
+  }
+
   return finalResult;
 });
 //const command = 'ping google.com | ConvertTo-Json';

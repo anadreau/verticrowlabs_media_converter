@@ -15,9 +15,11 @@ class _MediaDropDownState extends State<MediaDropDown> {
   var dropdownValue = dropDownList.first;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Watcher((context, ref, child) {
       return DropdownButton<String>(
-          dropdownColor: ThemeData().scaffoldBackgroundColor,
+          iconEnabledColor: theme.colorScheme.primaryContainer,
+          dropdownColor: theme.colorScheme.primaryContainer,
           focusColor: Colors.white.withOpacity(0.0),
           value: dropdownValue,
           items: dropDownList.map<DropdownMenuItem<String>>((String value) {
