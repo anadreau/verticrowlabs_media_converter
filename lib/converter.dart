@@ -8,7 +8,8 @@ import 'package:ffmpeg_converter/utils/common_variables.dart';
 ///String containing full file path of file chosen by file picker.
 ///
 ///Default value is ''
-final inputStringCreator = Creator.value('');
+final inputStringCreator = Creator.value('', name: 'inputStringCreator');
+final fileNameCreator = Creator.value('', name: 'fileNameCreator');
 
 ///String containing full file path and new name used for converted file.
 ///

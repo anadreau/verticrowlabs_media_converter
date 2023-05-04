@@ -99,7 +99,11 @@ class MainApp extends StatelessWidget {
                     MaterialButton(
                       onPressed: () {
                         //add dialog that edits file name
-                        fileNameEditDialog(context);
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const FileNameEditingDialog();
+                            });
                       },
                       child: Icon(
                         Icons.edit,
