@@ -3,10 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:creator/creator.dart';
-
-enum Status { notStarted, inProgress, done, error }
-
-enum MediaScale { low, medium, high }
+import 'package:ffmpeg_converter/utils/common_variables.dart';
 
 final inputStringCreator = Creator.value('');
 final outputStringCreator = Creator((ref) {
