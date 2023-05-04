@@ -29,17 +29,17 @@ class MainApp extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (ref.watch(inputStringCreator) == '')
+                if (ref.watch(fileInputStringCreator) == '')
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child:
                         Text('Press folder button to select file to convert'),
                   ),
-                if (ref.watch(inputStringCreator) != '')
+                if (ref.watch(fileInputStringCreator) != '')
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Text(
-                      ref.watch(inputStringCreator),
+                      ref.watch(fileInputStringCreator),
                       softWrap: true,
                     ),
                   ),

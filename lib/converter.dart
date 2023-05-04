@@ -8,7 +8,7 @@ import 'package:ffmpeg_converter/utils/common_variables.dart';
 ///String containing full file path of file chosen by file picker.
 ///
 ///Default value is ''
-final inputStringCreator = Creator.value('', name: 'inputStringCreator');
+final fileInputStringCreator = Creator.value('', name: 'inputStringCreator');
 final fileNameCreator = Creator.value('', name: 'fileNameCreator');
 
 ///String containing full file path and new name used for converted file.
@@ -16,31 +16,52 @@ final fileNameCreator = Creator.value('', name: 'fileNameCreator');
 ///Takes inputStringCreator value and parses and converts it into new file name.
 final outputStringCreator = Creator((ref) {
   //TODO: #5 @anadreau Change variable names so function flow is easier to follow.
-  var input = ref.watch(inputStringCreator);
-  var output = input.split('/');
-  String? finalResult;
+  var fileInput = ref.watch(fileInputStringCreator);
+  var parsedFileBySlash = fileInput.split('/');
+  String? filePathResult;
+  String newFileName;
+  String result;
+  String edittedFileName = ref.watch(fileNameCreator);
 
-  if (ref.read(inputStringCreator) != '') {
-    List newOutput = output;
-    var oldFileName = output.removeLast();
-    newOutput.removeRange(output.length, output.length);
-    var joinedOutput = newOutput.join('/');
-    //var test = joinedOutput.substring(1);
-    var filetypeIndex = oldFileName.lastIndexOf('.');
-    var newFileName =
-        '${oldFileName.substring(0, filetypeIndex)}.converted.mp4';
+  if (fileInput != '') {
+    List workingParsedFileList = parsedFileBySlash;
+
+    ///String that represents the original filename
+    var oldFileName = parsedFileBySlash.removeLast();
+
+    ///Removes last item in list which should be the old file name
+    workingParsedFileList.removeRange(
+        parsedFileBySlash.length, parsedFileBySlash.length);
+
+    ///Joins the workingParsedFileList by / into single String
+    String joinedOutput = workingParsedFileList.join('/');
+
+    ///finds the index where the file type starts based on last '.'
+    int filetypeIndex = oldFileName.lastIndexOf('.');
+
+    if (edittedFileName.isNotEmpty || edittedFileName != '') {
+      oldFileName = edittedFileName;
+      newFileName = '$oldFileName.converted.mp4';
+      log('here');
+    } else {
+      ///Creates new String from oldFileName without the old filetype plus
+      ///.converted.mp4
+      log('skipped if statement');
+      newFileName = '${oldFileName.substring(0, filetypeIndex)}.converted.mp4';
+    }
+
     log('Joined: $joinedOutput');
     log('old: $oldFileName');
     log('new: $newFileName');
-    String result = '$joinedOutput/$newFileName';
-    finalResult = result.substring(1);
+    result = '$joinedOutput/$newFileName';
+    filePathResult = result.substring(1);
     log('result: $result');
-    log('result: $finalResult');
+    log('result: $filePathResult');
   } else {
-    finalResult = null;
+    filePathResult = null;
   }
 
-  return finalResult;
+  return filePathResult;
 });
 
 ///Creator that returns the chosen resolution as a MediaScale enum of either
@@ -97,7 +118,7 @@ final statusCreator = Creator((ref) {
 ///process that updates conversionStatusCreator when the process finishes
 ///with a done status or error status
 final convertMediaCreator = Creator<void>((ref) async {
-  var input = ref.read(inputStringCreator);
+  var input = ref.read(fileInputStringCreator);
   var output = ref.read(outputStringCreator);
   var scale = ref.read(outputScaleCreator);
 

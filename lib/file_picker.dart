@@ -22,10 +22,10 @@ final filePickerCreator = Creator((ref) async {
       allowMultiple: false,
       type: FileType.media);
   if (file != null) {
-    ref.set(inputStringCreator, file.paths[0].toString());
+    ref.set(fileInputStringCreator, file.paths[0].toString());
     log('FilePath: ${file.paths[0].toString()}');
     log('FileName: ${file.names}');
   } else {
-    ref.set(inputStringCreator, 'No File Selected to Convert');
+    ref.set(fileInputStringCreator, 'No File Selected to Convert');
   }
 });
