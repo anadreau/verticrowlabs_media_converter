@@ -3,13 +3,19 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:creator/creator.dart';
+import 'package:ffmpeg_converter/utils/common_variables.dart';
 
-enum Status { notStarted, inProgress, done, error }
+///String containing full file path of file chosen by file picker.
+///
+///Default value is ''
+final inputStringCreator = Creator.value('', name: 'inputStringCreator');
+final fileNameCreator = Creator.value('', name: 'fileNameCreator');
 
-enum MediaScale { low, medium, high }
-
-final inputStringCreator = Creator.value('');
+///String containing full file path and new name used for converted file.
+///
+///Takes inputStringCreator value and parses and converts it into new file name.
 final outputStringCreator = Creator((ref) {
+  //TODO: #5 @anadreau Change variable names so function flow is easier to follow.
   var input = ref.watch(inputStringCreator);
   var output = input.split('/');
   String? finalResult;
@@ -36,8 +42,13 @@ final outputStringCreator = Creator((ref) {
 
   return finalResult;
 });
-//const command = 'ping google.com | ConvertTo-Json';
+
+///Creator that returns the chosen resolution as a MediaScale enum of either
+///low, medium, high.
 final outputScaleSelector = Creator.value(MediaScale.medium);
+
+///Creator that takes the value from outputScaleSelector and returns
+///a String representing the resolution that the media file will be converted to.
 final outputScaleCreator = Creator((ref) {
   var scale = ref.watch(outputScaleSelector);
   String resultString;
@@ -54,7 +65,13 @@ final outputScaleCreator = Creator((ref) {
   }
   return resultString;
 });
+
+///Creator that returns the status of the media conversion as a Status enum of
+///either notStarted, inProgress, done, or error
 final conversionStatusCreator = Creator.value(Status.notStarted);
+
+///Creator that takesthe value from conversionStatusCreator and returns a
+///String representing the status of the media file conversion.
 final statusCreator = Creator((ref) {
   var status = ref.watch(conversionStatusCreator);
   String statusString;
@@ -75,6 +92,10 @@ final statusCreator = Creator((ref) {
   return statusString;
 });
 
+///Creator function that takes inputStringCreator, outputStringcreator, and
+///outputScaleCreator and forms a ffmpeg cmd that runs in a powershell
+///process that updates conversionStatusCreator when the process finishes
+///with a done status or error status
 final convertMediaCreator = Creator<void>((ref) async {
   var input = ref.read(inputStringCreator);
   var output = ref.read(outputStringCreator);
@@ -83,6 +104,8 @@ final convertMediaCreator = Creator<void>((ref) async {
   final ffmpegCmd =
       'ffmpeg -i $input -vf scale=$scale:-2 -c:v libx264 $output | ConvertTo-Json | echo';
 
+  ///Runs powershell cmd in an Isolate as to not freeze rest of app while
+  ///conversion is taking place.
   final result = await Isolate.run(
       () => Process.runSync('powershell.exe', ['-Command', ffmpegCmd]));
 

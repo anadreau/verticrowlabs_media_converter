@@ -1,6 +1,8 @@
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/converter.dart';
+import 'package:ffmpeg_converter/file_name_edit.dart';
 import 'package:ffmpeg_converter/file_picker.dart';
+import 'package:ffmpeg_converter/utils/common_variables.dart';
 import 'package:ffmpeg_converter/utils/drop_down.dart';
 
 import 'package:flutter/material.dart';
@@ -83,15 +85,31 @@ class MainApp extends StatelessWidget {
                             child: const Text('Convert'),
                           )),
                     ),
-                    Watcher((context, ref, child) => MaterialButton(
-                          onPressed: () {
-                            ref.read(filePickerCreator);
-                          },
-                          child: Icon(
-                            Icons.folder,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ))
+                    Watcher(
+                      (context, ref, child) => MaterialButton(
+                        onPressed: () {
+                          ref.read(filePickerCreator);
+                        },
+                        child: Icon(
+                          Icons.folder,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        //add dialog that edits file name
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const FileNameEditingDialog();
+                            });
+                      },
+                      child: Icon(
+                        Icons.edit,
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                    ),
                   ],
                 ),
               ],
