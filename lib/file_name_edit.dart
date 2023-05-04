@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///Alert dialog that sets the String from textController to filename
 Future<void> fileNameEditDialog(BuildContext context) {
   TextEditingController fileNameController = TextEditingController();
   return showDialog(
