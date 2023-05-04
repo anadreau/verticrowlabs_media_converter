@@ -1,5 +1,6 @@
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/converter.dart';
+import 'package:ffmpeg_converter/file_name_edit.dart';
 import 'package:ffmpeg_converter/file_picker.dart';
 import 'package:ffmpeg_converter/utils/common_variables.dart';
 import 'package:ffmpeg_converter/utils/drop_down.dart';
@@ -98,33 +99,7 @@ class MainApp extends StatelessWidget {
                     MaterialButton(
                       onPressed: () {
                         //add dialog that edits file name
-
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Text('Edit File Name'),
-                                    TextFormField(),
-                                  ],
-                                ),
-                                actions: [
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  MaterialButton(
-                                    onPressed: () {},
-                                    child: const Text('Confirm'),
-                                  )
-                                ],
-                              );
-                            });
+                        fileNameEditDialog(context);
                       },
                       child: Icon(
                         Icons.edit,
