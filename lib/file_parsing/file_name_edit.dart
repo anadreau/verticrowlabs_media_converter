@@ -1,5 +1,5 @@
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/converter.dart';
+import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:flutter/material.dart';
 
 ///Alert dialog that sets the String from textController to filename

@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/converter.dart';
+import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:file_picker/file_picker.dart';
 
 final filePickerCreator = Creator((ref) async {
@@ -22,10 +22,10 @@ final filePickerCreator = Creator((ref) async {
       allowMultiple: false,
       type: FileType.media);
   if (file != null) {
-    ref.set(inputStringCreator, file.paths[0].toString());
+    ref.set(fileInputStringCreator, file.paths[0].toString());
     log('FilePath: ${file.paths[0].toString()}');
     log('FileName: ${file.names}');
   } else {
-    ref.set(inputStringCreator, 'No File Selected to Convert');
+    ref.set(fileInputStringCreator, 'No File Selected to Convert');
   }
 });

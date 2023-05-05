@@ -1,9 +1,8 @@
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/converter.dart';
-import 'package:ffmpeg_converter/file_name_edit.dart';
-import 'package:ffmpeg_converter/file_picker.dart';
+import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/utils/common_variables.dart';
 import 'package:ffmpeg_converter/utils/drop_down.dart';
+import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 
 import 'package:flutter/material.dart';
 
@@ -29,17 +28,17 @@ class MainApp extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (ref.watch(inputStringCreator) == '')
+                if (ref.watch(fileInputStringCreator) == '')
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child:
                         Text('Press folder button to select file to convert'),
                   ),
-                if (ref.watch(inputStringCreator) != '')
+                if (ref.watch(fileInputStringCreator) != '')
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Text(
-                      ref.watch(inputStringCreator),
+                      ref.watch(fileInputStringCreator),
                       softWrap: true,
                     ),
                   ),
