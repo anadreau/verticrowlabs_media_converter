@@ -9,11 +9,12 @@ import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 final outputStringCreator = Creator((ref) {
   //TODO: #5 @anadreau Change variable names so function flow is easier to follow.
   var fileInput = ref.watch(fileInputStringCreator);
-  var parsedFileBySlash = fileInput.split('/');
+  var parsedFileBySlash = fileInput.split('\\');
   String? filePathResult;
   String newFileName;
   String result;
   String edittedFileName = ref.watch(fileNameCreator);
+  String joinedOutput;
 
   if (fileInput != '') {
     List workingParsedFileList = parsedFileBySlash;
@@ -26,14 +27,14 @@ final outputStringCreator = Creator((ref) {
         parsedFileBySlash.length, parsedFileBySlash.length);
 
     ///Joins the workingParsedFileList by / into single String
-    String joinedOutput = workingParsedFileList.join('/');
+    joinedOutput = workingParsedFileList.join('/');
 
     ///finds the index where the file type starts based on last '.'
     int filetypeIndex = oldFileName.lastIndexOf('.');
 
     if (edittedFileName.isNotEmpty || edittedFileName != '') {
       oldFileName = edittedFileName;
-      newFileName = '$oldFileName.converted.mp4';
+      newFileName = '$oldFileName.mp4';
       log('here');
     } else {
       ///Creates new String from oldFileName without the old filetype plus
@@ -46,7 +47,7 @@ final outputStringCreator = Creator((ref) {
     log('old: $oldFileName');
     log('new: $newFileName');
     result = '$joinedOutput/$newFileName';
-    filePathResult = result.substring(1);
+    filePathResult = result.substring(0);
     log('result: $result');
     log('result: $filePathResult');
   } else {
