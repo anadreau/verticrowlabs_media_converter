@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/converter.dart';
+import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:file_picker/file_picker.dart';
 
 final filePickerCreator = Creator((ref) async {

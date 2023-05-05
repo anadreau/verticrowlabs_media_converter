@@ -1,9 +1,8 @@
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/converter.dart';
-import 'package:ffmpeg_converter/file_name_edit.dart';
-import 'package:ffmpeg_converter/file_picker.dart';
+import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/utils/common_variables.dart';
 import 'package:ffmpeg_converter/utils/drop_down.dart';
+import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 
 import 'package:flutter/material.dart';
 
