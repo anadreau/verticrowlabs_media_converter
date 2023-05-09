@@ -7,11 +7,11 @@ import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(CreatorGraph(child: const MainApp()));
+  runApp(CreatorGraph(child: const ConverterApp()));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class ConverterApp extends StatelessWidget {
+  const ConverterApp({super.key});
 
   @override
   Widget build(BuildContext context) {
