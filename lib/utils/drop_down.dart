@@ -32,17 +32,13 @@ class _MediaDropDownState extends State<MediaDropDown> {
           onChanged: (value) {
             setState(() {
               dropdownValue = value!;
-              switch (value) {
-                case '480':
-                  ref.set(outputScaleSelector, MediaScale.low);
-                  break;
-                case '720':
-                  ref.set(outputScaleSelector, MediaScale.medium);
-                  break;
-                case '1080':
-                  ref.set(outputScaleSelector, MediaScale.high);
-                  break;
-              }
+              MediaScale scale = switch (value) {
+                '480' => MediaScale.low,
+                '720' => MediaScale.medium,
+                '1080' => MediaScale.high,
+                _ => MediaScale.medium
+              };
+              ref.set(outputScaleCreator, scale);
             });
           });
     });

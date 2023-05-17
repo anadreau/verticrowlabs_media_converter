@@ -10,16 +10,10 @@ final outputScaleSelector = Creator.value(MediaScale.medium);
 final outputScaleCreator = Creator((ref) {
   var scale = ref.watch(outputScaleSelector);
   String resultString;
-  switch (scale) {
-    case MediaScale.low:
-      resultString = '480';
-      break;
-    case MediaScale.medium:
-      resultString = '720';
-      break;
-    case MediaScale.high:
-      resultString = '1080';
-      break;
-  }
+  resultString = switch (scale) {
+    MediaScale.low => '480',
+    MediaScale.medium => '720',
+    MediaScale.high => '1080'
+  };
   return resultString;
 });

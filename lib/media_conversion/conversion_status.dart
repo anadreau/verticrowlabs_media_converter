@@ -8,21 +8,14 @@ final conversionStatusCreator = Creator.value(Status.notStarted);
 ///Creator that takesthe value from conversionStatusCreator and returns a
 ///String representing the status of the media file conversion.
 final statusCreator = Creator((ref) {
-  var status = ref.watch(conversionStatusCreator);
+  Status status = ref.watch(conversionStatusCreator);
   String statusString;
-  switch (status) {
-    case Status.notStarted:
-      statusString = 'notStarted';
-      break;
-    case Status.inProgress:
-      statusString = 'inProgress';
-      break;
-    case Status.done:
-      statusString = 'done';
-      break;
-    case Status.error:
-      statusString = 'error';
-      break;
-  }
+
+  statusString = switch (status) {
+    Status.notStarted => 'Not Started',
+    Status.inProgress => 'In Progress',
+    Status.done => 'Done',
+    Status.error => 'error'
+  };
   return statusString;
 });
