@@ -6,6 +6,12 @@ import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 
 import 'package:flutter/material.dart';
 
+//TODO: #8 Update progress bar to be smaller, in line with buttons. @anadreau
+
+//TODO: #9 Implement function to check if FFMPEG is downloaded and download and install if needed. @anadreau
+
+//TODO: #10 Add functionality to change output file type. @anadreau
+
 void main() {
   runApp(CreatorGraph(child: const ConverterApp()));
 }
@@ -66,8 +72,11 @@ class ConverterApp extends StatelessWidget {
                         )),
                   ),
                 ),
-                if (ref.watch(statusCreator) == 'inProgress')
-                  const LinearProgressIndicator(),
+                if (ref.watch(statusCreator) == 'In Progress')
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
+                    child: LinearProgressIndicator(),
+                  ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
