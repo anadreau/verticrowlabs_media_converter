@@ -6,8 +6,6 @@ import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 
 import 'package:flutter/material.dart';
 
-//TODO: #8 Update progress bar to be smaller, in line with buttons. @anadreau
-
 //TODO: #9 Implement function to check if FFMPEG is downloaded and download and install if needed. @anadreau
 
 //TODO: #10 Add functionality to change output file type. @anadreau
