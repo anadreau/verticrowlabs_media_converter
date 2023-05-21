@@ -18,7 +18,7 @@ final convertMediaCreator = Creator<void>((ref) async {
   var scale = ref.read(outputScaleCreator);
 
   final ffmpegCmd =
-      'ffmpeg -i $input -vf scale=$scale:-2 -c:v libx264 $output | ConvertTo-Json | echo';
+      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | ConvertTo-Json | echo';
 
   ///Runs powershell cmd in an Isolate as to not freeze rest of app while
   ///conversion is taking place.
