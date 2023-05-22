@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 
 //TODO: #9 Implement function to check if FFMPEG is downloaded and download and install if needed. @anadreau
 
-//TODO: #10 Add functionality to change output file type. @anadreau
-
 void main() {
   runApp(CreatorGraph(child: const ConverterApp()));
 }
