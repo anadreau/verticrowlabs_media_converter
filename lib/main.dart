@@ -1,12 +1,11 @@
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/utils/common_variables.dart';
-import 'package:ffmpeg_converter/utils/drop_down.dart';
+import 'package:ffmpeg_converter/utils/file_type_drop_down.dart';
+import 'package:ffmpeg_converter/utils/resolution_drop_down.dart';
 import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 
 import 'package:flutter/material.dart';
-
-//TODO: #8 Update progress bar to be smaller, in line with buttons. @anadreau
 
 //TODO: #9 Implement function to check if FFMPEG is downloaded and download and install if needed. @anadreau
 
@@ -72,7 +71,7 @@ class ConverterApp extends StatelessWidget {
                         )),
                   ),
                 ),
-                if (ref.watch(statusCreator) == 'In Progress')
+                if (ref.watch(statusCreator) == Status.inProgress.message)
                   const Padding(
                     padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
                     child: LinearProgressIndicator(),
@@ -80,7 +79,14 @@ class ConverterApp extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const MediaDropDown(),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: FileTypeDropDown(),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: MediaDropDown(),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Watcher((context, ref, child) => MaterialButton(

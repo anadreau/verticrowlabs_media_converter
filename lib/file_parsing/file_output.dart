@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:ffmpeg_converter/media_conversion/container_type.dart';
 
 ///String containing full file path and new name used for converted file.
 ///
 ///Takes inputStringCreator value and parses and converts it into new file name.
 final outputStringCreator = Creator((ref) {
-  //TODO: #5 @anadreau Change variable names so function flow is easier to follow.
   var fileInput = ref.watch(fileInputStringCreator);
   var parsedFileBySlash = fileInput.split('\\');
   String? filePathResult;
@@ -15,6 +15,7 @@ final outputStringCreator = Creator((ref) {
   String result;
   String edittedFileName = ref.watch(fileNameCreator);
   String joinedOutput;
+  String fileType = ref.watch(mediaTypeCreator);
 
   if (fileInput != '') {
     List workingParsedFileList = parsedFileBySlash;
@@ -34,13 +35,14 @@ final outputStringCreator = Creator((ref) {
 
     if (edittedFileName.isNotEmpty || edittedFileName != '') {
       oldFileName = edittedFileName;
-      newFileName = '$oldFileName.mp4';
+      newFileName = '$oldFileName$fileType';
       log('here');
     } else {
       ///Creates new String from oldFileName without the old filetype plus
       ///.converted.mp4
       log('skipped if statement');
-      newFileName = '${oldFileName.substring(0, filetypeIndex)}.converted.mp4';
+      newFileName =
+          '${oldFileName.substring(0, filetypeIndex)}.converted$fileType';
     }
 
     log('Joined: $joinedOutput');
