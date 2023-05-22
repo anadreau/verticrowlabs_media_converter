@@ -4,6 +4,8 @@ import 'dart:isolate';
 
 import 'package:creator/creator.dart';
 
+String runAsAdmin = 'start-process pwsh -verb runas';
+
 String installFfmpegCmd = 'Install-Package ffmpeg';
 
 String getOldPathVariableUserCmd =
