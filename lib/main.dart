@@ -25,7 +25,7 @@ class ConverterApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         body: Watcher((context, ref, child) {
-          ref.read(verifyFfmpegInstallCreator);
+          ref.watch(verifyFfmpegInstallCreator);
           var ffmpegInstalled = ref.watch(ffmpegInstallStatusCreator);
           if (ffmpegInstalled == FfmpegInstallStatus.installed) {
             return const ConverterScreen();
