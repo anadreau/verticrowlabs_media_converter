@@ -12,10 +12,10 @@ final statusCreator = Creator((ref) {
   String statusString;
 
   statusString = switch (status) {
-    Status.notStarted => 'Not Started',
-    Status.inProgress => 'In Progress',
-    Status.done => 'Done',
-    Status.error => 'error'
+    Status.notStarted => Status.notStarted.message,
+    Status.inProgress => Status.inProgress.message,
+    Status.done => Status.done.message,
+    Status.error => Status.error.message
   };
   return statusString;
 });

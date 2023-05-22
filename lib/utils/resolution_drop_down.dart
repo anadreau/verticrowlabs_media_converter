@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 import 'package:ffmpeg_converter/utils/common_variables.dart';
 import 'package:flutter/material.dart';
 
-final List<String> dropDownList = ['480', '720', '1080'];
+final List<MediaScale> dropDownListEnum = MediaScale.values.toList();
+
+final List<String> dropDownList =
+    dropDownListEnum.map((e) => e.resolution).toList();
 
 class MediaDropDown extends StatefulWidget {
   const MediaDropDown({super.key});
@@ -26,19 +31,21 @@ class _MediaDropDownState extends State<MediaDropDown> {
           items: dropDownList.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text('${value}p'),
             );
           }).toList(),
           onChanged: (value) {
             setState(() {
               dropdownValue = value!;
-              MediaScale scale = switch (value) {
+
+              log('dropdownValue: $dropdownValue');
+              MediaScale scale = switch (dropdownValue) {
                 '480' => MediaScale.low,
                 '720' => MediaScale.medium,
                 '1080' => MediaScale.high,
                 _ => MediaScale.medium
               };
-              ref.set(outputScaleCreator, scale);
+              ref.set(outputScaleSelector, scale);
             });
           });
     });
