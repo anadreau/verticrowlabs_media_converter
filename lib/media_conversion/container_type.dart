@@ -1,5 +1,5 @@
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/utils/common_variables.dart';
+import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 
 ///Creator that holds the variable for file type to be converted to
 final containerTypeCreator = Creator.value(MediaContainerType.mp4);

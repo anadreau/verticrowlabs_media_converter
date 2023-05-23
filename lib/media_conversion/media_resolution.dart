@@ -1,5 +1,5 @@
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/utils/common_variables.dart';
+import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 
 ///Creator that returns the chosen resolution as a MediaScale enum of either
 ///low, medium, high.

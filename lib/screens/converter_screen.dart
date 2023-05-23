@@ -1,9 +1,8 @@
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
-import 'package:ffmpeg_converter/utils/common_variables.dart';
-import 'package:ffmpeg_converter/utils/file_type_drop_down.dart';
-import 'package:ffmpeg_converter/utils/resolution_drop_down.dart';
+import 'package:ffmpeg_converter/utils/utils_barrel.dart';
 import 'package:flutter/material.dart';
 
 class ConverterScreen extends StatelessWidget {
@@ -12,46 +11,62 @@ class ConverterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(100.0),
       child: Watcher((context, ref, child) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (ref.watch(fileInputStringCreator) == '')
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Press folder button to select file to convert'),
-                ),
-              if (ref.watch(fileInputStringCreator) != '')
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    ref.watch(fileInputStringCreator),
-                    softWrap: true,
+              Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                ),
-              Watcher((context, ref, child) => Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      ref.watch(outputStringCreator).toString(),
-                      softWrap: true,
-                    ),
-                  )),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Watcher(
-                  (context, ref, child) => Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          ref.watch(statusCreator),
+                  child: Column(
+                    children: [
+                      if (ref.watch(fileInputStringCreator) == '')
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                              'Press folder button to select file to convert'),
                         ),
-                      )),
-                ),
-              ),
+                      if (ref.watch(fileInputStringCreator) != '')
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'File to be converted: ${ref.watch(fileInputStringCreator)}',
+                            softWrap: true,
+                          ),
+                        ),
+                      Watcher((context, ref, child) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Converted file: ${ref.watch(outputStringCreator).toString()}',
+                              softWrap: true,
+                            ),
+                          )),
+                      const Divider(
+                        indent: 75,
+                        endIndent: 75,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Watcher(
+                          (context, ref, child) => Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Conversion Status: ${ref.watch(statusCreator)}',
+                                ),
+                              )),
+                        ),
+                      ),
+                    ],
+                  )),
               if (ref.watch(statusCreator) == Status.inProgress.message)
                 const Padding(
                   padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
@@ -86,26 +101,7 @@ class ConverterScreen extends StatelessWidget {
                           ),
                         )),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Watcher(
-                      (context, ref, child) => Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: MaterialButton(
-                          onPressed: () {
-                            ref.read(filePickerCreator);
-                          },
-                          child: Icon(
-                            Icons.folder,
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const FileSelector(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(

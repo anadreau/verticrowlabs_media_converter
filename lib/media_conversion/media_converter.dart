@@ -6,7 +6,7 @@ import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/media_conversion/conversion_status.dart';
 import 'package:ffmpeg_converter/media_conversion/media_resolution.dart';
-import 'package:ffmpeg_converter/utils/common_variables.dart';
+import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 
 ///Creator function that takes inputStringCreator, outputStringcreator, and

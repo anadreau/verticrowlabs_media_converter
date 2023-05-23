@@ -1,7 +1,7 @@
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
 import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
-import 'package:ffmpeg_converter/utils/common_variables.dart';
+import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:flutter/material.dart';
 
 class InstallerScreen extends StatelessWidget {
@@ -13,7 +13,15 @@ class InstallerScreen extends StatelessWidget {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Ffmpeg is not installed on this device.'),
+        Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Ffmpeg is not installed on this device.'),
+            )),
         const SizedBox(
           height: 15,
         ),

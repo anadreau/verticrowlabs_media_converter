@@ -2,7 +2,7 @@ import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
 import 'package:ffmpeg_converter/screens/converter_screen.dart';
 import 'package:ffmpeg_converter/screens/installer_screen.dart';
-import 'package:ffmpeg_converter/utils/common_variables.dart';
+import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class ConverterApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
       ),
       home: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Watcher((context, ref, child) {
           ref.watch(verifyFfmpegInstallCreator);
           var ffmpegInstalled = ref.watch(ffmpegInstallStatusCreator);

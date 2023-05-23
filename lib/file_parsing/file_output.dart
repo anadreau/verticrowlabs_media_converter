@@ -28,7 +28,7 @@ final outputStringCreator = Creator((ref) {
         parsedFileBySlash.length, parsedFileBySlash.length);
 
     ///Joins the workingParsedFileList by / into single String
-    joinedOutput = workingParsedFileList.join('/');
+    joinedOutput = workingParsedFileList.join('\\');
 
     ///finds the index where the file type starts based on last '.'
     int filetypeIndex = oldFileName.lastIndexOf('.');
@@ -48,7 +48,7 @@ final outputStringCreator = Creator((ref) {
     log('Joined: $joinedOutput');
     log('old: $oldFileName');
     log('new: $newFileName');
-    result = '$joinedOutput/$newFileName';
+    result = '$joinedOutput\\$newFileName';
     filePathResult = result.substring(0);
     log('result: $result');
     log('result: $filePathResult');
