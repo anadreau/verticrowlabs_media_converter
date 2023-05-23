@@ -6,8 +6,6 @@ import 'package:ffmpeg_converter/utils/common_variables.dart';
 
 import 'package:flutter/material.dart';
 
-//TODO: #9 Implement function to check if FFMPEG is downloaded and download and install if needed. @anadreau
-
 void main() {
   runApp(CreatorGraph(child: const ConverterApp()));
 }

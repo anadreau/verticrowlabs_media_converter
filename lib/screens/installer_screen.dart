@@ -1,4 +1,7 @@
 import 'package:creator/creator.dart';
+import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
+import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
+import 'package:ffmpeg_converter/utils/common_variables.dart';
 import 'package:flutter/material.dart';
 
 class InstallerScreen extends StatelessWidget {
@@ -8,17 +11,48 @@ class InstallerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text('Ffmpeg is not installed on this device.'),
+        const SizedBox(
+          height: 15,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Watcher((context, ref, child) => MaterialButton(
-                  onPressed: () {},
-                  child: const Text('Install'),
+            Watcher((context, ref, child) => Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      onPressed: () {
+                        ref.read(ffmpegInstallCreator);
+                        ref.set(ffmpegInstallStatusCreator,
+                            FfmpegInstallStatus.installing);
+                      },
+                      child: const Row(
+                        children: [
+                          Text('Install'),
+                          SizedBox(width: 8),
+                          Icon(Icons.install_desktop),
+                        ],
+                      ),
+                    ),
+                  ),
                 )),
-            const SizedBox(width: 15),
-            const CircularProgressIndicator()
+            const SizedBox(
+              width: 15,
+            ),
+            Watcher((context, ref, child) {
+              if (ref.watch(ffmpegInstallStatusCreator) ==
+                  FfmpegInstallStatus.installing) {
+                return const CircularProgressIndicator();
+              }
+              return const SizedBox();
+            }),
           ],
         ),
       ],

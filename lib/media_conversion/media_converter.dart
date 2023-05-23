@@ -7,6 +7,7 @@ import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/media_conversion/conversion_status.dart';
 import 'package:ffmpeg_converter/media_conversion/media_resolution.dart';
 import 'package:ffmpeg_converter/utils/common_variables.dart';
+import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 
 ///Creator function that takes inputStringCreator, outputStringcreator, and
 ///outputScaleCreator and forms a ffmpeg cmd that runs in a powershell
@@ -22,8 +23,8 @@ final convertMediaCreator = Creator<void>((ref) async {
 
   ///Runs powershell cmd in an Isolate as to not freeze rest of app while
   ///conversion is taking place.
-  final result = await Isolate.run(
-      () => Process.runSync('powershell.exe', ['-Command', ffmpegCmd]));
+  final result = await Isolate.run(() => Process.runSync('powershell.exe',
+      ['-Command', updateEvironmentVariableCmd, ';', ffmpegCmd]));
 
   if (result.exitCode == 0) {
     log(result.stdout);

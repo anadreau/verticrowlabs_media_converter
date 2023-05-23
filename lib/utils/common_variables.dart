@@ -31,4 +31,4 @@ enum MediaContainerType {
   const MediaContainerType(this.containerType);
 }
 
-enum FfmpegInstallStatus { notInstalled, installed }
+enum FfmpegInstallStatus { notInstalled, installing, installed }

@@ -70,38 +70,63 @@ class ConverterScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Watcher((context, ref, child) => MaterialButton(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          onPressed: () {
-                            ref.set(conversionStatusCreator, Status.inProgress);
-                            ref.read(convertMediaCreator);
-                          },
-                          child: const Text('Convert'),
+                    child: Watcher((context, ref, child) => Container(
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: MaterialButton(
+                            onPressed: () {
+                              ref.set(
+                                  conversionStatusCreator, Status.inProgress);
+                              ref.read(convertMediaCreator);
+                            },
+                            child: const Text('Convert'),
+                          ),
                         )),
                   ),
-                  Watcher(
-                    (context, ref, child) => MaterialButton(
-                      onPressed: () {
-                        ref.read(filePickerCreator);
-                      },
-                      child: Icon(
-                        Icons.folder,
-                        color: Theme.of(context).colorScheme.onBackground,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Watcher(
+                      (context, ref, child) => Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: MaterialButton(
+                          onPressed: () {
+                            ref.read(filePickerCreator);
+                          },
+                          child: Icon(
+                            Icons.folder,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  MaterialButton(
-                    onPressed: () {
-                      //add dialog that edits file name
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const FileNameEditingDialog();
-                          });
-                    },
-                    child: Icon(
-                      Icons.edit,
-                      color: Theme.of(context).colorScheme.onBackground,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: MaterialButton(
+                        onPressed: () {
+                          //add dialog that edits file name
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const FileNameEditingDialog();
+                              });
+                        },
+                        child: Icon(
+                          Icons.edit,
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ),
                     ),
                   ),
                 ],
