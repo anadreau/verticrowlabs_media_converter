@@ -1,6 +1,7 @@
 import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
 import 'package:ffmpeg_converter/screens/converter_screen.dart';
+import 'package:ffmpeg_converter/screens/installer_screen.dart';
 import 'package:ffmpeg_converter/utils/common_variables.dart';
 
 import 'package:flutter/material.dart';
@@ -31,15 +32,7 @@ class ConverterApp extends StatelessWidget {
             return const ConverterScreen();
           } else {
             //Implement install of ffmpeg here
-            return const Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Ffmpeg is not installed on this device.'),
-                SizedBox(width: 15),
-                CircularProgressIndicator()
-              ],
-            ));
+            return const InstallerScreen();
           }
         }),
       ),
