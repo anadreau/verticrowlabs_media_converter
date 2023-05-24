@@ -9,7 +9,7 @@ import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 
 //Possible way to invoke admin
 //Start-Process powershell -verb runAs -ArgumentList '-noexit Get-Command ffmpeg'
-
+//TODO: #14 break apart command and add progress enum to track each step of install. @anadreau
 var ffmpegInstallCreator = Creator((ref) async {
   final result = await Isolate.run(() => Process.runSync('powershell.exe', [
         '-Command',
