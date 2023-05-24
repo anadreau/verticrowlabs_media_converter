@@ -13,6 +13,14 @@ String setFfmpegPathVariableUserCmd =
     "User"
 )''';
 
+//Adds C:\ffmpeg to Machine path variable list
+String setFfmpegPathVariableMachineCmd =
+    r'''[System.Environment]::SetEnvironmentVariable(
+    "PATH",
+    "$([System.Environment]::GetEnvironmentVariable('PATH','Machine'));C:\ffmpeg",
+    "Machine"
+)''';
+
 //Creates Directory C:\ffmpeg
 String createDirCmd =
     r'New-Item -Type Directory -Path C:\ffmpeg ; Set-Location C:\ffmpeg';
