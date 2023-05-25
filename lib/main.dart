@@ -29,7 +29,6 @@ class ConverterApp extends StatelessWidget {
           if (ffmpegInstalled == InstallStatus.installed) {
             return const ConverterScreen();
           } else {
-            //Implement install of ffmpeg here
             return const InstallerScreen();
           }
         }),

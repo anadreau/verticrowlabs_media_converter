@@ -1,5 +1,4 @@
 import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/ffmpeg_install_helper/admin_install.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
@@ -134,15 +133,17 @@ class ConverterScreen extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child: MaterialButton(
-                        onPressed: () {
-                          return ref.read(ffmpegadminInstallCreator);
-                        },
-                        child: Icon(
-                          Icons.install_mobile,
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                      ),
+                      //TODO: #15 implement admin path variable update. @anadreau
+
+                      // child: MaterialButton(
+                      //   onPressed: () {
+                      //     return ref.read(ffmpegadminInstallCreator);
+                      //   },
+                      //   child: Icon(
+                      //     Icons.install_mobile,
+                      //     color: Theme.of(context).colorScheme.onBackground,
+                      //   ),
+                      // ),
                     ),
                   )
                 ],

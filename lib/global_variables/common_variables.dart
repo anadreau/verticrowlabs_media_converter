@@ -40,7 +40,8 @@ enum InstallStatus {
   cleanUpDir('Cleaning up Directory'),
   setPathVariable('Setting Path Variable'),
   updatePathVariable('Updating Path Variable'),
-  installed('Installation Complete');
+  installed('Installation Complete'),
+  error('Installation error');
 
   final String message;
   const InstallStatus(this.message);

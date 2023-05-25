@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:creator/creator.dart';
 
 String testcmd =
-    r'''start-process -verb runas powershell "[System.environment]::SetEnvironmentVariable('PATH','$([System.Environment]::GetEnvironmentVariable("Path","Machine"));C:\\ffmpeg','Machine')"''';
+    r'''start-process -verb runas powershell "[System.environment]::SetEnvironmentVariable('PATH','$([System.Environment]::GetEnvironmentVariable("Path","Machine"));C:\ffmpeg','Machine')"''';
 
 var ffmpegadminInstallCreator = Creator((ref) async {
   final result = Process.runSync('powershell.exe', [testcmd]);

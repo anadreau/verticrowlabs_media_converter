@@ -9,36 +9,79 @@ import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 
 //Possible way to invoke admin
 //Start-Process powershell -verb runAs -ArgumentList '-noexit Get-Command ffmpeg'
-//TODO: #14 break apart command and add progress enum to track each step of install. @anadreau
 var ffmpegInstallCreator = Creator((ref) async {
-  final result = await Isolate.run(
-          () => ref.set(ffmpegInstallStatusCreator, InstallStatus.createDir))
-      .then((value) =>
-          Process.runSync('powershell.exe', ['-Command', createDirCmd]))
-      .then((value) =>
-          ref.set(ffmpegInstallStatusCreator, InstallStatus.downloadPackage))
-      .then((value) =>
-          Process.runSync('powershell.exe', ['-Command', downloadFfmpegCmd]))
-      .then((value) =>
-          ref.set(ffmpegInstallStatusCreator, InstallStatus.extractPackage))
-      .then((value) =>
-          Process.runSync('powershell.exe', ['-Command', extractFfmpegCmd]))
-      .then((value) =>
-          ref.set(ffmpegInstallStatusCreator, InstallStatus.movePackage))
-      .then((value) => Process.runSync('powershell.exe', ['-Command', moveFfmpegCmd]))
-      .then((value) => ref.set(ffmpegInstallStatusCreator, InstallStatus.cleanUpDir))
-      .then((value) => Process.runSync('powershell.exe', ['-Command', cleanUpFfmpegCmd]))
-      .then((value) => ref.set(ffmpegInstallStatusCreator, InstallStatus.setPathVariable))
-      .then((value) => Process.runSync('powershell.exe', ['-Command', setFfmpegPathVariableUserCmd]))
-      .then((value) => ref.set(ffmpegInstallStatusCreator, InstallStatus.updatePathVariable))
-      .then((value) => Process.runSync('powershell.exe', ['-Command', updateEvironmentVariableCmd]));
+//Create Dir
+  ref.set(ffmpegInstallStatusCreator, InstallStatus.createDir);
+  var createDirResult = await Isolate.run(
+      () => Process.runSync('powershell.exe', ['-Command', createDirCmd]));
 
-  if (result.exitCode == 0) {
-    log(result.stdout);
-    log(result.stderr);
+  if (createDirResult.exitCode == 0) {
+    log(createDirResult.stdout);
+    log(createDirResult.stderr);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.downloadPackage);
   } else {
-    log('else ${result.stderr}');
+    log('else ${createDirResult.stderr}');
   }
-
-  ref.set(ffmpegInstallStatusCreator, InstallStatus.installed);
+//Download ffmpeg
+  var downloadResult = await Isolate.run(
+      () => Process.runSync('powershell.exe', ['-Command', downloadFfmpegCmd]));
+  if (downloadResult.exitCode == 0) {
+    log(downloadResult.stdout);
+    log(downloadResult.stderr);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.extractPackage);
+  } else {
+    log('else ${downloadResult.stderr}');
+  }
+//Extract ffmpeg
+  var extractResult = await Isolate.run(
+      () => Process.runSync('powershell.exe', ['-Command', extractFfmpegCmd]));
+  if (extractResult.exitCode == 0) {
+    log(extractResult.stdout);
+    log(extractResult.stderr);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.movePackage);
+  } else {
+    log('else ${extractResult.stderr}');
+  }
+//Move ffmpeg
+  var moveResult = await Isolate.run(
+      () => Process.runSync('powershell.exe', ['-Command', moveFfmpegCmd]));
+  if (moveResult.exitCode == 0) {
+    log(moveResult.stdout);
+    log(moveResult.stderr);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.cleanUpDir);
+  } else {
+    log('else ${extractResult.stderr}');
+  }
+  //Clean up Dir
+  var cleanUpResult = await Isolate.run(
+      () => Process.runSync('powershell.exe', ['-Command', cleanUpFfmpegCmd]));
+  if (cleanUpResult.exitCode == 0) {
+    log(cleanUpResult.stdout);
+    log(cleanUpResult.stderr);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.setPathVariable);
+  } else {
+    log('else ${cleanUpResult.stderr}');
+  }
+  //Set Path Variable
+  var setPathVariableResult = await Isolate.run(() => Process.runSync(
+      'powershell.exe', ['-Command', setFfmpegPathVariableUserCmd]));
+  if (cleanUpResult.exitCode == 0) {
+    log(setPathVariableResult.stdout);
+    log(setPathVariableResult.stderr);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.updatePathVariable);
+  } else {
+    log('else ${setPathVariableResult.stderr}');
+  }
+  //Update Path Variable
+  var updatePathVariableResult = await Isolate.run(() => Process.runSync(
+      'powershell.exe', ['-Command', updateEvironmentVariableCmd]));
+  if (cleanUpResult.exitCode == 0) {
+    log(updatePathVariableResult.stdout);
+    log(updatePathVariableResult.stderr);
+    //Installed
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.installed);
+  } else {
+    log('else ${updatePathVariableResult.stderr}');
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.error);
+  }
 });

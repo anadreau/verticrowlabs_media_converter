@@ -22,7 +22,8 @@ final ffmpegInstallStatusTrackerCreator = Creator<double>((ref) {
     InstallStatus.cleanUpDir => (6 / 9).toDouble(),
     InstallStatus.setPathVariable => (7 / 9).toDouble(),
     InstallStatus.updatePathVariable => (8 / 9).toDouble(),
-    InstallStatus.installed => 1.0
+    InstallStatus.installed => 1.0,
+    InstallStatus.error => 0.0
   };
   return installStatus;
 });

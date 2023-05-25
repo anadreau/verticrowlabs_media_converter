@@ -13,18 +13,49 @@ class InstallerScreen extends StatelessWidget {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Ffmpeg is not installed on this device.'),
-            )),
+        Watcher((context, ref, child) {
+          if (ref.watch(ffmpegInstallStatusCreator) ==
+              InstallStatus.notInstalled) {
+            return Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Ffmpeg is not installed on this device.'),
+                ));
+          } else {
+            return Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(ref.watch(ffmpegInstallStatusCreator).message),
+                ));
+          }
+        }),
         const SizedBox(
           height: 15,
         ),
+        Watcher((context, ref, _) {
+          if (ref.watch(ffmpegInstallStatusCreator) !=
+                  InstallStatus.installed &&
+              ref.watch(ffmpegInstallStatusCreator) !=
+                  InstallStatus.notInstalled) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(100, 0, 100, 15),
+              //TODO: #16 Smooth out animation of indicator. @anadreau
+              child: LinearProgressIndicator(
+                value: ref.watch(ffmpegInstallStatusTrackerCreator),
+              ),
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -49,18 +80,6 @@ class InstallerScreen extends StatelessWidget {
                     ),
                   ),
                 )),
-            const SizedBox(
-              width: 15,
-            ),
-            Watcher((context, ref, child) {
-              if (ref.watch(ffmpegInstallStatusCreator) !=
-                  InstallStatus.installed) {
-                return CircularProgressIndicator(
-                  value: ref.watch(ffmpegInstallStatusTrackerCreator),
-                );
-              }
-              return const SizedBox();
-            }),
           ],
         ),
       ],
