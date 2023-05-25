@@ -28,10 +28,10 @@ final convertMediaCreator = Creator<void>((ref) async {
 
   if (result.exitCode == 0) {
     log(result.stdout);
-    ref.set(conversionStatusCreator, Status.done);
+    ref.set(conversionStatusCreator, ConversionStatus.done);
     log('Finished');
   } else {
     log(result.stderr);
-    ref.set(conversionStatusCreator, Status.error);
+    ref.set(conversionStatusCreator, ConversionStatus.error);
   }
 });

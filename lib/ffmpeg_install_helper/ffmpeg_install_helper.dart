@@ -11,22 +11,24 @@ import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 //Start-Process powershell -verb runAs -ArgumentList '-noexit Get-Command ffmpeg'
 //TODO: #14 break apart command and add progress enum to track each step of install. @anadreau
 var ffmpegInstallCreator = Creator((ref) async {
-  final result = await Isolate.run(() => Process.runSync('powershell.exe', [
-        '-Command',
-        createDirCmd,
-        ';',
-        downloadFfmpegCmd,
-        ';',
-        extractFfmpegCmd,
-        ';',
-        moveFfmpegCmd,
-        ';',
-        cleanUpFfmpegCmd,
-        ';',
-        setFfmpegPathVariableUserCmd,
-        ';',
-        updateEvironmentVariableCmd,
-      ]));
+  final result = await Isolate.run(() {
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.createDir);
+    Process.runSync('powershell.exe', ['-Command', createDirCmd]);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.downloadPackage);
+    Process.runSync('powershell.exe', ['-Command', downloadFfmpegCmd]);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.extractPackage);
+    Process.runSync('powershell.exe', ['-Command', extractFfmpegCmd]);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.movePackage);
+    Process.runSync('powershell.exe', ['-Command', moveFfmpegCmd]);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.cleanUpDir);
+    Process.runSync('powershell.exe', ['-Command', cleanUpFfmpegCmd]);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.setPathVariable);
+    Process.runSync(
+        'powershell.exe', ['-Command', setFfmpegPathVariableUserCmd]);
+    ref.set(ffmpegInstallStatusCreator, InstallStatus.updatePathVariable);
+    Process.runSync(
+        'powershell.exe', ['-Command', updateEvironmentVariableCmd]);
+  });
 
   if (result.exitCode == 0) {
     log(result.stdout);
@@ -35,5 +37,5 @@ var ffmpegInstallCreator = Creator((ref) async {
     log('else ${result.stderr}');
   }
 
-  ref.set(ffmpegInstallStatusCreator, FfmpegInstallStatus.installed);
+  ref.set(ffmpegInstallStatusCreator, InstallStatus.installed);
 });

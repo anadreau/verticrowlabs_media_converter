@@ -38,8 +38,6 @@ class InstallerScreen extends StatelessWidget {
                     child: MaterialButton(
                       onPressed: () {
                         ref.read(ffmpegInstallCreator);
-                        ref.set(ffmpegInstallStatusCreator,
-                            FfmpegInstallStatus.installing);
                       },
                       child: const Row(
                         children: [
@@ -55,9 +53,11 @@ class InstallerScreen extends StatelessWidget {
               width: 15,
             ),
             Watcher((context, ref, child) {
-              if (ref.watch(ffmpegInstallStatusCreator) ==
-                  FfmpegInstallStatus.installing) {
-                return const CircularProgressIndicator();
+              if (ref.watch(ffmpegInstallStatusCreator) !=
+                  InstallStatus.installed) {
+                return CircularProgressIndicator(
+                  value: ref.watch(ffmpegInstallStatusTrackerCreator),
+                );
               }
               return const SizedBox();
             }),

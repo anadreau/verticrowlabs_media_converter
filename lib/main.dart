@@ -26,7 +26,7 @@ class ConverterApp extends StatelessWidget {
         body: Watcher((context, ref, child) {
           ref.watch(verifyFfmpegInstallCreator);
           var ffmpegInstalled = ref.watch(ffmpegInstallStatusCreator);
-          if (ffmpegInstalled == FfmpegInstallStatus.installed) {
+          if (ffmpegInstalled == InstallStatus.installed) {
             return const ConverterScreen();
           } else {
             //Implement install of ffmpeg here

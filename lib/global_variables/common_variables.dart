@@ -1,12 +1,12 @@
 ///Enum for conversion status
-enum Status {
+enum ConversionStatus {
   notStarted('Not Started'),
   inProgress('In Progress'),
   done('Done'),
   error('Error');
 
   final String message;
-  const Status(this.message);
+  const ConversionStatus(this.message);
 }
 
 ///Enum for Resolution quality
@@ -31,4 +31,17 @@ enum MediaContainerType {
   const MediaContainerType(this.containerType);
 }
 
-enum FfmpegInstallStatus { notInstalled, installing, installed }
+enum InstallStatus {
+  notInstalled('Not Installed'),
+  createDir('Creating Directory'),
+  downloadPackage('Downloading Package'),
+  extractPackage('Extracting Package'),
+  movePackage('Moving Package'),
+  cleanUpDir('Cleaning up Directory'),
+  setPathVariable('Setting Path Variable'),
+  updatePathVariable('Updating Path Variable'),
+  installed('Installation Complete');
+
+  final String message;
+  const InstallStatus(this.message);
+}

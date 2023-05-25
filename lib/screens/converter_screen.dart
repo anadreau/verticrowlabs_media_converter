@@ -68,7 +68,8 @@ class ConverterScreen extends StatelessWidget {
                       ),
                     ],
                   )),
-              if (ref.watch(statusCreator) == Status.inProgress.message)
+              if (ref.watch(statusCreator) ==
+                  ConversionStatus.inProgress.message)
                 const Padding(
                   padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
                   child: LinearProgressIndicator(),
@@ -94,8 +95,8 @@ class ConverterScreen extends StatelessWidget {
                           ),
                           child: MaterialButton(
                             onPressed: () {
-                              ref.set(
-                                  conversionStatusCreator, Status.inProgress);
+                              ref.set(conversionStatusCreator,
+                                  ConversionStatus.inProgress);
                               ref.read(convertMediaCreator);
                             },
                             child: const Text('Convert'),
