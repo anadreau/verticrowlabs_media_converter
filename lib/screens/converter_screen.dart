@@ -67,7 +67,8 @@ class ConverterScreen extends StatelessWidget {
                       ),
                     ],
                   )),
-              if (ref.watch(statusCreator) == Status.inProgress.message)
+              if (ref.watch(statusCreator) ==
+                  ConversionStatus.inProgress.message)
                 const Padding(
                   padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
                   child: LinearProgressIndicator(),
@@ -93,8 +94,8 @@ class ConverterScreen extends StatelessWidget {
                           ),
                           child: MaterialButton(
                             onPressed: () {
-                              ref.set(
-                                  conversionStatusCreator, Status.inProgress);
+                              ref.set(conversionStatusCreator,
+                                  ConversionStatus.inProgress);
                               ref.read(convertMediaCreator);
                             },
                             child: const Text('Convert'),
@@ -125,6 +126,26 @@ class ConverterScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      //TODO: #15 implement admin path variable update. @anadreau
+
+                      // child: MaterialButton(
+                      //   onPressed: () {
+                      //     return ref.read(ffmpegadminInstallCreator);
+                      //   },
+                      //   child: Icon(
+                      //     Icons.install_mobile,
+                      //     color: Theme.of(context).colorScheme.onBackground,
+                      //   ),
+                      // ),
+                    ),
+                  )
                 ],
               ),
             ],
