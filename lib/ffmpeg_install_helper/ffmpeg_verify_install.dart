@@ -6,6 +6,9 @@ import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 
+//TO-DO: #18 add ffmpeg installation ability for linux and macos. @anadreau
+//TO-DO: #19 implement ffmpeg command depending on OS. @anadreau
+
 //Creator that returns non
 final ffmpegInstallStatusCreator = Creator.value(InstallStatus.notInstalled,
     name: 'ffmpegInstallStatusCreator');
