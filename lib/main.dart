@@ -16,6 +16,8 @@ class ConverterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //Resoration scope in place so that non debug shows correctly
+      //instead of all blank
       restorationScopeId: 'bugFix',
       theme: ThemeData(
         useMaterial3: true,

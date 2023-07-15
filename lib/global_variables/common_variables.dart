@@ -19,7 +19,7 @@ enum MediaScale {
   const MediaScale(this.resolution);
 }
 
-///ENum for Container type
+///Enum for Container type
 enum MediaContainerType {
   mp4('mp4'),
   mkv('mkv'),
@@ -31,6 +31,7 @@ enum MediaContainerType {
   const MediaContainerType(this.containerType);
 }
 
+///Enum for Installation status
 enum InstallStatus {
   notInstalled('Not Installed'),
   createDir('Creating Directory'),
