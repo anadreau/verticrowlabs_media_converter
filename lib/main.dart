@@ -6,6 +6,8 @@ import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 
 import 'package:flutter/material.dart';
 
+//TO-DO: #20 Implement Bloc instead of Creator. @anadreau
+
 void main() {
   runApp(CreatorGraph(child: const ConverterApp()));
 }
