@@ -5,11 +5,12 @@ import 'package:ffmpeg_converter/screens/installer_screen.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //TO-DO: #20 Implement Bloc instead of Creator. @anadreau
 
 void main() {
-  runApp(CreatorGraph(child: const ConverterApp()));
+  runApp(const ProviderScope(child: ConverterApp()));
 }
 
 class ConverterApp extends StatelessWidget {

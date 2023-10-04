@@ -6,19 +6,28 @@ import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //Possible way to invoke admin
 //Start-Process powershell -verb runAs -ArgumentList '-noexit Get-Command ffmpeg'
-var ffmpegInstallCreator = Creator((ref) async {
+
+final ffmpegInstallStatusProvider =
+    StateProvider((ref) => InstallStatus.notInstalled);
+
+var ffmpegInstallProvider = FutureProvider((ref) async {
 //Create Dir
-  ref.set(ffmpegInstallStatusCreator, InstallStatus.createDir);
+  ref
+      .read(ffmpegInstallStatusProvider.notifier)
+      .update((state) => InstallStatus.createDir);
   var createDirResult = await Isolate.run(
       () => Process.runSync('powershell.exe', ['-Command', createDirCmd]));
 
   if (createDirResult.exitCode == 0) {
     log(createDirResult.stdout);
     log(createDirResult.stderr);
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.downloadPackage);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.downloadPackage);
   } else {
     log('else ${createDirResult.stderr}');
   }
@@ -28,7 +37,9 @@ var ffmpegInstallCreator = Creator((ref) async {
   if (downloadResult.exitCode == 0) {
     log(downloadResult.stdout);
     log(downloadResult.stderr);
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.extractPackage);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.extractPackage);
   } else {
     log('else ${downloadResult.stderr}');
   }
@@ -38,7 +49,9 @@ var ffmpegInstallCreator = Creator((ref) async {
   if (extractResult.exitCode == 0) {
     log(extractResult.stdout);
     log(extractResult.stderr);
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.movePackage);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.movePackage);
   } else {
     log('else ${extractResult.stderr}');
   }
@@ -48,7 +61,9 @@ var ffmpegInstallCreator = Creator((ref) async {
   if (moveResult.exitCode == 0) {
     log(moveResult.stdout);
     log(moveResult.stderr);
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.cleanUpDir);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.cleanUpDir);
   } else {
     log('else ${extractResult.stderr}');
   }
@@ -58,7 +73,9 @@ var ffmpegInstallCreator = Creator((ref) async {
   if (cleanUpResult.exitCode == 0) {
     log(cleanUpResult.stdout);
     log(cleanUpResult.stderr);
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.setPathVariable);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.setPathVariable);
   } else {
     log('else ${cleanUpResult.stderr}');
   }
@@ -68,7 +85,9 @@ var ffmpegInstallCreator = Creator((ref) async {
   if (cleanUpResult.exitCode == 0) {
     log(setPathVariableResult.stdout);
     log(setPathVariableResult.stderr);
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.updatePathVariable);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.updatePathVariable);
   } else {
     log('else ${setPathVariableResult.stderr}');
   }
@@ -79,9 +98,13 @@ var ffmpegInstallCreator = Creator((ref) async {
     log(updatePathVariableResult.stdout);
     log(updatePathVariableResult.stderr);
     //Installed
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.installed);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.installed);
   } else {
     log('else ${updatePathVariableResult.stderr}');
-    ref.set(ffmpegInstallStatusCreator, InstallStatus.error);
+    ref
+        .read(ffmpegInstallStatusProvider.notifier)
+        .update((state) => InstallStatus.error);
   }
 });
