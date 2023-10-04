@@ -1,3 +1,3 @@
 # ffmpeg_converter
 
-A new Flutter project.
+A media conversion tool currently for Windows that allows changing media type and compression size using ffmpeg behind the scenes. 
