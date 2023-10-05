@@ -2,19 +2,17 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:creator/creator.dart';
+import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //TO-DO: #18 add ffmpeg installation ability for linux and macos. @anadreau
 //TO-DO: #19 implement ffmpeg command depending on OS. @anadreau
 
 //Creator that returns non
-final ffmpegInstallStatusCreator = Creator.value(InstallStatus.notInstalled,
-    name: 'ffmpegInstallStatusCreator');
-
-final ffmpegInstallStatusTrackerCreator = Creator<double>((ref) {
-  InstallStatus status = ref.watch(ffmpegInstallStatusCreator);
+final ffmpegInstallStatusTrackerProvider = Provider<double>((ref) {
+  InstallStatus status = ref.watch(ffmpegInstallStatusProvider);
 
   double installStatus = switch (status) {
     InstallStatus.notInstalled => 0.0,
@@ -31,7 +29,7 @@ final ffmpegInstallStatusTrackerCreator = Creator<double>((ref) {
   return installStatus;
 });
 
-final verifyFfmpegInstallCreator = Creator((ref) async {
+final verifyFfmpegInstallProvider = Provider((ref) async {
   final result = await Isolate.run(() => Process.runSync('powershell.exe',
       ['-Command', updateEvironmentVariableCmd, ';', verifyInstallCmd],
       runInShell: true));
@@ -41,9 +39,13 @@ final verifyFfmpegInstallCreator = Creator((ref) async {
     log('${result.stderr}');
     if (result.stdout != null) {
       log('${result.stdout}');
-      ref.set(ffmpegInstallStatusCreator, InstallStatus.installed);
+      ref
+          .read(ffmpegInstallStatusProvider.notifier)
+          .update((state) => InstallStatus.installed);
     } else {
-      ref.set(ffmpegInstallStatusCreator, InstallStatus.notInstalled);
+      ref
+          .read(ffmpegInstallStatusProvider.notifier)
+          .update((state) => InstallStatus.notInstalled);
     }
   } else {
     log('stdout: ${result.stdout}');

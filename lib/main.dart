@@ -1,4 +1,4 @@
-import 'package:creator/creator.dart';
+import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
 import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
 import 'package:ffmpeg_converter/screens/converter_screen.dart';
 import 'package:ffmpeg_converter/screens/installer_screen.dart';
@@ -28,16 +28,23 @@ class ConverterApp extends StatelessWidget {
       ),
       home: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Watcher((context, ref, child) {
-          ref.watch(verifyFfmpegInstallCreator);
-          var ffmpegInstalled = ref.watch(ffmpegInstallStatusCreator);
-          if (ffmpegInstalled == InstallStatus.installed) {
-            return const ConverterScreen();
-          } else {
-            return const InstallerScreen();
-          }
-        }),
+        body: const InstallScreen(),
       ),
     );
+  }
+}
+
+class InstallScreen extends ConsumerWidget {
+  const InstallScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(verifyFfmpegInstallProvider);
+    var ffmpegInstalled = ref.watch(ffmpegInstallStatusProvider);
+    if (ffmpegInstalled == InstallStatus.installed) {
+      return const ConverterScreen();
+    } else {
+      return const InstallerScreen();
+    }
   }
 }

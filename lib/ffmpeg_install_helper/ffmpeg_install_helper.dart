@@ -2,8 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //Start-Process powershell -verb runAs -ArgumentList '-noexit Get-Command ffmpeg'
 
 final ffmpegInstallStatusProvider =
-    StateProvider((ref) => InstallStatus.notInstalled);
+    StateProvider<InstallStatus>((ref) => InstallStatus.notInstalled);
 
 var ffmpegInstallProvider = FutureProvider((ref) async {
 //Create Dir
