@@ -17,7 +17,7 @@ class MediaDropDown extends ConsumerStatefulWidget {
 }
 
 class _MediaDropDownState extends ConsumerState<MediaDropDown> {
-  var dropdownValue = dropDownList.first;
+  String dropdownValue = dropDownList.first;
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +25,14 @@ class _MediaDropDownState extends ConsumerState<MediaDropDown> {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: DropdownButton<String>(
             iconEnabledColor: theme.colorScheme.onPrimaryContainer,
             dropdownColor: theme.colorScheme.primaryContainer,
-            focusColor: Colors.white.withOpacity(0.0),
+            focusColor: Colors.white.withOpacity(0),
             value: dropdownValue,
             items: dropDownList.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
@@ -45,7 +45,7 @@ class _MediaDropDownState extends ConsumerState<MediaDropDown> {
                 dropdownValue = value!;
 
                 log('dropdownValue: $dropdownValue');
-                MediaScale scale = switch (dropdownValue) {
+                final scale = switch (dropdownValue) {
                   '480' => MediaScale.low,
                   '720' => MediaScale.medium,
                   '1080' => MediaScale.high,
@@ -53,7 +53,7 @@ class _MediaDropDownState extends ConsumerState<MediaDropDown> {
                 };
                 ref.read(outputScaleSelector.notifier).update((state) => scale);
               });
-            }),
+            },),
       ),
     );
   }

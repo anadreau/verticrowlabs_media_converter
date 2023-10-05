@@ -6,8 +6,8 @@ final containerTypeProvider = StateProvider((ref) => MediaContainerType.mp4);
 
 final mediaTypeProvider = Provider(
   (ref) {
-    MediaContainerType type = ref.watch(containerTypeProvider);
-    String typeOutput = switch (type) {
+    final type = ref.watch(containerTypeProvider);
+    final typeOutput = switch (type) {
       MediaContainerType.avi => '.avi',
       MediaContainerType.flv => '.flv',
       MediaContainerType.mkv => '.mkv',

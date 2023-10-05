@@ -1,6 +1,7 @@
 import 'dart:developer';
-import 'package:ffmpeg_converter/media_conversion/container_type.dart';
+
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
+import 'package:ffmpeg_converter/media_conversion/container_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,21 +21,21 @@ class FileTypeDropDown extends ConsumerStatefulWidget {
 }
 
 class _FileTypeDropDownState extends ConsumerState<FileTypeDropDown> {
-  var initialListValue = dropDownListasString.first;
+  String initialListValue = dropDownListasString.first;
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: DropdownButton<String>(
             iconEnabledColor: theme.colorScheme.onPrimaryContainer,
             dropdownColor: theme.colorScheme.primaryContainer,
-            focusColor: Colors.white.withOpacity(0.0),
+            focusColor: Colors.white.withOpacity(0),
             value: initialListValue,
             items: dropDownListasString
                 .map<DropdownMenuItem<String>>((String value) {
@@ -47,7 +48,7 @@ class _FileTypeDropDownState extends ConsumerState<FileTypeDropDown> {
               setState(() {
                 initialListValue = value!;
                 log('Dropdown value: $value');
-                MediaContainerType selectedType = switch (initialListValue) {
+                final selectedType = switch (initialListValue) {
                   'avi' => MediaContainerType.avi,
                   'flv' => MediaContainerType.flv,
                   'mkv' => MediaContainerType.mkv,
@@ -60,7 +61,7 @@ class _FileTypeDropDownState extends ConsumerState<FileTypeDropDown> {
                     .read(containerTypeProvider.notifier)
                     .update((state) => selectedType);
               });
-            }),
+            },),
       ),
     );
   }

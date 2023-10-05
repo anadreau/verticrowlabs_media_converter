@@ -10,62 +10,64 @@ class ConverterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String fileInput = ref.watch(fileInputStringProvider);
-    String outputFile = ref.watch(outputStringProvider).toString();
-    String status = ref.watch(statusProvider);
+    final fileInput = ref.watch(fileInputStringProvider);
+    final outputFile = ref.watch(outputStringProvider).toString();
+    final status = ref.watch(statusProvider);
     return Padding(
-      padding: const EdgeInsets.all(100.0),
+      padding: const EdgeInsets.all(100),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Column(
-                children: [
-                  if (fileInput == '')
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child:
-                          Text('Press folder button to select file to convert'),
-                    ),
-                  if (fileInput != '')
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'File to be converted: $fileInput',
-                        softWrap: true,
-                      ),
-                    ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                if (fileInput == '')
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                    child:
+                        Text('Press folder button to select file to convert'),
+                  ),
+                if (fileInput != '')
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8),
                     child: Text(
-                      'Converted file: $outputFile',
+                      'File to be converted: $fileInput',
                       softWrap: true,
                     ),
                   ),
-                  const Divider(
-                    indent: 75,
-                    endIndent: 75,
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    'Converted file: $outputFile',
+                    softWrap: true,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Conversion Status: $status',
-                          ),
-                        )),
+                ),
+                const Divider(
+                  indent: 75,
+                  endIndent: 75,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        'Conversion Status: $status',
+                      ),
+                    ),
                   ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
           if (status == ConversionStatus.inProgress.message)
             const Padding(
               padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
@@ -75,19 +77,19 @@ class ConverterScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8),
                 child: FileTypeDropDown(),
               ),
               const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8),
                 child: MediaDropDown(),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: MaterialButton(
                     onPressed: () {
@@ -102,20 +104,21 @@ class ConverterScreen extends ConsumerWidget {
               ),
               const FileSelector(),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: MaterialButton(
                     onPressed: () {
                       //add dialog that edits file name
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const FileNameEditingDialog();
-                          });
+                      showDialog<FileNameEditingDialog>(
+                        context: context,
+                        builder: (context) {
+                          return const FileNameEditingDialog();
+                        },
+                      );
                     },
                     child: Icon(
                       Icons.edit,
@@ -125,13 +128,13 @@ class ConverterScreen extends ConsumerWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  //TODO: #15 implement admin path variable update. @anadreau
+                  //TO-DO: #15 implement admin path variable update. @anadreau
 
                   // child: MaterialButton(
                   //   onPressed: () {
@@ -143,7 +146,7 @@ class ConverterScreen extends ConsumerWidget {
                   //   ),
                   // ),
                 ),
-              )
+              ),
             ],
           ),
         ],

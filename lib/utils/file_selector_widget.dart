@@ -10,11 +10,11 @@ class FileSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: MaterialButton(
           onPressed: () {

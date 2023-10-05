@@ -7,7 +7,8 @@ const verifyInstallCmd = 'get-command ffmpeg | Format-List -Property Source';
 
 //Adds C:\ffmpeg to User Path variable list
 String setFfmpegPathVariableUserCmd =
-    r'''[System.Environment]::SetEnvironmentVariable(
+    r'''
+[System.Environment]::SetEnvironmentVariable(
     "PATH",
     "$([System.Environment]::GetEnvironmentVariable('PATH','User'));C:\ffmpeg",
     "User"
@@ -15,7 +16,8 @@ String setFfmpegPathVariableUserCmd =
 
 //Adds C:\ffmpeg to Machine path variable list
 String setFfmpegPathVariableMachineCmd =
-    r'''[System.Environment]::SetEnvironmentVariable(
+    r'''
+[System.Environment]::SetEnvironmentVariable(
     "PATH",
     "$([System.Environment]::GetEnvironmentVariable('PATH','Machine'));C:\ffmpeg",
     "Machine"

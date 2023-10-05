@@ -8,11 +8,11 @@ environment:
 
 dependencies:
   ffi: ^2.0.1
-  path_provider: ^2.0.14
-  flutter:
-    sdk: flutter
   file_picker: ^5.2.11
+  flutter:
+    sdk: flutter  
   flutter_riverpod: ^2.4.2
+  path_provider: ^2.0.14
   riverpod: ^2.4.1
   
   
@@ -28,8 +28,9 @@ flutter_launcher_icons:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^2.0.0
+  very_good_analysis: ^5.1.0
 
 flutter:
   uses-material-design: true

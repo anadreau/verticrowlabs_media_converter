@@ -20,7 +20,7 @@ class ColumnConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var installStatus = ref.watch(ffmpegInstallStatusProvider);
+    final installStatus = ref.watch(ffmpegInstallStatusProvider);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -28,30 +28,30 @@ class ColumnConsumer extends ConsumerWidget {
           InstallStatus.notInstalled => Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8),
                 child: Text('Ffmpeg is not installed on this device.'),
-              )),
+              ),),
           InstallStatus.installed => Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Text(ref.watch(ffmpegInstallStatusProvider).message),
-              )),
+              ),),
           _ => Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: Text(ref.watch(ffmpegInstallStatusProvider).message),
-              )),
+              ),),
         },
         const SizedBox(
           height: 15,
@@ -71,10 +71,10 @@ class ColumnConsumer extends ConsumerWidget {
             Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(20),
               ),
               child: const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8),
                 child: StatusProviderButton(),
               ),
             ),

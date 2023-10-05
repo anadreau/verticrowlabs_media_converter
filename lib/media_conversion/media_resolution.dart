@@ -8,7 +8,7 @@ final outputScaleSelector = StateProvider((ref) => MediaScale.medium);
 ///Creator that takes the value from outputScaleSelector and returns
 ///a String representing the resolution that the media file will be converted to.
 final outputScaleCreator = Provider((ref) {
-  var scale = ref.watch(outputScaleSelector);
+  final scale = ref.watch(outputScaleSelector);
   String resultString;
   resultString = switch (scale) {
     MediaScale.low => MediaScale.low.resolution,

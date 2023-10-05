@@ -12,17 +12,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final ffmpegInstallStatusProvider =
     StateProvider<InstallStatus>((ref) => InstallStatus.notInstalled);
 
-var ffmpegInstallProvider = FutureProvider((ref) async {
+FutureProvider<void> ffmpegInstallProvider = FutureProvider((ref) async {
 //Create Dir
   ref
       .read(ffmpegInstallStatusProvider.notifier)
       .update((state) => InstallStatus.createDir);
-  var createDirResult = await Isolate.run(
-      () => Process.runSync('powershell.exe', ['-Command', createDirCmd]));
+  final createDirResult = await Isolate.run(
+    () => Process.runSync('powershell.exe', ['-Command', createDirCmd]),
+  );
 
   if (createDirResult.exitCode == 0) {
-    log(createDirResult.stdout);
-    log(createDirResult.stderr);
+    log(createDirResult.stdout.toString());
+    log(createDirResult.stderr.toString());
     ref
         .read(ffmpegInstallStatusProvider.notifier)
         .update((state) => InstallStatus.downloadPackage);
@@ -30,11 +31,12 @@ var ffmpegInstallProvider = FutureProvider((ref) async {
     log('else ${createDirResult.stderr}');
   }
 //Download ffmpeg
-  var downloadResult = await Isolate.run(
-      () => Process.runSync('powershell.exe', ['-Command', downloadFfmpegCmd]));
+  final downloadResult = await Isolate.run(
+    () => Process.runSync('powershell.exe', ['-Command', downloadFfmpegCmd]),
+  );
   if (downloadResult.exitCode == 0) {
-    log(downloadResult.stdout);
-    log(downloadResult.stderr);
+    log(downloadResult.stdout.toString());
+    log(downloadResult.stderr.toString());
     ref
         .read(ffmpegInstallStatusProvider.notifier)
         .update((state) => InstallStatus.extractPackage);
@@ -42,11 +44,12 @@ var ffmpegInstallProvider = FutureProvider((ref) async {
     log('else ${downloadResult.stderr}');
   }
 //Extract ffmpeg
-  var extractResult = await Isolate.run(
-      () => Process.runSync('powershell.exe', ['-Command', extractFfmpegCmd]));
+  final extractResult = await Isolate.run(
+    () => Process.runSync('powershell.exe', ['-Command', extractFfmpegCmd]),
+  );
   if (extractResult.exitCode == 0) {
-    log(extractResult.stdout);
-    log(extractResult.stderr);
+    log(extractResult.stdout.toString());
+    log(extractResult.stderr.toString());
     ref
         .read(ffmpegInstallStatusProvider.notifier)
         .update((state) => InstallStatus.movePackage);
@@ -54,11 +57,12 @@ var ffmpegInstallProvider = FutureProvider((ref) async {
     log('else ${extractResult.stderr}');
   }
 //Move ffmpeg
-  var moveResult = await Isolate.run(
-      () => Process.runSync('powershell.exe', ['-Command', moveFfmpegCmd]));
+  final moveResult = await Isolate.run(
+    () => Process.runSync('powershell.exe', ['-Command', moveFfmpegCmd]),
+  );
   if (moveResult.exitCode == 0) {
-    log(moveResult.stdout);
-    log(moveResult.stderr);
+    log(moveResult.stdout.toString());
+    log(moveResult.stderr.toString());
     ref
         .read(ffmpegInstallStatusProvider.notifier)
         .update((state) => InstallStatus.cleanUpDir);
@@ -66,11 +70,12 @@ var ffmpegInstallProvider = FutureProvider((ref) async {
     log('else ${extractResult.stderr}');
   }
   //Clean up Dir
-  var cleanUpResult = await Isolate.run(
-      () => Process.runSync('powershell.exe', ['-Command', cleanUpFfmpegCmd]));
+  final cleanUpResult = await Isolate.run(
+    () => Process.runSync('powershell.exe', ['-Command', cleanUpFfmpegCmd]),
+  );
   if (cleanUpResult.exitCode == 0) {
-    log(cleanUpResult.stdout);
-    log(cleanUpResult.stderr);
+    log(cleanUpResult.stdout.toString());
+    log(cleanUpResult.stderr.toString());
     ref
         .read(ffmpegInstallStatusProvider.notifier)
         .update((state) => InstallStatus.setPathVariable);
@@ -78,11 +83,15 @@ var ffmpegInstallProvider = FutureProvider((ref) async {
     log('else ${cleanUpResult.stderr}');
   }
   //Set Path Variable
-  var setPathVariableResult = await Isolate.run(() => Process.runSync(
-      'powershell.exe', ['-Command', setFfmpegPathVariableUserCmd]));
+  final setPathVariableResult = await Isolate.run(
+    () => Process.runSync(
+      'powershell.exe',
+      ['-Command', setFfmpegPathVariableUserCmd],
+    ),
+  );
   if (cleanUpResult.exitCode == 0) {
-    log(setPathVariableResult.stdout);
-    log(setPathVariableResult.stderr);
+    log(setPathVariableResult.stdout.toString());
+    log(setPathVariableResult.stderr.toString());
     ref
         .read(ffmpegInstallStatusProvider.notifier)
         .update((state) => InstallStatus.updatePathVariable);
@@ -90,11 +99,15 @@ var ffmpegInstallProvider = FutureProvider((ref) async {
     log('else ${setPathVariableResult.stderr}');
   }
   //Update Path Variable
-  var updatePathVariableResult = await Isolate.run(() => Process.runSync(
-      'powershell.exe', ['-Command', updateEvironmentVariableCmd]));
+  final updatePathVariableResult = await Isolate.run(
+    () => Process.runSync(
+      'powershell.exe',
+      ['-Command', updateEvironmentVariableCmd],
+    ),
+  );
   if (cleanUpResult.exitCode == 0) {
-    log(updatePathVariableResult.stdout);
-    log(updatePathVariableResult.stderr);
+    log(updatePathVariableResult.stdout.toString());
+    log(updatePathVariableResult.stderr.toString());
     //Installed
     ref
         .read(ffmpegInstallStatusProvider.notifier)

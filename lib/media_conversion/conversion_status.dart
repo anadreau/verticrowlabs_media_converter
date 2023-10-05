@@ -9,7 +9,7 @@ final conversionStatusProvider =
 ///Creator that takesthe value from conversionStatusCreator and returns a
 ///String representing the status of the media file conversion.
 final statusProvider = StateProvider((ref) {
-  ConversionStatus status = ref.watch(conversionStatusProvider);
+  final status = ref.watch(conversionStatusProvider);
   String statusString;
 
   statusString = switch (status) {

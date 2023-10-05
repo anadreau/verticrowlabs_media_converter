@@ -41,7 +41,7 @@ class _FileNameEditingDialogState extends State<FileNameEditingDialog> {
           child: const Text('Cancel'),
         ),
         EditButtonConsumer(
-            formkey: formkey, fileNameController: fileNameController),
+            formkey: formkey, fileNameController: fileNameController,),
       ],
     );
   }
@@ -49,9 +49,7 @@ class _FileNameEditingDialogState extends State<FileNameEditingDialog> {
 
 class EditButtonConsumer extends ConsumerWidget {
   const EditButtonConsumer({
-    super.key,
-    required this.formkey,
-    required this.fileNameController,
+    required this.formkey, required this.fileNameController, super.key,
   });
 
   final GlobalKey<FormFieldState> formkey;
