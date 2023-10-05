@@ -39,9 +39,10 @@ final verifyFfmpegInstallProvider = Provider((ref) async {
     log('${result.stderr}');
     if (result.stdout != null) {
       log('${result.stdout}');
-      ref
+      var installed = ref
           .read(ffmpegInstallStatusProvider.notifier)
           .update((state) => InstallStatus.installed);
+      log('Ffmpeg is $installed');
     } else {
       ref
           .read(ffmpegInstallStatusProvider.notifier)
@@ -51,4 +52,4 @@ final verifyFfmpegInstallProvider = Provider((ref) async {
     log('stdout: ${result.stdout}');
     log('error: ${result.stderr}');
   }
-}, name: 'verifyFfmpegInstallCreator');
+});

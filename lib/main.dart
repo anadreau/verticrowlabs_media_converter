@@ -41,10 +41,13 @@ class InstallScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(verifyFfmpegInstallProvider);
     var ffmpegInstalled = ref.watch(ffmpegInstallStatusProvider);
-    if (ffmpegInstalled == InstallStatus.installed) {
-      return const ConverterScreen();
-    } else {
-      return const InstallerScreen();
+    switch (ffmpegInstalled) {
+      case InstallStatus.notInstalled:
+        return const InstallerScreen();
+      case InstallStatus.installed:
+        return const ConverterScreen();
+      default:
+        return const InstallScreen();
     }
   }
 }
