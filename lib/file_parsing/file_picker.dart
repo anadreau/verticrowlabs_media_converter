@@ -5,7 +5,9 @@ import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final filePickerCreator = Provider((ref) async {
+///[FutureProvider] that sets [fileInputStringProvider] with the selected
+///file name chosen.
+final filePickerProvider = FutureProvider((ref) async {
   final result =
       Process.runSync('powershell.exe', ['-Command', r'$env:USERPROFILE']);
   //var dir = await getDownloadsDirectory();
@@ -17,9 +19,10 @@ final filePickerCreator = Provider((ref) async {
   log('VideoPath: $videoPath');
 
   final file = await FilePicker.platform.pickFiles(
-      initialDirectory: videoPath,
-      dialogTitle: 'Chosose Media File to Convert.',
-      type: FileType.media,);
+    initialDirectory: videoPath,
+    dialogTitle: 'Chosose Media File to Convert.',
+    type: FileType.media,
+  );
   if (file != null) {
     ref
         .read(fileInputStringProvider.notifier)

@@ -6,14 +6,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final outputScaleSelector = StateProvider((ref) => MediaScale.medium);
 
 ///Creator that takes the value from outputScaleSelector and returns
-///a String representing the resolution that the media file will be converted to.
+///a String representing the resolution
+///that the media file will be converted to.
 final outputScaleCreator = Provider((ref) {
   final scale = ref.watch(outputScaleSelector);
-  String resultString;
-  resultString = switch (scale) {
+
+  return switch (scale) {
     MediaScale.low => MediaScale.low.resolution,
     MediaScale.medium => MediaScale.medium.resolution,
     MediaScale.high => MediaScale.high.resolution
   };
-  return resultString;
 });

@@ -7,11 +7,15 @@ import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //Possible way to invoke admin
-//Start-Process powershell -verb runAs -ArgumentList '-noexit Get-Command ffmpeg'
+//Start-Process powershell -verb runAs -ArgumentList
+//'-noexit Get-Command ffmpeg'
 
+///[Provider] to hold [InstallStatus]
 final ffmpegInstallStatusProvider =
     StateProvider<InstallStatus>((ref) => InstallStatus.notInstalled);
 
+///[FutureProvider] that runs through and creates a directory, installs
+///ffmpeg to that directory, then sets a env path variable for ffmpeg
 FutureProvider<void> ffmpegInstallProvider = FutureProvider((ref) async {
 //Create Dir
   ref

@@ -4,7 +4,9 @@ import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+///Screen that is displayed if ffmpeg is not installed
 class InstallerScreen extends StatelessWidget {
+  ///Implementation of [InstallerScreen]
   const InstallerScreen({super.key});
 
   @override
@@ -13,7 +15,9 @@ class InstallerScreen extends StatelessWidget {
   }
 }
 
+///ConsumerWidget that gives access to [ffmpegInstallStatusProvider]
 class ColumnConsumer extends ConsumerWidget {
+  ///Implementation of [ColumnConsumer]
   const ColumnConsumer({
     super.key,
   });
@@ -33,7 +37,8 @@ class ColumnConsumer extends ConsumerWidget {
               child: const Padding(
                 padding: EdgeInsets.all(8),
                 child: Text('Ffmpeg is not installed on this device.'),
-              ),),
+              ),
+            ),
           InstallStatus.installed => Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
@@ -42,7 +47,8 @@ class ColumnConsumer extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(ref.watch(ffmpegInstallStatusProvider).message),
-              ),),
+              ),
+            ),
           _ => Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
@@ -51,7 +57,8 @@ class ColumnConsumer extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(ref.watch(ffmpegInstallStatusProvider).message),
-              ),),
+              ),
+            ),
         },
         const SizedBox(
           height: 15,
@@ -85,7 +92,10 @@ class ColumnConsumer extends ConsumerWidget {
   }
 }
 
+///[ConsumerWidget] that gives [LinearProgressIndicator] access to
+///[ffmpegInstallStatusTrackerProvider]
 class LinearProgressIndicatorConsumer extends ConsumerWidget {
+  ///Implementation of [LinearProgressIndicatorConsumer]
   const LinearProgressIndicatorConsumer({
     super.key,
   });
@@ -98,7 +108,9 @@ class LinearProgressIndicatorConsumer extends ConsumerWidget {
   }
 }
 
+///[ConsumerWidget] that reads [ffmpegInstallProvider] when button is pressed
 class StatusProviderButton extends ConsumerWidget {
+  ///Implementation of [StatusProviderButton]
   const StatusProviderButton({
     super.key,
   });

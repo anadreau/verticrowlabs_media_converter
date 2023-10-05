@@ -5,7 +5,9 @@ import 'package:ffmpeg_converter/utils/utils_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+///[ConsumerWidget] that displays screen if ffmpeg is installed
 class ConverterScreen extends ConsumerWidget {
+  ///Implementation of [ConverterScreen]
   const ConverterScreen({super.key});
 
   @override

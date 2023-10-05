@@ -2,7 +2,9 @@ import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+///[ConsumerWidget] that reads [filePickerProvider] when button is pressed.
 class FileSelector extends ConsumerWidget {
+  ///Implementation of [FileSelector]
   const FileSelector({
     super.key,
   });
@@ -18,7 +20,7 @@ class FileSelector extends ConsumerWidget {
         ),
         child: MaterialButton(
           onPressed: () {
-            ref.read(filePickerCreator);
+            ref.read(filePickerProvider);
           },
           child: Icon(
             Icons.folder,

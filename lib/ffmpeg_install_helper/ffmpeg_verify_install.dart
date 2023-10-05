@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //TO-DO: #18 add ffmpeg installation ability for linux and macos. @anadreau
 //TO-DO: #19 implement ffmpeg command depending on OS. @anadreau
 
-//Creator that returns non
+///[Provider] that returns [double] representing install status of ffmpeg
 final ffmpegInstallStatusTrackerProvider = Provider<double>((ref) {
   final status = ref.watch(ffmpegInstallStatusProvider);
 
@@ -29,10 +29,15 @@ final ffmpegInstallStatusTrackerProvider = Provider<double>((ref) {
   return installStatus;
 });
 
-final verifyFfmpegInstallProvider = Provider((ref) async {
-  final result = await Isolate.run(() => Process.runSync('powershell.exe',
+///[FutureProvider] that runs Isolate to verify installation of ffmpeg
+final verifyFfmpegInstallProvider = FutureProvider((ref) async {
+  final result = await Isolate.run(
+    () => Process.runSync(
+      'powershell.exe',
       ['-Command', updateEvironmentVariableCmd, ';', verifyInstallCmd],
-      runInShell: true,),);
+      runInShell: true,
+    ),
+  );
 
   if (result.exitCode == 0) {
     log('${result.stdout}');

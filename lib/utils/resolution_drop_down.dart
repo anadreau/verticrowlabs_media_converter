@@ -4,12 +4,17 @@ import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final List<MediaScale> mediaScaledropDownList = MediaScale.values.toList();
+///[List] of [MediaScale] values for use in [MediaDropDown]
+final List<MediaScale> mediaScaleDropDownList = MediaScale.values.toList();
 
+///[List] of [mediaScaleDropDownList] as [String] for use in [MediaDropDown]
 final List<String> dropDownList =
-    mediaScaledropDownList.map((e) => e.resolution).toList();
+    mediaScaleDropDownList.map((e) => e.resolution).toList();
 
+///[ConsumerStatefulWidget] that returns a [DropdownButton] for selecting
+///[MediaScale]
 class MediaDropDown extends ConsumerStatefulWidget {
+  ///Implementation of [MediaDropDown]
   const MediaDropDown({super.key});
 
   @override
@@ -30,30 +35,31 @@ class _MediaDropDownState extends ConsumerState<MediaDropDown> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: DropdownButton<String>(
-            iconEnabledColor: theme.colorScheme.onPrimaryContainer,
-            dropdownColor: theme.colorScheme.primaryContainer,
-            focusColor: Colors.white.withOpacity(0),
-            value: dropdownValue,
-            items: dropDownList.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text('${value}p'),
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                dropdownValue = value!;
+          iconEnabledColor: theme.colorScheme.onPrimaryContainer,
+          dropdownColor: theme.colorScheme.primaryContainer,
+          focusColor: Colors.white.withOpacity(0),
+          value: dropdownValue,
+          items: dropDownList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text('${value}p'),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              dropdownValue = value!;
 
-                log('dropdownValue: $dropdownValue');
-                final scale = switch (dropdownValue) {
-                  '480' => MediaScale.low,
-                  '720' => MediaScale.medium,
-                  '1080' => MediaScale.high,
-                  _ => MediaScale.medium
-                };
-                ref.read(outputScaleSelector.notifier).update((state) => scale);
-              });
-            },),
+              log('dropdownValue: $dropdownValue');
+              final scale = switch (dropdownValue) {
+                '480' => MediaScale.low,
+                '720' => MediaScale.medium,
+                '1080' => MediaScale.high,
+                _ => MediaScale.medium
+              };
+              ref.read(outputScaleSelector.notifier).update((state) => scale);
+            });
+          },
+        ),
       ),
     );
   }

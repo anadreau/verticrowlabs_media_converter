@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///Creator that holds the variable for file type to be converted to
 final containerTypeProvider = StateProvider((ref) => MediaContainerType.mp4);
 
+///[Provider] that returns [MediaContainerType] based on [containerTypeProvider]
 final mediaTypeProvider = Provider(
   (ref) {
     final type = ref.watch(containerTypeProvider);

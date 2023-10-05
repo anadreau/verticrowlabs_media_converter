@@ -10,7 +10,9 @@ void main() {
   runApp(const ProviderScope(child: ConverterApp()));
 }
 
+///Root of application
 class ConverterApp extends StatelessWidget {
+  ///Implementation of [ConverterApp]
   const ConverterApp({super.key});
 
   @override
@@ -31,20 +33,20 @@ class ConverterApp extends StatelessWidget {
   }
 }
 
+///ConsumerWidget that returns either ConverterScreen or InstallScreen
+///based on [ffmpegInstallStatusProvider] status
 class InstallScreen extends ConsumerWidget {
+  ///Implementation of [InstallScreen]
   const InstallScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(verifyFfmpegInstallProvider);
     final ffmpegInstalled = ref.watch(ffmpegInstallStatusProvider);
-    switch (ffmpegInstalled) {
-      case InstallStatus.notInstalled:
-        return const InstallerScreen();
-      case InstallStatus.installed:
-        return const ConverterScreen();
-      default:
-        return const InstallScreen();
-    }
+    return switch (ffmpegInstalled) {
+      InstallStatus.notInstalled => const InstallerScreen(),
+      InstallStatus.installed => const ConverterScreen(),
+      _ => const InstallerScreen()
+    };
   }
 }
