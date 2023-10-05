@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final filePickerCreator = Creator((ref) async {
+final filePickerCreator = Provider((ref) async {
   var result =
       Process.runSync('powershell.exe', ['-Command', '\$env:USERPROFILE']);
   //var dir = await getDownloadsDirectory();
@@ -22,10 +22,14 @@ final filePickerCreator = Creator((ref) async {
       allowMultiple: false,
       type: FileType.media);
   if (file != null) {
-    ref.set(fileInputStringCreator, file.paths[0].toString());
+    ref
+        .read(fileInputStringProvider.notifier)
+        .update((state) => file.paths[0].toString());
     log('FilePath: ${file.paths[0].toString()}');
     log('FileName: ${file.names}');
   } else {
-    ref.set(fileInputStringCreator, 'No File Selected to Convert');
+    ref
+        .read(fileInputStringProvider.notifier)
+        .update((state) => 'No File Selected to Convert');
   }
 });

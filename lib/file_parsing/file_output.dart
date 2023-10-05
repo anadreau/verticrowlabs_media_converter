@@ -1,21 +1,20 @@
 import 'dart:developer';
-
-import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/media_conversion/container_type.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///String containing full file path and new name used for converted file.
 ///
 ///Takes inputStringCreator value and parses and converts it into new file name.
-final outputStringCreator = Creator((ref) {
-  var fileInput = ref.watch(fileInputStringCreator);
+final outputStringProvider = Provider((ref) {
+  var fileInput = ref.watch(fileInputStringProvider);
   var parsedFileBySlash = fileInput.split('\\');
   String? filePathResult;
   String newFileName;
   String result;
-  String edittedFileName = ref.watch(fileNameCreator);
+  String edittedFileName = ref.watch(fileNameProvider);
   String joinedOutput;
-  String fileType = ref.watch(mediaTypeCreator);
+  String fileType = ref.watch(mediaTypeProvider);
 
   if (fileInput != '') {
     List workingParsedFileList = parsedFileBySlash;

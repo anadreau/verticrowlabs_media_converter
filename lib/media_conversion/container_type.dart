@@ -1,12 +1,12 @@
-import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///Creator that holds the variable for file type to be converted to
-final containerTypeCreator = Creator.value(MediaContainerType.mp4);
+final containerTypeProvider = StateProvider((ref) => MediaContainerType.mp4);
 
-final mediaTypeCreator = Creator(
+final mediaTypeProvider = Provider(
   (ref) {
-    MediaContainerType type = ref.watch(containerTypeCreator);
+    MediaContainerType type = ref.watch(containerTypeProvider);
     String typeOutput = switch (type) {
       MediaContainerType.avi => '.avi',
       MediaContainerType.flv => '.flv',

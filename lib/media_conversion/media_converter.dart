@@ -1,21 +1,20 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
-
-import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/media_conversion/conversion_status.dart';
 import 'package:ffmpeg_converter/media_conversion/media_resolution.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///Creator function that takes inputStringCreator, outputStringcreator, and
 ///outputScaleCreator and forms a ffmpeg cmd that runs in a powershell
 ///process that updates conversionStatusCreator when the process finishes
 ///with a done status or error status
-final convertMediaCreator = Creator<void>((ref) async {
-  var input = ref.read(fileInputStringCreator);
-  var output = ref.read(outputStringCreator);
+final convertMediaProvider = FutureProvider((ref) async {
+  var input = ref.read(fileInputStringProvider);
+  var output = ref.read(outputStringProvider);
   var scale = ref.read(outputScaleCreator);
 
   final ffmpegCmd =
@@ -28,10 +27,14 @@ final convertMediaCreator = Creator<void>((ref) async {
 
   if (result.exitCode == 0) {
     log(result.stdout);
-    ref.set(conversionStatusCreator, ConversionStatus.done);
+    ref
+        .read(conversionStatusProvider.notifier)
+        .update((state) => ConversionStatus.done);
     log('Finished');
   } else {
     log(result.stderr);
-    ref.set(conversionStatusCreator, ConversionStatus.error);
+    ref
+        .read(conversionStatusProvider.notifier)
+        .update((state) => ConversionStatus.error);
   }
 });

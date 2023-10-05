@@ -1,9 +1,9 @@
-import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///String containing full path of file
-final filePathCreator = Creator((ref) {
-  var fileInput = ref.watch(fileInputStringCreator);
+final filePathCreator = Provider((ref) {
+  var fileInput = ref.watch(fileInputStringProvider);
   var parsedFileBySlash = fileInput.split('/');
   String? filePathResult;
 
