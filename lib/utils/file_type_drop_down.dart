@@ -1,9 +1,9 @@
 import 'dart:developer';
 
-import 'package:creator/creator.dart';
-import 'package:ffmpeg_converter/media_conversion/container_type.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
+import 'package:ffmpeg_converter/media_conversion/container_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///List of MediaContainerType as enum
 const List<MediaContainerType> dropDownListEnum = MediaContainerType.values;
@@ -12,55 +12,60 @@ const List<MediaContainerType> dropDownListEnum = MediaContainerType.values;
 List<String> dropDownListasString =
     dropDownListEnum.map((e) => e.containerType).toList();
 
-class FileTypeDropDown extends StatefulWidget {
+///[ConsumerStatefulWidget] that returns a [DropdownButton] to select
+///[MediaContainerType]
+class FileTypeDropDown extends ConsumerStatefulWidget {
+  ///Implementation of [FileTypeDropDown]
   const FileTypeDropDown({super.key});
 
   @override
-  State<FileTypeDropDown> createState() => _FileTypeDropDownState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _FileTypeDropDownState();
 }
 
-class _FileTypeDropDownState extends State<FileTypeDropDown> {
-  var initialListValue = dropDownListasString.first;
+class _FileTypeDropDownState extends ConsumerState<FileTypeDropDown> {
+  String initialListValue = dropDownListasString.first;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        child: Watcher((context, ref, child) {
-          final theme = Theme.of(context);
-          return DropdownButton<String>(
-              iconEnabledColor: theme.colorScheme.onPrimaryContainer,
-              dropdownColor: theme.colorScheme.primaryContainer,
-              focusColor: Colors.white.withOpacity(0.0),
-              value: initialListValue,
-              items: dropDownListasString
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  initialListValue = value!;
-                  log('Dropdown value: $value');
-                  MediaContainerType selectedType = switch (initialListValue) {
-                    'avi' => MediaContainerType.avi,
-                    'flv' => MediaContainerType.flv,
-                    'mkv' => MediaContainerType.mkv,
-                    'mov' => MediaContainerType.mov,
-                    'mp4' => MediaContainerType.mp4,
-                    _ => MediaContainerType.mp4
-                  };
-                  log('DropDown type: $selectedType');
-                  ref.set(containerTypeCreator, selectedType);
-                });
-              });
-        }),
+        child: DropdownButton<String>(
+          iconEnabledColor: theme.colorScheme.onPrimaryContainer,
+          dropdownColor: theme.colorScheme.primaryContainer,
+          focusColor: Colors.white.withOpacity(0),
+          value: initialListValue,
+          items: dropDownListasString
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              initialListValue = value!;
+              log('Dropdown value: $value');
+              final selectedType = switch (initialListValue) {
+                'avi' => MediaContainerType.avi,
+                'flv' => MediaContainerType.flv,
+                'mkv' => MediaContainerType.mkv,
+                'mov' => MediaContainerType.mov,
+                'mp4' => MediaContainerType.mp4,
+                _ => MediaContainerType.mp4
+              };
+              log('DropDown type: $selectedType');
+              ref
+                  .read(containerTypeProvider.notifier)
+                  .update((state) => selectedType);
+            });
+          },
+        ),
       ),
     );
   }

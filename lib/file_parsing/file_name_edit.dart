@@ -1,10 +1,10 @@
-import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///Alert dialog that sets the String from textController to filename
-
 class FileNameEditingDialog extends StatefulWidget {
+  ///Implementation of [FileNameEditingDialog]
   const FileNameEditingDialog({super.key});
 
   @override
@@ -12,7 +12,7 @@ class FileNameEditingDialog extends StatefulWidget {
 }
 
 class _FileNameEditingDialogState extends State<FileNameEditingDialog> {
-  final formkey = GlobalKey<FormFieldState>();
+  final formkey = GlobalKey<FormFieldState<dynamic>>();
   TextEditingController fileNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -40,17 +40,43 @@ class _FileNameEditingDialogState extends State<FileNameEditingDialog> {
           },
           child: const Text('Cancel'),
         ),
-        Watcher((context, ref, child) => MaterialButton(
-              onPressed: () {
-                if (formkey.currentState!.validate()) {
-                  ref.set(fileNameCreator, fileNameController.text.trimRight());
-                  Navigator.of(context).pop();
-                  fileNameController.clear();
-                }
-              },
-              child: const Text('Confirm'),
-            ))
+        EditButtonConsumer(
+          formkey: formkey,
+          fileNameController: fileNameController,
+        ),
       ],
+    );
+  }
+}
+
+///ConsumerWidget that gives access to [fileNameProvider]
+class EditButtonConsumer extends ConsumerWidget {
+  ///Implementation of [EditButtonConsumer]
+  const EditButtonConsumer({
+    required this.formkey,
+    required this.fileNameController,
+    super.key,
+  });
+
+  ///FormKey for [EditButtonConsumer]
+  final GlobalKey<FormFieldState<dynamic>> formkey;
+
+  ///[TextEditingController] for [EditButtonConsumer]
+  final TextEditingController fileNameController;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialButton(
+      onPressed: () {
+        if (formkey.currentState!.validate()) {
+          ref
+              .read(fileNameProvider.notifier)
+              .update((state) => fileNameController.text.trimRight());
+          Navigator.of(context).pop();
+          fileNameController.clear();
+        }
+      },
+      child: const Text('Confirm'),
     );
   }
 }

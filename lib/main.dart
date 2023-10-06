@@ -1,18 +1,18 @@
-import 'package:creator/creator.dart';
+import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
 import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
+import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/screens/converter_screen.dart';
 import 'package:ffmpeg_converter/screens/installer_screen.dart';
-import 'package:ffmpeg_converter/global_variables/common_variables.dart';
-
 import 'package:flutter/material.dart';
-
-//TO-DO: #20 Implement Bloc instead of Creator. @anadreau
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(CreatorGraph(child: const ConverterApp()));
+  runApp(const ProviderScope(child: ConverterApp()));
 }
 
+///Root of application
 class ConverterApp extends StatelessWidget {
+  ///Implementation of [ConverterApp]
   const ConverterApp({super.key});
 
   @override
@@ -27,16 +27,26 @@ class ConverterApp extends StatelessWidget {
       ),
       home: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Watcher((context, ref, child) {
-          ref.watch(verifyFfmpegInstallCreator);
-          var ffmpegInstalled = ref.watch(ffmpegInstallStatusCreator);
-          if (ffmpegInstalled == InstallStatus.installed) {
-            return const ConverterScreen();
-          } else {
-            return const InstallerScreen();
-          }
-        }),
+        body: const InstallScreen(),
       ),
     );
+  }
+}
+
+///ConsumerWidget that returns either ConverterScreen or InstallScreen
+///based on [ffmpegInstallStatusProvider] status
+class InstallScreen extends ConsumerWidget {
+  ///Implementation of [InstallScreen]
+  const InstallScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(verifyFfmpegInstallProvider);
+    final ffmpegInstalled = ref.watch(ffmpegInstallStatusProvider);
+    return switch (ffmpegInstalled) {
+      InstallStatus.notInstalled => const InstallerScreen(),
+      InstallStatus.installed => const ConverterScreen(),
+      _ => const InstallerScreen()
+    };
   }
 }

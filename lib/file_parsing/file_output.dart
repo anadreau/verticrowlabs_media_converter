@@ -1,37 +1,38 @@
 import 'dart:developer';
-
-import 'package:creator/creator.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/media_conversion/container_type.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///String containing full file path and new name used for converted file.
 ///
 ///Takes inputStringCreator value and parses and converts it into new file name.
-final outputStringCreator = Creator((ref) {
-  var fileInput = ref.watch(fileInputStringCreator);
-  var parsedFileBySlash = fileInput.split('\\');
+final outputStringProvider = Provider((ref) {
+  final fileInput = ref.watch(fileInputStringProvider);
+  final parsedFileBySlash = fileInput.split(r'\');
   String? filePathResult;
   String newFileName;
   String result;
-  String edittedFileName = ref.watch(fileNameCreator);
+  final edittedFileName = ref.watch(fileNameProvider);
   String joinedOutput;
-  String fileType = ref.watch(mediaTypeCreator);
+  final fileType = ref.watch(mediaTypeProvider);
 
   if (fileInput != '') {
-    List workingParsedFileList = parsedFileBySlash;
+    final workingParsedFileList = parsedFileBySlash;
 
     ///String that represents the original filename
     var oldFileName = parsedFileBySlash.removeLast();
 
     ///Removes last item in list which should be the old file name
     workingParsedFileList.removeRange(
-        parsedFileBySlash.length, parsedFileBySlash.length);
+      parsedFileBySlash.length,
+      parsedFileBySlash.length,
+    );
 
     ///Joins the workingParsedFileList by / into single String
-    joinedOutput = workingParsedFileList.join('\\');
+    joinedOutput = workingParsedFileList.join(r'\');
 
     ///finds the index where the file type starts based on last '.'
-    int filetypeIndex = oldFileName.lastIndexOf('.');
+    final filetypeIndex = oldFileName.lastIndexOf('.');
 
     if (edittedFileName.isNotEmpty || edittedFileName != '') {
       oldFileName = edittedFileName;
