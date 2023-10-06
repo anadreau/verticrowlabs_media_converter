@@ -1,7 +1,7 @@
 name: ffmpeg_converter
 description: A media conversion tool currently for Windows that allows changing media type and compression size using ffmpeg behind the scenes.
 publish_to: 'none'
-version: 0.1.2
+version: 0.1.3
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
