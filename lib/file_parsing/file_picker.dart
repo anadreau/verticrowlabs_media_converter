@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ///[FutureProvider] that sets [fileInputStringProvider] with the selected
 ///file name chosen.
-final filePickerProvider = FutureProvider((ref) async {
+final filePickerProvider = Provider((ref) async {
   final result =
       Process.runSync('powershell.exe', ['-Command', r'$env:USERPROFILE']);
   //var dir = await getDownloadsDirectory();

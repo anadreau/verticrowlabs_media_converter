@@ -26,8 +26,8 @@ enum MediaScale {
   ///Resolution quality is 480p
   low('480'),
 
-  ///Resolution quality is 1080p
-  high('1080');
+  ///Resolution quality is 1280p
+  high('1280');
 
   const MediaScale(this.resolution);
 

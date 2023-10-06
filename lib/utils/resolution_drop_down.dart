@@ -53,7 +53,7 @@ class _MediaDropDownState extends ConsumerState<MediaDropDown> {
               final scale = switch (dropdownValue) {
                 '480' => MediaScale.low,
                 '720' => MediaScale.medium,
-                '1080' => MediaScale.high,
+                '1280' => MediaScale.high,
                 _ => MediaScale.medium
               };
               ref.read(outputScaleSelector.notifier).update((state) => scale);

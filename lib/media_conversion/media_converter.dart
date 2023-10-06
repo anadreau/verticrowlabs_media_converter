@@ -18,8 +18,17 @@ final convertMediaProvider = FutureProvider((ref) async {
   final output = ref.read(outputStringProvider);
   final scale = ref.read(outputScaleCreator);
 
-  final ffmpegCmd =
-      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo';
+  final ffmpegCmd = switch (scale) {
+    '480' =>
+      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
+    '720' =>
+      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
+    '1280' =>
+      'ffmpeg -i "$input" -vf scale=1280:720 -c:v libx264 "$output" | echo',
+    _ => 'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo'
+  };
+  log('scale is: $scale');
+  log('ffmpeg cmd being run:\n$ffmpegCmd');
 
   ///Runs powershell cmd in an Isolate as to not freeze rest of app while
   ///conversion is taking place.
