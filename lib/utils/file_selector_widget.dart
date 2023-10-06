@@ -1,8 +1,9 @@
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-///[ConsumerWidget] that reads [filePickerProvider] when button is pressed.
+///[ConsumerWidget] that sets [fileInputStringProvider] when button is pressed.
 class FileSelector extends ConsumerWidget {
   ///Implementation of [FileSelector]
   const FileSelector({
@@ -19,9 +20,7 @@ class FileSelector extends ConsumerWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: MaterialButton(
-          onPressed: () {
-            ref.read(filePickerProvider);
-          },
+          onPressed: () => _fileSelector(ref),
           child: Icon(
             Icons.folder,
             color: Theme.of(context).colorScheme.onBackground,
@@ -30,4 +29,14 @@ class FileSelector extends ConsumerWidget {
       ),
     );
   }
+}
+
+Future<void> _fileSelector(WidgetRef ref) async {
+  final path = await FilePicker.platform.pickFiles(
+    dialogTitle: 'Chosose Media File to Convert.',
+    type: FileType.media,
+  );
+
+  ref.read(fileInputStringProvider.notifier).state =
+      path?.paths.first ?? 'No file selected';
 }
