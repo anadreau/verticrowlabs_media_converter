@@ -1,3 +1,7 @@
+import 'dart:developer';
+import 'dart:io';
+import 'dart:isolate';
+
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
@@ -94,12 +98,7 @@ class ConverterScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: MaterialButton(
-                    onPressed: () {
-                      ref
-                          .read(conversionStatusProvider.notifier)
-                          .update((state) => ConversionStatus.inProgress);
-                      ref.read(convertMediaProvider);
-                    },
+                    onPressed: () => _convertMedia(ref),
                     child: const Text('Convert'),
                   ),
                 ),
@@ -154,5 +153,47 @@ class ConverterScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+Future<void> _convertMedia(WidgetRef ref) async {
+  ref
+      .read(conversionStatusProvider.notifier)
+      .update((state) => ConversionStatus.inProgress);
+  final input = ref.read(fileInputStringProvider);
+  final output = ref.read(outputStringProvider);
+  final scale = ref.read(outputScaleCreator);
+
+  final ffmpegCmd = switch (scale) {
+    '480' =>
+      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
+    '720' =>
+      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
+    '1280' =>
+      'ffmpeg -i "$input" -vf scale=1280:720 -c:v libx264 "$output" | echo',
+    _ => 'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo'
+  };
+  log('scale is: $scale');
+  log('ffmpeg cmd being run:\n$ffmpegCmd');
+
+  final result = await Isolate.run(
+    () => Process.runSync(
+      'powershell.exe',
+      ['-Command', updateEvironmentVariableCmd, ';', ffmpegCmd],
+    ),
+  );
+
+  if (result.exitCode == 0) {
+    log(result.stdout.toString());
+    ref
+        .read(conversionStatusProvider.notifier)
+        .update((state) => ConversionStatus.done);
+    log('Finished');
+  } else {
+    log(result.stderr.toString());
+    ref
+        .read(conversionStatusProvider.notifier)
+        .update((state) => ConversionStatus.error);
+    log('Error');
   }
 }
