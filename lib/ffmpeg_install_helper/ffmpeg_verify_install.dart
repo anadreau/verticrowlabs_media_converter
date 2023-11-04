@@ -31,6 +31,8 @@ final ffmpegInstallStatusTrackerProvider = Provider<double>((ref) {
 
 ///[FutureProvider] that runs Isolate to verify installation of ffmpeg
 final verifyFfmpegInstallProvider = FutureProvider((ref) async {
+  //TO-DO: #23 try implementing Process.start instead of
+  //Process.runSync. @anadreau
   final result = await Isolate.run(
     () => Process.runSync(
       'powershell.exe',
