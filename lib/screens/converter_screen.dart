@@ -9,9 +9,6 @@ import 'package:ffmpeg_converter/utils/utils_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-//TO-DO: #24 Make text selectable and
-//change text format to be more readable. @anadreau
-
 ///[ConsumerWidget] that displays screen if ffmpeg is installed
 class ConverterScreen extends ConsumerWidget {
   ///Implementation of [ConverterScreen]
@@ -93,6 +90,7 @@ class ConverterScreen extends ConsumerWidget {
                 if (fileInput != '')
                   const Padding(
                     padding: EdgeInsets.all(8),
+                    //TO-DO: #25 add thumbnail for selected file. @anadreau
                     child: Text('Image will go here.'),
                   ),
                 Padding(
@@ -195,6 +193,8 @@ class ConverterScreen extends ConsumerWidget {
   }
 }
 
+///[StateProvider] to track state of convert button and disable if fileInput
+///is blank.
 final buttonEnabledProvider = StateProvider((ref) {
   final fileInput = ref.watch(fileInputStringProvider);
   if (fileInput == '' || fileInput == ' ') {
