@@ -23,11 +23,19 @@ class ConverterApp extends StatelessWidget {
       restorationScopeId: 'bugFix',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: const InstallScreen(),
+        body: const DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/globe.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: InstallScreen(),
+        ),
       ),
     );
   }
