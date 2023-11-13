@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///Takes inputStringCreator value and parses and converts it into new file name.
 final outputStringProvider = Provider((ref) {
   final fileInput = ref.watch(fileInputStringProvider);
-  final parsedFileBySlash = fileInput.split(r'\');
+  final parsedFileBySlash = fileInput!.split(r'\');
   String? filePathResult;
   String newFileName;
   String result;
@@ -16,7 +16,7 @@ final outputStringProvider = Provider((ref) {
   String joinedOutput;
   final fileType = ref.watch(mediaTypeProvider);
 
-  if (fileInput != '') {
+  if (fileInput != '' && fileInput != 'No file selected') {
     final workingParsedFileList = parsedFileBySlash;
 
     ///String that represents the original filename

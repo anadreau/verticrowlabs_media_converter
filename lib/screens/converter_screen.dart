@@ -20,8 +20,11 @@ class ConverterScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fileInput = ref.watch(fileInputStringProvider);
-    final outputFile = ref.watch(outputStringProvider).toString();
+    final outputFile = ref.watch(outputStringProvider) ?? 'No file selected';
     final status = ref.watch(statusProvider);
+    final buttonEnabled = ref.watch(buttonEnabledProvider);
+    log('ButtonEnabled: $buttonEnabled');
+
     return Padding(
       padding: const EdgeInsets.all(100),
       child: Column(
@@ -37,28 +40,61 @@ class ConverterScreen extends ConsumerWidget {
                 if (fileInput == '')
                   const Padding(
                     padding: EdgeInsets.all(8),
-                    child:
-                        Text('Press folder button to select file to convert'),
-                  ),
-                if (fileInput != '')
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      'File to be converted: $fileInput',
-                      softWrap: true,
+                    child: SelectableText(
+                      'Press folder button to select file to convert',
                     ),
                   ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    'Converted file: $outputFile',
-                    softWrap: true,
+                if (fileInput != '')
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'File to be converted: ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            SelectableText(
+                              fileInput.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Converted file: ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            SelectableText(
+                              outputFile,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
                 const Divider(
                   indent: 75,
                   endIndent: 75,
                 ),
+                if (fileInput != '')
+                  const Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text('Image will go here.'),
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
@@ -68,7 +104,7 @@ class ConverterScreen extends ConsumerWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: Text(
+                      child: SelectableText(
                         'Conversion Status: $status',
                       ),
                     ),
@@ -101,7 +137,7 @@ class ConverterScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: MaterialButton(
-                    onPressed: () => _convertMedia(ref),
+                    onPressed: buttonEnabled ? () => _convertMedia(ref) : null,
                     child: const Text('Convert'),
                   ),
                 ),
@@ -159,7 +195,19 @@ class ConverterScreen extends ConsumerWidget {
   }
 }
 
+final buttonEnabledProvider = StateProvider((ref) {
+  final fileInput = ref.watch(fileInputStringProvider);
+  if (fileInput == '' || fileInput == ' ') {
+    log('FileInput was $fileInput so returning false');
+    return false;
+  } else {
+    log('File input was not $fileInput so returning true');
+    return true;
+  }
+});
+
 Future<void> _convertMedia(WidgetRef ref) async {
+  log('ConvertMedia started.');
   ref
       .read(conversionStatusProvider.notifier)
       .update((state) => ConversionStatus.inProgress);
