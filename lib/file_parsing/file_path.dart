@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 ///String containing full path of file
 final filePathCreator = Provider((ref) {
   final fileInput = ref.watch(fileInputStringProvider);
-  final parsedFileBySlash = fileInput.split('/');
+  final parsedFileBySlash = fileInput!.split('/');
   String? filePathResult;
 
   if (fileInput != '') {

@@ -36,7 +36,7 @@ Future<void> _fileSelector(WidgetRef ref) async {
     dialogTitle: 'Chosose Media File to Convert.',
     type: FileType.media,
   );
-
-  ref.read(fileInputStringProvider.notifier).state =
-      path?.paths.first ?? 'No file selected';
+  if (path?.paths.first != null) {
+    ref.read(fileInputStringProvider.notifier).state = path!.paths.first;
+  }
 }
