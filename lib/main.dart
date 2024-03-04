@@ -30,8 +30,7 @@ class ConverterApp extends StatelessWidget {
         body: const DecoratedBox(
           decoration: BoxDecoration(
             image: DecorationImage(
-              //TO-DO: #27 Update app with generated images. @anadreau
-              image: AssetImage('assets/globe.jpg'),
+              image: AssetImage('assets/GlobeBackground.jpg'),
               fit: BoxFit.cover,
             ),
           ),
