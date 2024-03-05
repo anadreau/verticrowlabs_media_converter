@@ -239,6 +239,8 @@ Future<void> _convertMedia(WidgetRef ref) async {
     ref
         .read(conversionStatusProvider.notifier)
         .update((state) => ConversionStatus.done);
+    ref.read(fileNameProvider.notifier).update((state) => '');
+
     log('Finished');
   } else {
     log(result.stderr.toString());
@@ -247,4 +249,18 @@ Future<void> _convertMedia(WidgetRef ref) async {
         .update((state) => ConversionStatus.error);
     log('Error');
   }
+}
+
+Future<void> _generateThumbnail(WidgetRef ref) async {
+  final input = ref.read(fileInputStringProvider);
+
+  final ffmpegCmd =
+      """ffmpeg -i $input -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:00:30 -vframes 1 thumbnail2.jpg""";
+
+  final result = await Isolate.run(
+    () => Process.runSync(
+      'powershell.exe',
+      ['-Command', updateEvironmentVariableCmd, ';', ffmpegCmd],
+    ),
+  );
 }
