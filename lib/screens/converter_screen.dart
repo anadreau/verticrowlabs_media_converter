@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
@@ -253,9 +253,11 @@ Future<void> _convertMedia(WidgetRef ref) async {
 
 Future<void> _generateThumbnail(WidgetRef ref) async {
   final input = ref.read(fileInputStringProvider);
+  final thumbnailPath = await getTemporaryDirectory();
+  log('Thumbnail dir: $thumbnailPath');
 
   final ffmpegCmd =
-      """ffmpeg -i $input -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:00:30 -vframes 1 thumbnail2.jpg""";
+      """ffmpeg -i $input -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:00:30 -vframes 1 $thumbnailPath/thumbnail.jpg""";
 
   final result = await Isolate.run(
     () => Process.runSync(
@@ -264,3 +266,5 @@ Future<void> _generateThumbnail(WidgetRef ref) async {
     ),
   );
 }
+
+Future _retrieveThumbnail(WidgetRef ref) async {}
