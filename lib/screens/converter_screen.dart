@@ -265,6 +265,25 @@ Future<void> _generateThumbnail(WidgetRef ref) async {
       ['-Command', updateEvironmentVariableCmd, ';', ffmpegCmd],
     ),
   );
+
+  if (result.exitCode == 0) {
+    log(result.stdout.toString());
+
+    log('Finished Generating Thumbnail');
+  } else {
+    log('Error in Generating Thumbnail: ${result.stderr}');
+  }
 }
 
-Future _retrieveThumbnail(WidgetRef ref) async {}
+Future<FileImage> _retrieveThumbnail(WidgetRef ref) async {
+  final thumbnailPath = await getTemporaryDirectory();
+  final imageFile = File('$thumbnailPath/thumbnail.jpg');
+  final imageFileExists = imageFile.existsSync();
+  log('imageFileExists: $imageFileExists');
+  if (imageFileExists == true) {
+    return FileImage(imageFile);
+  } else {
+    final imageHolder = File('/assets/ImageHolder.jpg');
+    return FileImage(imageHolder);
+  }
+}
