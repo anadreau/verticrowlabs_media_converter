@@ -1,7 +1,7 @@
 name: ffmpeg_converter
 description: A media conversion tool currently for Windows that allows changing media type and compression size using ffmpeg backend.
 publish_to: 'none'
-version: 0.1.4
+version: 0.1.6
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -30,6 +30,7 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
+  msix: ^3.16.7
   very_good_analysis: ^5.1.0
 
 flutter:
@@ -39,3 +40,17 @@ flutter:
     - assets/
     - assets/globe.jpg
     - assets/verticrow2.ico
+
+#MSIX config node
+msix_config:
+  display_name: Ffmpeg Converter
+  publisher_display_name: VerticrowLabs
+  identity_name: verticrowlabs.ffmpegconverter
+  msix_version: 1.0.0.1
+  logo_path: C:\Projects\VerticrowLabs\verticrow2.jpg
+  certificate_path: C:\Projects\VerticrowLabs\ffmpeg.pfx
+  certificate_password: VerticrowLabs69
+  app_installer:
+    publish_folder_path: C:\Projects\VerticrowLabs
+    hours_between_update_checks: 0
+  #capabilities: internetClient, location, microphone, webcam
