@@ -217,12 +217,16 @@ Future<void> _convertMedia(WidgetRef ref) async {
   final scale = ref.read(outputScaleCreator);
 
   final ffmpegCmd = switch (scale) {
+    //SD
     '480' =>
-      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
+      'ffmpeg -i "$input" -vf scale=640:$scale -c:v libx264 "$output" | echo',
+    //HD
     '720' =>
-      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
+      'ffmpeg -i "$input" -vf scale=1280:$scale -c:v libx264 "$output" | echo',
+    //1080p
     '1280' =>
-      'ffmpeg -i "$input" -vf scale=1280:720 -c:v libx264 "$output" | echo',
+      'ffmpeg -i "$input" -vf scale=1920:1080 -c:v libx264 "$output" | echo',
+    //Default
     _ => 'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo'
   };
   log('scale is: $scale');
