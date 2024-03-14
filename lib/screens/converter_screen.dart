@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
-import 'dart:isolate';
 
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
@@ -9,7 +7,6 @@ import 'package:ffmpeg_converter/media_conversion/thumbnail.dart';
 import 'package:ffmpeg_converter/utils/utils_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
 
 ///[ConsumerWidget] that displays screen if ffmpeg is installed
 class ConverterScreen extends ConsumerWidget {
@@ -31,7 +28,10 @@ class ConverterScreen extends ConsumerWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context)
+                  .colorScheme
+                  .primaryContainer
+                  .withOpacity(.5),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -41,6 +41,8 @@ class ConverterScreen extends ConsumerWidget {
                     padding: EdgeInsets.all(8),
                     child: SelectableText(
                       'Press folder button to select file to convert',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                     ),
                   ),
                 if (fileInput != '')
@@ -93,7 +95,11 @@ class ConverterScreen extends ConsumerWidget {
                   const Padding(
                     padding: EdgeInsets.all(8),
                     //TO-DO: #25 add thumbnail for selected file. @anadreau
-                    child: MediaThumbnailWidget(),
+                    child: SizedBox(
+                      height: 250,
+                      width: 250,
+                      child: MediaThumbnailWidget(),
+                    ),
                   ),
                 Padding(
                   padding: const EdgeInsets.all(8),
