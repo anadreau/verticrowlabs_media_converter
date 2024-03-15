@@ -19,18 +19,24 @@ class MediaThumbnailWidget extends ConsumerWidget {
     return FutureBuilder(
       builder: (context, AsyncSnapshot<File> snapshot) {
         if (snapshot.hasData == true) {
-          return Container(
-            decoration: BoxDecoration(
+          return SizedBox(
+            height: 250,
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
+              child: Image.file(
+                snapshot.data!,
+              ),
             ),
-            child: Image.file(snapshot.data!),
           );
         } else {
-          return Container(
-            decoration: BoxDecoration(
+          return SizedBox(
+            height: 250,
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                'assets/ImageHolder.jpg',
+              ),
             ),
-            child: Image.asset('assets/ImageHolder.jpg'),
           );
         }
       },

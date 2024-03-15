@@ -25,16 +25,18 @@ class ConverterApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
-      home: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: const DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/GlobeBackground.jpg'),
-              fit: BoxFit.cover,
+      home: SelectionArea(
+        child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: const DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/GlobeBackground.jpg'),
+                fit: BoxFit.cover,
+              ),
             ),
+            child: InstallScreen(),
           ),
-          child: InstallScreen(),
         ),
       ),
     );

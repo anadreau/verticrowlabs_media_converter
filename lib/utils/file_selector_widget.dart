@@ -27,6 +27,7 @@ class FileSelector extends ConsumerWidget {
         ),
         child: MaterialButton(
           onPressed: () => {
+            ref.read(fileNameProvider.notifier).update((state) => ''),
             _fileSelector(ref).then((_) => _generateThumbnail(ref)),
           },
           child: Icon(
@@ -54,13 +55,24 @@ Future<void> _generateThumbnail(WidgetRef ref) async {
   final thumbnailPath = await getTemporaryDirectory();
   log('Thumbnail dir: ${thumbnailPath.path}');
 
+  //Cmd that removes the thumbnail from previous media conversion.
+  final clearTmpCmd = 'rm ${thumbnailPath.path}/thumbnail.jpg | echo';
+
+  //Cmd that generates the thumbnail
   final ffmpegCmd =
       """ffmpeg -i $input -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:00:30 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg""";
 
   final result = await Isolate.run(
     () => Process.runSync(
       'powershell.exe',
-      ['-Command', updateEvironmentVariableCmd, ';', ffmpegCmd],
+      [
+        '-Command',
+        updateEvironmentVariableCmd,
+        ';',
+        clearTmpCmd,
+        ';',
+        ffmpegCmd,
+      ],
     ),
   );
 

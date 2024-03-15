@@ -39,7 +39,7 @@ class ConverterScreen extends ConsumerWidget {
                 if (fileInput == '')
                   const Padding(
                     padding: EdgeInsets.all(8),
-                    child: SelectableText(
+                    child: Text(
                       'Press folder button to select file to convert',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
@@ -51,38 +51,24 @@ class ConverterScreen extends ConsumerWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'File to be converted: ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SelectableText(
-                              fileInput.toString(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          'File to be converted: $fileInput',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Converted file: ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SelectableText(
-                              outputFile,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          'Converted file: $outputFile',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -94,12 +80,7 @@ class ConverterScreen extends ConsumerWidget {
                 if (fileInput != '')
                   const Padding(
                     padding: EdgeInsets.all(8),
-                    //TO-DO: #25 add thumbnail for selected file. @anadreau
-                    child: SizedBox(
-                      height: 250,
-                      width: 250,
-                      child: MediaThumbnailWidget(),
-                    ),
+                    child: MediaThumbnailWidget(),
                   ),
                 Padding(
                   padding: const EdgeInsets.all(8),
@@ -110,7 +91,7 @@ class ConverterScreen extends ConsumerWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: SelectableText(
+                      child: Text(
                         'Conversion Status: $status',
                       ),
                     ),
