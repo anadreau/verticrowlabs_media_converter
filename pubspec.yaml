@@ -16,6 +16,7 @@ dependencies:
   riverpod: ^2.4.1
   
   
+  
 flutter_launcher_icons:
   image_path: assets/verticrow2.ico
   windows:
@@ -40,6 +41,7 @@ flutter:
     - assets/
     - assets/globe.jpg
     - assets/verticrow2.ico
+    - assets/ImageHolder.jpg
 
 #MSIX config node
 msix_config:
@@ -54,3 +56,4 @@ msix_config:
     publish_folder_path: C:\Projects\VerticrowLabs
     hours_between_update_checks: 0
   #capabilities: internetClient, location, microphone, webcam
+    

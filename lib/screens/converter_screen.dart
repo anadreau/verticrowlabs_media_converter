@@ -1,10 +1,9 @@
 import 'dart:developer';
-import 'dart:io';
-import 'dart:isolate';
 
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:ffmpeg_converter/global_variables/common_variables.dart';
 import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
+import 'package:ffmpeg_converter/media_conversion/thumbnail.dart';
 import 'package:ffmpeg_converter/utils/utils_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +28,10 @@ class ConverterScreen extends ConsumerWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context)
+                  .colorScheme
+                  .primaryContainer
+                  .withOpacity(.5),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
@@ -37,8 +39,10 @@ class ConverterScreen extends ConsumerWidget {
                 if (fileInput == '')
                   const Padding(
                     padding: EdgeInsets.all(8),
-                    child: SelectableText(
+                    child: Text(
                       'Press folder button to select file to convert',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                     ),
                   ),
                 if (fileInput != '')
@@ -47,38 +51,24 @@ class ConverterScreen extends ConsumerWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'File to be converted: ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SelectableText(
-                              fileInput.toString(),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          'File to be converted: $fileInput',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Converted file: ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SelectableText(
-                              outputFile,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          'Converted file: $outputFile',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -90,8 +80,7 @@ class ConverterScreen extends ConsumerWidget {
                 if (fileInput != '')
                   const Padding(
                     padding: EdgeInsets.all(8),
-                    //TO-DO: #25 add thumbnail for selected file. @anadreau
-                    child: Text('Image will go here.'),
+                    child: MediaThumbnailWidget(),
                   ),
                 Padding(
                   padding: const EdgeInsets.all(8),
@@ -102,7 +91,7 @@ class ConverterScreen extends ConsumerWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: SelectableText(
+                      child: Text(
                         'Conversion Status: $status',
                       ),
                     ),
@@ -134,10 +123,7 @@ class ConverterScreen extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: MaterialButton(
-                    onPressed: buttonEnabled ? () => _convertMedia(ref) : null,
-                    child: const Text('Convert'),
-                  ),
+                  child: ConvertMediaButton(buttonEnabled: buttonEnabled),
                 ),
               ),
               const FileSelector(),
@@ -190,61 +176,5 @@ class ConverterScreen extends ConsumerWidget {
         ],
       ),
     );
-  }
-}
-
-///[StateProvider] to track state of convert button and disable if fileInput
-///is blank.
-final buttonEnabledProvider = StateProvider((ref) {
-  final fileInput = ref.watch(fileInputStringProvider);
-  if (fileInput == '' || fileInput == ' ') {
-    log('FileInput was $fileInput so returning false');
-    return false;
-  } else {
-    log('File input was not $fileInput so returning true');
-    return true;
-  }
-});
-
-Future<void> _convertMedia(WidgetRef ref) async {
-  log('ConvertMedia started.');
-  ref
-      .read(conversionStatusProvider.notifier)
-      .update((state) => ConversionStatus.inProgress);
-  final input = ref.read(fileInputStringProvider);
-  final output = ref.read(outputStringProvider);
-  final scale = ref.read(outputScaleCreator);
-
-  final ffmpegCmd = switch (scale) {
-    '480' =>
-      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
-    '720' =>
-      'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo',
-    '1280' =>
-      'ffmpeg -i "$input" -vf scale=1280:720 -c:v libx264 "$output" | echo',
-    _ => 'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo'
-  };
-  log('scale is: $scale');
-  log('ffmpeg cmd being run:\n$ffmpegCmd');
-
-  final result = await Isolate.run(
-    () => Process.runSync(
-      'powershell.exe',
-      ['-Command', updateEvironmentVariableCmd, ';', ffmpegCmd],
-    ),
-  );
-
-  if (result.exitCode == 0) {
-    log(result.stdout.toString());
-    ref
-        .read(conversionStatusProvider.notifier)
-        .update((state) => ConversionStatus.done);
-    log('Finished');
-  } else {
-    log(result.stderr.toString());
-    ref
-        .read(conversionStatusProvider.notifier)
-        .update((state) => ConversionStatus.error);
-    log('Error');
   }
 }
