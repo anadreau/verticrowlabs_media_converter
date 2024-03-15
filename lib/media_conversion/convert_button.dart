@@ -9,12 +9,17 @@ import 'package:ffmpeg_converter/utils/utils_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+///[ConsumerWidget] Button that starts media conversion when pressed.
+///disabled/enabled based on [buttonEnabled] value
 class ConvertMediaButton extends ConsumerWidget {
+  ///[ConvertMediaButton] Default constructor.
   const ConvertMediaButton({
     required this.buttonEnabled,
     super.key,
   });
 
+  ///[buttonEnabled] if true [_convertMedia] is run when button is pressed.
+  ///if false, button is disabled.
   final bool buttonEnabled;
 
   @override
