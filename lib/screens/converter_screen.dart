@@ -77,11 +77,10 @@ class ConverterScreen extends ConsumerWidget {
                   indent: 75,
                   endIndent: 75,
                 ),
-                if (fileInput != '')
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: MediaThumbnailWidget(),
-                  ),
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: MediaThumbnailWidget(),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
