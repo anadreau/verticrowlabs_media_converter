@@ -61,4 +61,4 @@ class InstallScreen extends ConsumerWidget {
   }
 }
 
-//TO-DO: #29 integrate MSIX package. @anadreau
+//TO-DO: #34 Implement video snipping. @anadreau

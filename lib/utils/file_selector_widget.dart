@@ -83,7 +83,6 @@ Future<void> _generateThumbnail(WidgetRef ref) async {
 
   if (result.exitCode == 0) {
     log('Finished Generating Thumbnail: ${result.stdout}');
-    //TO-DO: #31 New thumbnails do not update the thumbnail widget. @anadreau
     ref.read(thumbnailLoadedProvider.notifier).update((state) => true);
   } else {
     log('Error in Generating Thumbnail: ${result.stderr}');

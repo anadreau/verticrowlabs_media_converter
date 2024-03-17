@@ -157,17 +157,6 @@ class ConverterScreen extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  //TO-DO: #15 implement admin path variable update. @anadreau
-
-                  // child: MaterialButton(
-                  //   onPressed: () {
-                  //     return ref.read(ffmpegadminInstallCreator);
-                  //   },
-                  //   child: Icon(
-                  //     Icons.install_mobile,
-                  //     color: Theme.of(context).colorScheme.onBackground,
-                  //   ),
-                  // ),
                 ),
               ),
             ],
