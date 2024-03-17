@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:ffmpeg_converter/media_conversion/thumbnail.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class FileSelector extends ConsumerWidget {
           onPressed: () => {
             ref.read(fileNameProvider.notifier).update((state) => ''),
             _fileSelector(ref).then((_) => _generateThumbnail(ref)),
+            ref.read(thumbnailLoadedProvider.notifier).update((state) => false),
           },
           child: Icon(
             Icons.folder,
@@ -54,13 +56,16 @@ Future<void> _generateThumbnail(WidgetRef ref) async {
   final input = ref.read(fileInputStringProvider);
   final thumbnailPath = await getTemporaryDirectory();
   log('Thumbnail dir: ${thumbnailPath.path}');
+  //Used to clear application cache that caused old thumbnail to be loaded
+  //even though new thumbnail was generated.
+  await FileImage(File('${thumbnailPath.path}/thumbnail.jpg')).evict();
 
   //Cmd that removes the thumbnail from previous media conversion.
   final clearTmpCmd = 'rm ${thumbnailPath.path}/thumbnail.jpg | echo';
 
   //Cmd that generates the thumbnail
   final ffmpegCmd =
-      """ffmpeg -i $input -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:00:30 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg""";
+      """ffmpeg -i $input -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:01:00 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg""";
 
   final result = await Isolate.run(
     () => Process.runSync(
@@ -79,6 +84,7 @@ Future<void> _generateThumbnail(WidgetRef ref) async {
   if (result.exitCode == 0) {
     log('Finished Generating Thumbnail: ${result.stdout}');
     //TO-DO: #31 New thumbnails do not update the thumbnail widget. @anadreau
+    ref.read(thumbnailLoadedProvider.notifier).update((state) => true);
   } else {
     log('Error in Generating Thumbnail: ${result.stderr}');
   }

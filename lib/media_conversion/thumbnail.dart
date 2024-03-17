@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -14,47 +13,40 @@ class MediaThumbnailWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final image = _retrieveThumbnail(ref);
+    final imagePath = ref.read(thumbnailPathProvider);
+    final loaded = ref.watch(thumbnailLoadedProvider);
 
-    return FutureBuilder(
-      builder: (context, AsyncSnapshot<File> snapshot) {
-        if (snapshot.hasData == true) {
-          return SizedBox(
-            height: 250,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.file(
-                snapshot.data!,
-              ),
+    switch (loaded) {
+      case true:
+        return SizedBox(
+          height: 250,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.file(
+              File('${imagePath.value}/thumbnail.jpg'),
             ),
-          );
-        } else {
-          return SizedBox(
-            height: 250,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                'assets/ImageHolder.jpg',
-              ),
+          ),
+        );
+      case false:
+        return SizedBox(
+          height: 250,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.file(
+              File('assets/ImageHolder.jpg'),
             ),
-          );
-        }
-      },
-      future: image,
-    );
+          ),
+        );
+    }
   }
 }
 
-Future<File> _retrieveThumbnail(WidgetRef ref) async {
-  final thumbnailPath = await getTemporaryDirectory();
+///[Provider] to track state of generated thumbnail.
+final thumbnailLoadedProvider = StateProvider((ref) => false);
 
-  final imageFile = File('${thumbnailPath.path}/thumbnail.jpg');
-  final imageFileExists = imageFile.existsSync();
-  log('imageFileExists: $imageFileExists');
-  if (imageFileExists == true) {
-    return imageFile;
-  } else {
-    final imageHolder = File('assets/ImageHolder.jpg');
-    return imageHolder;
-  }
-}
+///[FutureProvider] that supplies the path to the thumbnail image in
+///the temp folder on the machine.
+final thumbnailPathProvider = FutureProvider((ref) async {
+  final path = await getTemporaryDirectory();
+  return path.path;
+});
