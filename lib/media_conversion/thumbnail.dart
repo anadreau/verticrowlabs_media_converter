@@ -32,8 +32,8 @@ class MediaThumbnailWidget extends ConsumerWidget {
           height: 250,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.file(
-              File('assets/ImageHolder.jpg'),
+            child: Image.asset(
+              'assets/ImageHolder.jpg',
             ),
           ),
         );
