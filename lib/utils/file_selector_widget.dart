@@ -65,7 +65,7 @@ Future<void> _generateThumbnail(WidgetRef ref) async {
 
   //Cmd that generates the thumbnail
   final ffmpegCmd =
-      """ffmpeg -i $input -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:01:00 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg""";
+      """ffmpeg -i '$input' -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:01:00 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg""";
 
   final result = await Isolate.run(
     () => Process.runSync(
