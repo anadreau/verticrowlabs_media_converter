@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
-import 'package:ffmpeg_converter/media_conversion/thumbnail.dart';
+import 'package:ffmpeg_converter/thumbnail_generator/thumbnail_barrel.dart';
 import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';

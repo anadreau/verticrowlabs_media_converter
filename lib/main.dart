@@ -25,6 +25,8 @@ class ConverterApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
+      //[SelectionArea] Allows text in app to be selectable. Used for copy and
+      //paste functionality.
       home: SelectionArea(
         child: Scaffold(
           backgroundColor: Theme.of(context).colorScheme.background,
@@ -60,5 +62,3 @@ class InstallScreen extends ConsumerWidget {
     };
   }
 }
-
-//TO-DO: #34 Implement video snipping. @anadreau
