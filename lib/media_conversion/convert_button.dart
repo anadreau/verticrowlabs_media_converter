@@ -63,8 +63,9 @@ Future<void> _convertMedia(WidgetRef ref) async {
     //1080p
     '1280' =>
       'ffmpeg -i "$input" -vf scale=1920:1080 -c:v libx264 "$output" | echo',
+
     //Default
-    _ => 'ffmpeg -i "$input" -vf scale=$scale:-2 -c:v libx264 "$output" | echo'
+    _ => 'ffmpeg -i "$input" -vf scale=1920:1080 -c:v libx264 "$output" | echo'
   };
   log('scale is: $scale');
   log('ffmpeg cmd being run:\n$ffmpegCmd');
