@@ -2,13 +2,13 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
-import 'package:ffmpeg_converter/thumbnail_generator/thumbnail_barrel.dart';
-import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_barrel.dart';
+import 'package:verticrowlabs_media_converter/utils/pwsh_cmd.dart';
 
 ///[ConsumerWidget] that sets [fileInputStringProvider] when button is pressed.
 class FileSelector extends ConsumerWidget {

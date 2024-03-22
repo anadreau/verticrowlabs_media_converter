@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:ffmpeg_converter/thumbnail_generator/thumbnail_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_barrel.dart';
 
 //Thumbnail function goes here.
 ///[ConsumerWidget] to return the thumbnail of the media file that will be

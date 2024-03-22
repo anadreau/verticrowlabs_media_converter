@@ -2,10 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:ffmpeg_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
-import 'package:ffmpeg_converter/global_variables/common_variables.dart';
-import 'package:ffmpeg_converter/utils/pwsh_cmd.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
+import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/utils/pwsh_cmd.dart';
 
 //TO-DO: #18 add ffmpeg installation ability for linux and macos. @anadreau
 //TO-DO: #19 implement ffmpeg command depending on OS. @anadreau
