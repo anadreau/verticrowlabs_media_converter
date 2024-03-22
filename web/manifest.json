@@ -1,6 +1,6 @@
 {
-    "name": "ffmpeg_converter",
-    "short_name": "ffmpeg_converter",
+    "name": "verticrowlabs_media_converter",
+    "short_name": "verticrowlabs_media_converter",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

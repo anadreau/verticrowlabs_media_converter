@@ -1,4 +1,4 @@
-name: ffmpeg_converter
+name: verticrowlabs_media_converter
 description: A media conversion tool currently for Windows that allows changing media type and compression size using ffmpeg backend.
 publish_to: 'none'
 version: 0.1.6

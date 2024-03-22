@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ffmpeg_converter">
+    package="com.example.verticrowlabs_media_converter">
    <application
-        android:label="ffmpeg_converter"
+        android:label="verticrowlabs_media_converter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
