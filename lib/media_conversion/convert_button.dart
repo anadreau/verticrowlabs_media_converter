@@ -2,12 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:ffmpeg_converter/file_parsing/file_parsing_barrel.dart';
-import 'package:ffmpeg_converter/global_variables/common_variables.dart';
-import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
-import 'package:ffmpeg_converter/utils/utils_barrel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
+import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
 
 ///[ConsumerWidget] Button that starts media conversion when pressed.
 ///disabled/enabled based on [buttonEnabled] value

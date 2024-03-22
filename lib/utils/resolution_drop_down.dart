@@ -1,8 +1,9 @@
 import 'dart:developer';
-import 'package:ffmpeg_converter/global_variables/common_variables.dart';
-import 'package:ffmpeg_converter/media_conversion/media_conversion_barrel.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
 
 ///[List] of [MediaScale] values for use in [MediaDropDown]
 final List<MediaScale> mediaScaleDropDownList = MediaScale.values.toList();

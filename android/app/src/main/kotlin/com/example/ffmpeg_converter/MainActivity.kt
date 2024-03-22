@@ -1,4 +1,4 @@
-package com.example.ffmpeg_converter
+package com.example.verticrowlabs_media_converter
 
 import io.flutter.embedding.android.FlutterActivity
 
