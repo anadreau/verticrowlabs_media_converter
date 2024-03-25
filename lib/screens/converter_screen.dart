@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
 import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_widget.dart';
 import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';

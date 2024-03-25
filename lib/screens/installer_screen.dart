@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
 import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
 
 ///Screen that is displayed if ffmpeg is not installed
 class InstallerScreen extends StatelessWidget {

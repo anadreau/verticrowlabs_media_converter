@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
 
 ///Creator that holds the variable for file type to be converted to
 final containerTypeProvider = StateProvider((ref) => MediaContainerType.mp4);

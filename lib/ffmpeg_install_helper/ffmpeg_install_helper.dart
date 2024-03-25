@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
 import 'package:verticrowlabs_media_converter/utils/pwsh_cmd.dart';
 
 //Possible way to invoke admin

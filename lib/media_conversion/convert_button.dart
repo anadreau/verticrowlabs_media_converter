@@ -5,8 +5,8 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
+import 'package:verticrowlabs_media_converter/utils/ffmpeg_cmd.dart';
 import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
 
 ///[ConsumerWidget] Button that starts media conversion when pressed.
@@ -49,31 +49,13 @@ Future<void> _convertMedia(WidgetRef ref) async {
   ref
       .read(conversionStatusProvider.notifier)
       .update((state) => ConversionStatus.inProgress);
-  final input = ref.read(fileInputStringProvider);
-  final output = ref.read(outputStringProvider);
-  final scale = ref.read(outputScaleCreator);
 
-  final ffmpegCmd = switch (scale) {
-    //SD
-    '480' =>
-      'ffmpeg -i "$input" -vf scale=640:$scale -c:v libx264 "$output" | echo',
-    //HD
-    '720' =>
-      'ffmpeg -i "$input" -vf scale=1280:$scale -c:v libx264 "$output" | echo',
-    //1080p
-    '1280' =>
-      'ffmpeg -i "$input" -vf scale=1920:1080 -c:v libx264 "$output" | echo',
-
-    //Default
-    _ => 'ffmpeg -i "$input" -vf scale=1920:1080 -c:v libx264 "$output" | echo'
-  };
-  log('scale is: $scale');
-  log('ffmpeg cmd being run:\n$ffmpegCmd');
+  final cmd = ref.watch(ffmpegCmd);
 
   final result = await Isolate.run(
     () => Process.runSync(
       'powershell.exe',
-      ['-Command', updateEvironmentVariableCmd, ';', ffmpegCmd],
+      ['-Command', updateEvironmentVariableCmd, ';', cmd],
     ),
   );
 

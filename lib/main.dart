@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
 import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
 import 'package:verticrowlabs_media_converter/screens/converter_screen.dart';
 import 'package:verticrowlabs_media_converter/screens/installer_screen.dart';
+import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
 
 void main() {
   runApp(const ProviderScope(child: ConverterApp()));
