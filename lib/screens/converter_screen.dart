@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
@@ -39,33 +40,34 @@ class ConverterScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (fileInput == '')
-                      const Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Text(
-                          'Press folder button to select file to convert',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
+                      const Flexible(
+                        flex: 5,
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            'Press folder button to select file to convert',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
                           ),
                         ),
                       ),
                     if (fileInput != '')
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              'File to be converted: $fileInput',
-                              maxLines: 1,
-                              overflow: TextOverflow.visible,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
+                      Flexible(
+                        flex: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            'File to be converted: $fileInput',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     const FileSelector(),
                   ],
@@ -73,15 +75,18 @@ class ConverterScreen extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        'Converted file: $outputFile',
-                        maxLines: 1,
-                        overflow: TextOverflow.visible,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                    Flexible(
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          'Converted file: $outputFile',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
                         ),
                       ),
                     ),
