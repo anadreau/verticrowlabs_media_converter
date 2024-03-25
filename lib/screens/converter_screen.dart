@@ -17,8 +17,8 @@ class ConverterScreen extends ConsumerWidget {
     final fileInput = ref.watch(fileInputStringProvider);
     final outputFile = ref.watch(outputStringProvider) ?? 'No file selected';
     final status = ref.watch(statusProvider);
-    final buttonEnabled = ref.watch(buttonEnabledProvider);
-    log('ButtonEnabled: $buttonEnabled');
+    final convertButtonEnabled = ref.watch(buttonEnabledProvider);
+    log('ButtonEnabled: $convertButtonEnabled');
 
     return Padding(
       padding: const EdgeInsets.all(100),
@@ -35,43 +35,82 @@ class ConverterScreen extends ConsumerWidget {
             ),
             child: Column(
               children: [
-                if (fileInput == '')
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      'Press folder button to select file to convert',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (fileInput == '')
+                      const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          'Press folder button to select file to convert',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ),
+                    if (fileInput != '')
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              'File to be converted: $fileInput',
+                              maxLines: 1,
+                              overflow: TextOverflow.visible,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    const FileSelector(),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        'Converted file: $outputFile',
+                        maxLines: 1,
+                        overflow: TextOverflow.visible,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
                     ),
-                  ),
-                if (fileInput != '')
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          'File to be converted: $fileInput',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: MaterialButton(
+                          onPressed: () {
+                            //add dialog that edits file name
+                            showDialog<FileNameEditingDialog>(
+                              context: context,
+                              builder: (context) {
+                                return const FileNameEditingDialog();
+                              },
+                            );
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          'Converted file: $outputFile',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
                 const Divider(
                   indent: 75,
                   endIndent: 75,
@@ -95,70 +134,47 @@ class ConverterScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+                if (status == ConversionStatus.inProgress.message)
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
+                    child: LinearProgressIndicator(),
+                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: FileTypeDropDown(),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: MediaDropDown(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: ConvertMediaButton(
+                          buttonEnabled: convertButtonEnabled,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
-          if (status == ConversionStatus.inProgress.message)
-            const Padding(
-              padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
-              child: LinearProgressIndicator(),
-            ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: FileTypeDropDown(),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8),
-                child: MediaDropDown(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ConvertMediaButton(buttonEnabled: buttonEnabled),
-                ),
-              ),
-              const FileSelector(),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: MaterialButton(
-                    onPressed: () {
-                      //add dialog that edits file name
-                      showDialog<FileNameEditingDialog>(
-                        context: context,
-                        builder: (context) {
-                          return const FileNameEditingDialog();
-                        },
-                      );
-                    },
-                    child: Icon(
-                      Icons.edit,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),
