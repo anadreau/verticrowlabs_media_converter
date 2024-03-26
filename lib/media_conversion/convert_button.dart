@@ -51,6 +51,7 @@ Future<void> _convertMedia(WidgetRef ref) async {
       .update((state) => ConversionStatus.inProgress);
 
   final cmd = ref.watch(ffmpegCmd);
+  log('ffmpeg used: $cmd');
 
   final result = await Isolate.run(
     () => Process.runSync(

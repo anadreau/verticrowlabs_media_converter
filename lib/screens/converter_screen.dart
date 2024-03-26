@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
@@ -65,6 +63,7 @@ class ConverterScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
+                //Selects Input file.
                 const FileSelector(),
               ],
             ),

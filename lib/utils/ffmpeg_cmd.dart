@@ -14,11 +14,11 @@ import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart
 ///[Provider] that handles logic for which ffmpeg cmd is selected when
 ///convert_button is pressed.
 Provider<String> ffmpegCmd = Provider<String>((ref) {
-  final input = ref.read(fileInputStringProvider);
-  final output = ref.read(outputStringProvider);
-  final scale = ref.read(outputScaleCreator);
-  final startTime = ref.read(startTimeProvider);
-  final endTime = ref.read(endTimeProvider);
+  final input = ref.watch(fileInputStringProvider);
+  final output = ref.watch(outputStringProvider);
+  final scale = ref.watch(outputScaleCreator);
+  final startTime = ref.watch(startTimeProvider);
+  final endTime = ref.watch(endTimeProvider);
 
   final ffmpegCmd = switch (scale) {
     //SD
