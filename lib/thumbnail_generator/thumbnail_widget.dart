@@ -18,13 +18,10 @@ class MediaThumbnailWidget extends ConsumerWidget {
 
     switch (loaded) {
       case true:
-        return SizedBox(
-          height: 250,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.file(
-              File('${imagePath.value}/thumbnail.jpg'),
-            ),
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.file(
+            File('${imagePath.value}/thumbnail.jpg'),
           ),
         );
       case false:
