@@ -53,7 +53,7 @@ class ConverterScreen extends ConsumerWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text(
-                        'File to be converted: $fileInput',
+                        '$fileInput',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -75,7 +75,7 @@ class ConverterScreen extends ConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text(
-                      'Converted file: $outputFile',
+                      outputFile,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
