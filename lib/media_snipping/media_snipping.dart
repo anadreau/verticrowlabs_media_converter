@@ -10,4 +10,5 @@ final endTimeProvider = Provider((ref) => '');
 
 
 // ffprobe cmd to get duration:
-//ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 -sexagesimal <input>
+//ffprobe -v error -show_entries format=duration
+// -of default=noprint_wrappers=1 -sexagesimal <input>

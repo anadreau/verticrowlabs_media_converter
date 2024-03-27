@@ -20,18 +20,18 @@ Provider<String> ffmpegCmd = Provider<String>((ref) {
 
   final ffmpegCmd = switch (scale) {
     //SD
-    '480' =>
-      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=640:$scale -c:v libx264 "$output"',
+    '480' => '''
+ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=640:$scale -c:v libx264 "$output"''',
     //HD
-    '720' =>
-      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1280:$scale -c:v libx264 "$output"',
+    '720' => '''
+ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1280:$scale -c:v libx264 "$output"''',
     //1080p
-    '1080' =>
-      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output"',
+    '1080' => '''
+ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output"''',
 
     //Default
-    _ =>
-      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output"'
+    _ => '''
+ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output"'''
   };
   //log('scale is: $scale');
   //log('StartTime: $startTime & EndTime: $endTime');
@@ -40,4 +40,5 @@ Provider<String> ffmpegCmd = Provider<String>((ref) {
   return ffmpegCmd;
 });
 
+///[StateProvider] for log of last conversion that was run's output.
 final cmdLog = StateProvider((ref) => '');
