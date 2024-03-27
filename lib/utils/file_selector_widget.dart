@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/conversion_status.dart';
+import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart';
 import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_barrel.dart';
 import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
 
@@ -25,7 +26,9 @@ class FileSelector extends ConsumerWidget {
         child: MaterialButton(
           onPressed: () => {
             ref.read(fileNameProvider.notifier).update((state) => ''),
-            _fileSelector(ref).then((_) => generateThumbnail(ref)),
+            _fileSelector(ref)
+                .then((_) => generateThumbnail(ref))
+                .then((_) => mediaDurationProbe(ref)),
             ref.read(thumbnailLoadedProvider.notifier).update((state) => false),
             ref
                 .read(conversionStatusProvider.notifier)
