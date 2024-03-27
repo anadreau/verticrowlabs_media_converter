@@ -4,8 +4,6 @@
 //example: ffmpeg -i input.mp4 -ss 00:00:00 -to 00:00:00 -vf scale=1920:1080
 // -c:v libx264 output.mp4
 
-import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
@@ -23,21 +21,23 @@ Provider<String> ffmpegCmd = Provider<String>((ref) {
   final ffmpegCmd = switch (scale) {
     //SD
     '480' =>
-      'ffmpeg -i "$input" $startTime $endTime -vf scale=640:$scale -c:v libx264 "$output" | echo',
+      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=640:$scale -c:v libx264 "$output"',
     //HD
     '720' =>
-      'ffmpeg -i "$input" $startTime $endTime -vf scale=1280:$scale -c:v libx264 "$output" | echo',
+      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1280:$scale -c:v libx264 "$output"',
     //1080p
     '1080' =>
-      'ffmpeg -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output" | echo',
+      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output"',
 
     //Default
     _ =>
-      'ffmpeg -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output" | echo'
+      'ffmpeg -hide_banner -stats -i "$input" $startTime $endTime -vf scale=1920:1080 -c:v libx264 "$output"'
   };
-  log('scale is: $scale');
-  log('StartTime: $startTime & EndTime: $endTime');
-  log('ffmpeg cmd being run:\n$ffmpegCmd');
+  //log('scale is: $scale');
+  //log('StartTime: $startTime & EndTime: $endTime');
+  // log('ffmpeg cmd being run:\n$ffmpegCmd');
 
   return ffmpegCmd;
 });
+
+final cmdLog = StateProvider((ref) => '');

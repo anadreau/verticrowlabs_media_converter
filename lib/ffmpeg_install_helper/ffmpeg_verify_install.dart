@@ -42,10 +42,9 @@ final verifyFfmpegInstallProvider = FutureProvider((ref) async {
   );
 
   if (result.exitCode == 0) {
-    log('${result.stdout}');
-    log('${result.stderr}');
+    log('stdout: ${result.stdout}');
+    log('error: ${result.stderr}');
     if (result.stdout != null) {
-      log('${result.stdout}');
       final installed = ref
           .read(ffmpegInstallStatusProvider.notifier)
           .update((state) => InstallStatus.installed);
@@ -56,7 +55,7 @@ final verifyFfmpegInstallProvider = FutureProvider((ref) async {
           .update((state) => InstallStatus.notInstalled);
     }
   } else {
-    log('stdout: ${result.stdout}');
-    log('error: ${result.stderr}');
+    //log('else stdout: ${result.stdout}');
+    log('else error: ${result.stderr}');
   }
 });

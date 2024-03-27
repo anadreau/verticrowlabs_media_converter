@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
+import 'package:verticrowlabs_media_converter/media_conversion/output_dialog.dart';
 import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_widget.dart';
 import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
 
@@ -122,11 +124,31 @@ class ConverterScreen extends ConsumerWidget {
                   color: Theme.of(context).colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    'Conversion Status: $status',
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        'Conversion Status: $status',
+                      ),
+                    ),
+                    if (status == 'Done' || status == 'Error')
+                      GestureDetector(
+                        onTap: () {
+                          showDialog<AlertDialog>(
+                            context: context,
+                            builder: (context) {
+                              return const OutputDialog();
+                            },
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Icon(Icons.nearby_error),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ),

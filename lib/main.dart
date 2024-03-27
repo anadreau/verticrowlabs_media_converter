@@ -37,7 +37,7 @@ class ConverterApp extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: InstallScreen(),
+            child: RootScreen(),
           ),
         ),
       ),
@@ -47,9 +47,9 @@ class ConverterApp extends StatelessWidget {
 
 ///ConsumerWidget that returns either ConverterScreen or InstallScreen
 ///based on [ffmpegInstallStatusProvider] status
-class InstallScreen extends ConsumerWidget {
-  ///Implementation of [InstallScreen]
-  const InstallScreen({super.key});
+class RootScreen extends ConsumerWidget {
+  ///Implementation of [RootScreen]
+  const RootScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

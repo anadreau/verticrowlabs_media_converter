@@ -38,22 +38,22 @@ final outputStringProvider = Provider((ref) {
     if (edittedFileName.isNotEmpty || edittedFileName != '') {
       oldFileName = edittedFileName;
       newFileName = '$oldFileName$fileType';
-      log('here');
+      //log('here');
     } else {
       ///Creates new String from oldFileName without the old filetype plus
       ///.converted.mp4
-      log('skipped if statement');
+      //log('skipped if statement');
       newFileName =
           '${oldFileName.substring(0, filetypeIndex)}.converted$fileType';
     }
 
-    log('Joined: $joinedOutput');
-    log('old: $oldFileName');
-    log('new: $newFileName');
+    //log('Joined: $joinedOutput');
+    //log('old: $oldFileName');
+    //log('new: $newFileName');
     result = '$joinedOutput\\$newFileName';
     filePathResult = result.substring(0);
-    log('result: $result');
-    log('result: $filePathResult');
+    //log('result: $result');
+    //log('result: $filePathResult');
   } else {
     filePathResult = null;
   }
