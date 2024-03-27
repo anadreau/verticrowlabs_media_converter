@@ -132,7 +132,10 @@ class ConverterScreen extends ConsumerWidget {
                         'Conversion Status: $status',
                       ),
                     ),
-                    if (status == 'Done' || status == 'Error')
+                    //Displays the AlertDialog icon only if the conversion
+                    //has completed with done or error status
+                    if (status == ConversionStatus.done.message ||
+                        status == ConversionStatus.error.message)
                       GestureDetector(
                         onTap: () {
                           showDialog<AlertDialog>(

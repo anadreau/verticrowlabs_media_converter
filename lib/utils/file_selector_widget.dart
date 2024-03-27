@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/media_conversion/conversion_status.dart';
 import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_barrel.dart';
+import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
 import 'package:verticrowlabs_media_converter/utils/pwsh_cmd.dart';
 
 ///[ConsumerWidget] that sets [fileInputStringProvider] when button is pressed.
@@ -31,6 +33,9 @@ class FileSelector extends ConsumerWidget {
             ref.read(fileNameProvider.notifier).update((state) => ''),
             _fileSelector(ref).then((_) => _generateThumbnail(ref)),
             ref.read(thumbnailLoadedProvider.notifier).update((state) => false),
+            ref
+                .read(conversionStatusProvider.notifier)
+                .update((state) => ConversionStatus.notStarted),
           },
           child: Icon(
             Icons.folder,
