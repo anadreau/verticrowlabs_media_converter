@@ -4,6 +4,7 @@ import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_input.dart';
+import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
 import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
 
 ///[MediaTime] class to handle time information for selected media
@@ -57,11 +58,30 @@ class MediaTime {
         (((temphours * 60) + tempminutes) * 60) + tempseconds;
     return durationInSeconds;
   }
+
+  ///function takes seconds and formats to hrs:mins:seconds
+  String durationFromSeconds({double? seconds}) {
+    final hours = (seconds! / 3600).truncate();
+    final remainingSeconds = seconds - (hours * 3600);
+    final minutes = (remainingSeconds / 60).truncate();
+    final remainingSeconds2 = remainingSeconds - (minutes * 60);
+
+    final formattedHours = hours.toString().padLeft(2, '0');
+    final formattedMinutes = minutes.toString().padLeft(2, '0');
+    final formattedSeconds =
+        remainingSeconds2.toStringAsFixed(3).padLeft(2, '0');
+
+    return '$formattedHours:$formattedMinutes:$formattedSeconds';
+  }
 }
 
 ///variable [StateProvider]<String> to hold -ss start time in 00:00:00 format
 ///variable defaults to '' when not used
-final startTimeProvider = StateProvider((ref) => '00:00:00.000');
+final startTimeProvider = StateProvider((ref) {
+  final duration = ref.watch(startRangeProvider);
+
+  return MediaTime().durationFromSeconds(seconds: duration);
+});
 
 ///variable [StateProvider]<String> to hold -to stop time in 00:00:00 format
 ///variable defaults to '' when not used

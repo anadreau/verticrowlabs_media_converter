@@ -25,7 +25,7 @@ class ConverterScreen extends ConsumerWidget {
     log('ButtonEnabled: $convertButtonEnabled');
 
     return Padding(
-      padding: const EdgeInsets.all(75),
+      padding: const EdgeInsets.all(50),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer.withOpacity(.5),
@@ -165,7 +165,10 @@ class ConverterScreen extends ConsumerWidget {
             ),
             if (validEndTime != '' &&
                 status != ConversionStatus.inProgress.message)
-              const TimeRangeSelector(),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
+                child: TimeRangeSelector(),
+              ),
             if (status == ConversionStatus.inProgress.message)
               const Padding(
                 padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
