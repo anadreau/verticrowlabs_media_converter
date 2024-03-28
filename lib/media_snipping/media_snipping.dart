@@ -4,6 +4,7 @@ import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_input.dart';
+import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
 import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
 
 ///[MediaTime] class to handle time information for selected media
@@ -48,13 +49,26 @@ class MediaTime {
   }
 }
 
+enum TimePosition {
+  start,
+  end;
+
+  const TimePosition();
+}
+
 ///variable [StateProvider]<String> to hold -ss start time in 00:00:00 format
 ///variable defaults to '' when not used
 final startTimeProvider = StateProvider((ref) => '');
 
+///[StateProvider] handling checkbox state for start [TimeSelector]
+final startCheckboxValue = StateProvider<bool?>((ref) => false);
+
 ///variable [StateProvider]<String> to hold -to stop time in 00:00:00 format
 ///variable defaults to '' when not used
 final endTimeProvider = StateProvider((ref) => '');
+
+///[StateProvider] handling checkbox state for end [TimeSelector]
+final endCheckboxValue = StateProvider<bool?>((ref) => false);
 
 ///[StateProvider] that sets the length of the selected media
 ///so that [endTimeProvider] can not exceed it.

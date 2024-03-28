@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/output_dialog.dart';
+import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart';
 import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_widget.dart';
+import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
 import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
 
 ///[ConsumerWidget] that displays screen if ffmpeg is installed
@@ -198,6 +200,24 @@ class ConverterScreen extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 2),
+                        child: TimeSelector(
+                          stateProvider: startCheckboxValue,
+                          timePosition: TimePosition.start,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 2, 8, 8),
+                        child: TimeSelector(
+                          stateProvider: endCheckboxValue,
+                          timePosition: TimePosition.end,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
