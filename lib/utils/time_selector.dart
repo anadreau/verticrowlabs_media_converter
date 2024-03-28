@@ -1,38 +1,45 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart';
 
-///[TimeSelector] to check if checkbox is selected and allow
+///[TimeRangeSelector] to check if checkbox is selected and allow
 ///the input of time 00:00:00.000
-class TimeSelector extends ConsumerWidget {
-  ///[TimeSelector] Default Constructor
-  const TimeSelector({
-    required this.stateProvider,
-    required this.timePosition,
+class TimeRangeSelector extends ConsumerWidget {
+  ///[TimeRangeSelector] Default Constructor
+  const TimeRangeSelector({
     super.key,
   });
 
-  final StateProvider<bool?> stateProvider;
-  final TimePosition timePosition;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkValue = ref.watch(stateProvider);
-
-    return Row(
-      children: [
-        Checkbox(
-          value: checkValue,
-          onChanged: (bool? newValue) {
-            ref.read(stateProvider.notifier).update((state) => newValue);
-          },
-        ),
-        switch (timePosition) {
-          TimePosition.start => const Text('Start 00:00:00'),
-          TimePosition.end => const Text('End 00:00:00'),
-        },
-      ],
+    final tempDuration = ref.watch(maxTimeProvider);
+    final start = ref.watch(startTimeProvider);
+    final end = ref.watch(endTimeProvider);
+    final startRangeValue = ref.watch(startRangeProvider);
+    final endRangeValue = ref.watch(endRangeProvider);
+    final mediaDuration = MediaTime().mediaTimeFromString(tempDuration);
+    final rangeEnd = MediaTime().durationInSeconds(
+      hours: mediaDuration.hours,
+      minutes: mediaDuration.minutes,
+      seconds: mediaDuration.seconds,
+    );
+    log('start: $start');
+    log('end: $end');
+    return RangeSlider(
+      max: rangeEnd,
+      values: RangeValues(startRangeValue, rangeEnd),
+      labels: RangeLabels(start, end),
+      onChanged: (RangeValues newValues) {
+        ref
+            .read(startRangeProvider.notifier)
+            .update((state) => newValues.start);
+        ref.read(endRangeProvider.notifier).update((state) => newValues.end);
+      },
     );
   }
 }
+
+final startRangeProvider = StateProvider((ref) => 0.0);
+final endRangeProvider = StateProvider((ref) => 0.0);

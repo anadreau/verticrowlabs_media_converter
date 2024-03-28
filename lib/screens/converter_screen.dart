@@ -21,6 +21,7 @@ class ConverterScreen extends ConsumerWidget {
     final outputFile = ref.watch(outputStringProvider) ?? 'No file selected';
     final status = ref.watch(statusProvider);
     final convertButtonEnabled = ref.watch(buttonEnabledProvider);
+    final validEndTime = ref.watch(maxTimeProvider);
     log('ButtonEnabled: $convertButtonEnabled');
 
     return Padding(
@@ -162,6 +163,9 @@ class ConverterScreen extends ConsumerWidget {
                 child: MediaThumbnailWidget(),
               ),
             ),
+            if (validEndTime != '' &&
+                status != ConversionStatus.inProgress.message)
+              const TimeRangeSelector(),
             if (status == ConversionStatus.inProgress.message)
               const Padding(
                 padding: EdgeInsets.fromLTRB(100, 8, 100, 8),
@@ -200,24 +204,6 @@ class ConverterScreen extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 2),
-                        child: TimeSelector(
-                          stateProvider: startCheckboxValue,
-                          timePosition: TimePosition.start,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 2, 8, 8),
-                        child: TimeSelector(
-                          stateProvider: endCheckboxValue,
-                          timePosition: TimePosition.end,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

@@ -4,7 +4,6 @@ import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_input.dart';
-import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
 import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
 
 ///[MediaTime] class to handle time information for selected media
@@ -28,7 +27,7 @@ class MediaTime {
 
   ///function to parse from string to [MediaTime]
   MediaTime mediaTimeFromString(String durationString) {
-    final parsedDuration = durationString.substring(9);
+    final parsedDuration = durationString.replaceAll(RegExp('duration='), '');
     final tempList = parsedDuration.split(':');
     final tempHours = int.parse(tempList[0]);
     final tempMinutes = int.parse(tempList[1]);
@@ -41,34 +40,32 @@ class MediaTime {
   }
 
   ///function parse from int to String in format 00:00:00.000
-  String duration(int? hours, int? minutes, double? seconds) {
+  String duration({int? hours, int? minutes, double? seconds}) {
     final durationhrs = hours.toString();
     final durationmins = minutes.toString();
     final durationseconds = seconds.toString();
     return '$durationhrs:$durationmins:$durationseconds';
   }
-}
 
-enum TimePosition {
-  start,
-  end;
-
-  const TimePosition();
+  ///function takes the hours, minutes, and seconds and returns
+  ///seconds
+  double durationInSeconds({int? hours, int? minutes, double? seconds}) {
+    final temphours = hours ?? 0;
+    final tempminutes = minutes ?? 0;
+    final tempseconds = seconds ?? 0;
+    final durationInSeconds =
+        (((temphours * 60) + tempminutes) * 60) + tempseconds;
+    return durationInSeconds;
+  }
 }
 
 ///variable [StateProvider]<String> to hold -ss start time in 00:00:00 format
 ///variable defaults to '' when not used
-final startTimeProvider = StateProvider((ref) => '');
-
-///[StateProvider] handling checkbox state for start [TimeSelector]
-final startCheckboxValue = StateProvider<bool?>((ref) => false);
+final startTimeProvider = StateProvider((ref) => '00:00:00.000');
 
 ///variable [StateProvider]<String> to hold -to stop time in 00:00:00 format
 ///variable defaults to '' when not used
-final endTimeProvider = StateProvider((ref) => '');
-
-///[StateProvider] handling checkbox state for end [TimeSelector]
-final endCheckboxValue = StateProvider<bool?>((ref) => false);
+final endTimeProvider = StateProvider((ref) => ref.read(maxTimeProvider));
 
 ///[StateProvider] that sets the length of the selected media
 ///so that [endTimeProvider] can not exceed it.
@@ -98,8 +95,11 @@ ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 -s
     log('Probe stdout: ${result.stdout}');
     log('Probe stderr: ${result.stderr}');
     final duration = MediaTime().mediaTimeFromString(result.stdout.toString());
-    final durationFormatted =
-        duration.duration(duration.hours, duration.minutes, duration.seconds);
+    final durationFormatted = duration.duration(
+      hours: duration.hours,
+      minutes: duration.minutes,
+      seconds: duration.seconds,
+    );
     log('Duration: $durationFormatted');
     ref.read(maxTimeProvider.notifier).update((state) => durationFormatted);
   } else {
