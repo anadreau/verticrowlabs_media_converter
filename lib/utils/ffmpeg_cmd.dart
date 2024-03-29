@@ -7,7 +7,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
-import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart';
+import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
 
 ///[Provider] that handles logic for which ffmpeg cmd is selected when
 ///convert_button is pressed.
@@ -15,8 +15,8 @@ Provider<String> ffmpegCmd = Provider<String>((ref) {
   final input = ref.watch(fileInputStringProvider);
   final output = ref.watch(outputStringProvider);
   final scale = ref.watch(outputScaleCreator);
-  final startTime = ref.watch(startTimeProvider);
-  final endTime = ref.watch(endTimeProvider);
+  final startTime = ref.watch(startRangeProvider);
+  final endTime = ref.watch(endRangeProvider);
 
   final ffmpegCmd = switch (scale) {
     //SD

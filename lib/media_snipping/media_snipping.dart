@@ -126,8 +126,3 @@ ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 -s
     log('Error in Generating Thumbnail: ${result.stderr}');
   }
 }
-
-// Create function that parses the duration by splitting it by ":"
-// then changing to int and validating it against the input numbers
-// if all three values are equal or lower than max then allow the
-// input -ss & -to time to be used.

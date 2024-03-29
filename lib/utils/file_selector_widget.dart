@@ -6,6 +6,7 @@ import 'package:verticrowlabs_media_converter/media_conversion/conversion_status
 import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart';
 import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_barrel.dart';
 import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
+import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
 
 ///[ConsumerWidget] that sets [fileInputStringProvider] when button is pressed.
 class FileSelector extends ConsumerWidget {
@@ -25,7 +26,7 @@ class FileSelector extends ConsumerWidget {
         ),
         child: MaterialButton(
           onPressed: () => {
-            ref.read(fileNameProvider.notifier).update((state) => ''),
+            ref.read(startRangeProvider.notifier).update((state) => 0.0),
             _fileSelector(ref)
                 .then((_) => generateThumbnail(ref))
                 .then((_) => mediaDurationProbe(ref)),
