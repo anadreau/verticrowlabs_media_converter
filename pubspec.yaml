@@ -1,7 +1,7 @@
 name: verticrowlabs_media_converter
 description: A media conversion tool currently for Windows that allows changing media type and compression size using ffmpeg backend.
 publish_to: 'none'
-version: 0.1.6
+version: 0.1.7
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -49,7 +49,7 @@ msix_config:
   display_name: Ffmpeg Converter
   publisher_display_name: VerticrowLabs
   identity_name: verticrowlabs.ffmpegconverter
-  msix_version: 1.0.0.1
+  msix_version: 1.0.1
   logo_path: C:\Projects\VerticrowLabs\verticrow2.jpg
   certificate_path: C:\Projects\VerticrowLabs\ffmpeg.pfx
   certificate_password: VerticrowLabs69
