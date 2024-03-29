@@ -49,7 +49,7 @@ msix_config:
   display_name: Ffmpeg Converter
   publisher_display_name: VerticrowLabs
   identity_name: verticrowlabs.ffmpegconverter
-  msix_version: 1.0.1
+  msix_version: 1.0.1.0
   logo_path: C:\Projects\VerticrowLabs\verticrow2.jpg
   certificate_path: C:\Projects\VerticrowLabs\ffmpeg.pfx
   certificate_password: VerticrowLabs69
