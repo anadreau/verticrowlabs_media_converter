@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
-import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_verify_install.dart';
-import 'package:verticrowlabs_media_converter/screens/converter_screen.dart';
-import 'package:verticrowlabs_media_converter/screens/installer_screen.dart';
-import 'package:verticrowlabs_media_converter/utils/common_variables.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/screens/media_converter_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: ConverterApp()));
@@ -37,28 +33,10 @@ class ConverterApp extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: RootScreen(),
+            child: MediaConverterScreen(),
           ),
         ),
       ),
     );
-  }
-}
-
-///ConsumerWidget that returns either ConverterScreen or InstallScreen
-///based on [ffmpegInstallStatusProvider] status
-class RootScreen extends ConsumerWidget {
-  ///Implementation of [RootScreen]
-  const RootScreen({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(verifyFfmpegInstallProvider);
-    final ffmpegInstalled = ref.watch(ffmpegInstallStatusProvider);
-    return switch (ffmpegInstalled) {
-      InstallStatus.notInstalled => const InstallerScreen(),
-      InstallStatus.installed => const ConverterScreen(),
-      _ => const InstallerScreen()
-    };
   }
 }

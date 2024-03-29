@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/utils/ffmpeg_cmd.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/ffmpeg_cmd.dart';
 
 ///[AlertDialog] that displays the log of last run convesion.
 class OutputDialog extends ConsumerWidget {

@@ -4,12 +4,11 @@ import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
-import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart';
-import 'package:verticrowlabs_media_converter/utils/ffmpeg_cmd.dart';
-import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
-import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/ffmpeg_cmd.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
 
 ///[ConsumerWidget] Button that starts media conversion when pressed.
 ///disabled/enabled based on [buttonEnabled] value
@@ -26,9 +25,18 @@ class ConvertMediaButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialButton(
-      onPressed: buttonEnabled ? () => _convertMedia(ref) : null,
-      child: const Text('Convert'),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: MaterialButton(
+          onPressed: buttonEnabled ? () => _convertMedia(ref) : null,
+          child: const Text('Convert'),
+        ),
+      ),
     );
   }
 }

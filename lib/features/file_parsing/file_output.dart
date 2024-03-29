@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/media_conversion/container_type.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/media_conversion/container_type.dart';
 
 ///String containing full file path and new name used for converted file.
 ///

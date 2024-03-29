@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 
 ///String containing full path of file
 final filePathCreator = Provider((ref) {

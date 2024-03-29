@@ -5,8 +5,8 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:verticrowlabs_media_converter/file_parsing/file_input.dart';
-import 'package:verticrowlabs_media_converter/utils/pwsh_cmd.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_input.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
 
 ///[Provider] to track state of generated thumbnail.
 final thumbnailLoadedProvider = StateProvider((ref) => false);

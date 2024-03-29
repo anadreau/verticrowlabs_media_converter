@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 
 ///Alert dialog that sets the String from textController to filename
 class FileNameEditingDialog extends StatefulWidget {

@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/file_parsing/file_input.dart';
-import 'package:verticrowlabs_media_converter/utils/time_selector.dart';
-import 'package:verticrowlabs_media_converter/utils/utils_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_input.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/time_selector.dart';
 
 ///[MediaTime] class to handle time information for selected media
 ///such as start time, end time, and duration.

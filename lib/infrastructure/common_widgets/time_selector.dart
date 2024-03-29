@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/media_snipping/media_snipping.dart';
+import 'package:verticrowlabs_media_converter/features/media_snipping/media_snipping.dart';
 
 ///[TimeRangeSelector] to check if checkbox is selected and allow
 ///the input of time 00:00:00.000
