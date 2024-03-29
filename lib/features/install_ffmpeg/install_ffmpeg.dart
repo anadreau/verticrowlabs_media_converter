@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
-import 'package:verticrowlabs_media_converter/utils/pwsh_cmd.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
 
 //Possible way to invoke admin
 //Start-Process powershell -verb runAs -ArgumentList

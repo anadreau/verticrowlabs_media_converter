@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/ffmpeg_install_helper/ffmpeg_install_helper.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
-import 'package:verticrowlabs_media_converter/utils/pwsh_cmd.dart';
+import 'package:verticrowlabs_media_converter/features/install_ffmpeg/install_ffmpeg.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
 
 //TO-DO: #18 add ffmpeg installation ability for linux and macos. @anadreau
 //TO-DO: #19 implement ffmpeg command depending on OS. @anadreau
@@ -42,10 +42,9 @@ final verifyFfmpegInstallProvider = FutureProvider((ref) async {
   );
 
   if (result.exitCode == 0) {
-    log('${result.stdout}');
-    log('${result.stderr}');
+    log('stdout: ${result.stdout}');
+    log('error: ${result.stderr}');
     if (result.stdout != null) {
-      log('${result.stdout}');
       final installed = ref
           .read(ffmpegInstallStatusProvider.notifier)
           .update((state) => InstallStatus.installed);
@@ -56,7 +55,7 @@ final verifyFfmpegInstallProvider = FutureProvider((ref) async {
           .update((state) => InstallStatus.notInstalled);
     }
   } else {
-    log('stdout: ${result.stdout}');
-    log('error: ${result.stderr}');
+    //log('else stdout: ${result.stdout}');
+    log('else error: ${result.stderr}');
   }
 });

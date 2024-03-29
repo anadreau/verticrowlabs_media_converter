@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/global_variables/common_variables.dart';
-import 'package:verticrowlabs_media_converter/media_conversion/media_conversion_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///[List] of [MediaScale] values for use in [MediaDropDown]
 final List<MediaScale> mediaScaleDropDownList = MediaScale.values.toList();
@@ -54,7 +54,7 @@ class _MediaDropDownState extends ConsumerState<MediaDropDown> {
               final scale = switch (dropdownValue) {
                 '480' => MediaScale.low,
                 '720' => MediaScale.medium,
-                '1280' => MediaScale.high,
+                '1080' => MediaScale.high,
                 _ => MediaScale.medium
               };
               ref.read(outputScaleSelector.notifier).update((state) => scale);

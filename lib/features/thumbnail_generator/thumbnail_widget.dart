@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/thumbnail_generator/thumbnail_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/thumbnail_generator/thumbnail_barrel.dart';
 
 //Thumbnail function goes here.
 ///[ConsumerWidget] to return the thumbnail of the media file that will be
@@ -18,13 +18,10 @@ class MediaThumbnailWidget extends ConsumerWidget {
 
     switch (loaded) {
       case true:
-        return SizedBox(
-          height: 250,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.file(
-              File('${imagePath.value}/thumbnail.jpg'),
-            ),
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.file(
+            File('${imagePath.value}/thumbnail.jpg'),
           ),
         );
       case false:
