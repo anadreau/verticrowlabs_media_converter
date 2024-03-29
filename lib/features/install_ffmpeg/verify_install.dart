@@ -4,7 +4,7 @@ import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/install_ffmpeg.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
 
 //TO-DO: #18 add ffmpeg installation ability for linux and macos. @anadreau

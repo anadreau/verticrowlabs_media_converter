@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/output_dialog.dart';
-import 'package:verticrowlabs_media_converter/features/media_snipping/media_snipping.dart';
+import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 import 'package:verticrowlabs_media_converter/features/thumbnail_generator/thumbnail_widget.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/file_selector_widget.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/file_type_drop_down.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/resolution_drop_down.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/time_selector.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/models/mediatime.dart';
 
 ///[ConverterPage] that displays if ffmpeg is installed
 ///Main screen where files and options can be selected

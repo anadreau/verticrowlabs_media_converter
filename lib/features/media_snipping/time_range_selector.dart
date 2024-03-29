@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/features/media_snipping/media_snipping.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/models/mediatime.dart';
 
 ///[TimeRangeSelector] to check if checkbox is selected and allow
 ///the input of time 00:00:00.000
@@ -20,20 +20,23 @@ class TimeRangeSelector extends ConsumerWidget {
     final startRangeValue = ref.watch(startRangeProvider);
     final endRangeValue = ref.watch(endRangeProvider);
     final mediaDuration = MediaTime().mediaTimeFromString(tempDuration);
-    final rangeEnd = MediaTime().durationInSeconds(
+    final rangeEnd = MediaTime().durationFromMediaTimeToSeconds(
       hours: mediaDuration.hours,
       minutes: mediaDuration.minutes,
       seconds: mediaDuration.seconds,
     );
     final formattedStart =
-        MediaTime().durationFromSeconds(seconds: startRangeValue);
+        MediaTime().durationFromSecondsToString(seconds: startRangeValue);
     final formattedEnd =
-        MediaTime().durationFromSeconds(seconds: endRangeValue);
+        MediaTime().durationFromSecondsToString(seconds: endRangeValue);
     log('start: ${startRangeValue.toStringAsFixed(3)}');
     log('end: ${endRangeValue.toStringAsFixed(3)}');
     return Row(
       children: [
-        Text(formattedStart),
+        Text(
+          formattedStart,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         Expanded(
           child: RangeSlider(
             max: rangeEnd,
@@ -48,7 +51,10 @@ class TimeRangeSelector extends ConsumerWidget {
             },
           ),
         ),
-        Text(formattedEnd),
+        Text(
+          formattedEnd,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
       ],
     );
   }
@@ -61,7 +67,7 @@ final startRangeProvider = StateProvider((ref) => 0.0);
 final endRangeProvider = StateProvider((ref) {
   final tempDuration = ref.watch(maxTimeProvider);
   final mediaDuration = MediaTime().mediaTimeFromString(tempDuration);
-  final rangeEnd = MediaTime().durationInSeconds(
+  final rangeEnd = MediaTime().durationFromMediaTimeToSeconds(
     hours: mediaDuration.hours,
     minutes: mediaDuration.minutes,
     seconds: mediaDuration.seconds,

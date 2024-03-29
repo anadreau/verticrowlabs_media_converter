@@ -7,7 +7,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/time_selector.dart';
+import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 
 ///[Provider] that handles logic for which ffmpeg cmd is selected when
 ///convert_button is pressed.

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_variables.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///Creator that returns the status of the media conversion as a Status enum of
 ///either notStarted, inProgress, done, or error
