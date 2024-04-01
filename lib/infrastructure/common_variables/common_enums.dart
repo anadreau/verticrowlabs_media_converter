@@ -1,3 +1,6 @@
+//TO-DO: #36 Streamline enums using enum.name if all
+//that is being used is the string. @anadreau
+
 ///Enum for conversion status
 enum ConversionStatus {
   ///Conversion has not started
