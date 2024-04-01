@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/container_type.dart';
 
@@ -57,4 +58,12 @@ final outputStringProvider = Provider((ref) {
   }
 
   return filePathResult;
+});
+
+final pathOutputProvider = Provider((ref) {
+  final input = ref.watch(fileInputStringProvider);
+  return FileParser().filePathParser(
+    input,
+    null,
+  );
 });
