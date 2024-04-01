@@ -22,19 +22,20 @@ final thumbnailPathProvider = FutureProvider((ref) async {
 ///updates [thumbnailLoadedProvider]
 Future<void> generateThumbnail(WidgetRef ref) async {
   final input = ref.read(fileInputStringProvider);
+  log('input: $input');
   final thumbnailPath = await getTemporaryDirectory();
   log('Thumbnail dir: ${thumbnailPath.path}');
   //Used to clear application cache that caused old thumbnail to be loaded
   //even though new thumbnail was generated.
-  await FileImage(File('${thumbnailPath.path}/thumbnail.jpg')).evict();
+  await FileImage(File('"${thumbnailPath.path}/thumbnail.jpg"')).evict();
 
   //Cmd that removes the thumbnail from previous media conversion.
-  final clearTmpCmd = 'rm ${thumbnailPath.path}/thumbnail.jpg | echo';
+  final clearTmpCmd = 'rm "${thumbnailPath.path}/thumbnail.jpg" | echo';
 
   //Cmd that generates the thumbnail
   final ffmpegCmd =
-      """ffmpeg -i '$input' -vf "select='eq(pict_type,PICT_TYPE_I)'" -vsync vfr -ss 00:01:00 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg""";
-
+      '''ffmpeg -hide_banner -i "$input" -vf "select='eq(pict_type,PICT_TYPE_I)'" -fps_mode vfr -ss 00:01:00 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg''';
+  log('ffmpegCmd: \n$ffmpegCmd');
   final result = await Isolate.run(
     () => Process.runSync(
       'powershell.exe',
@@ -48,7 +49,7 @@ Future<void> generateThumbnail(WidgetRef ref) async {
       ],
     ),
   );
-
+  log('exitCode: ${result.exitCode}');
   if (result.exitCode == 0) {
     log('Finished Generating Thumbnail: ${result.stdout}');
     ref.read(thumbnailLoadedProvider.notifier).update((state) => true);

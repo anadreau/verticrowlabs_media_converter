@@ -13,7 +13,7 @@ import 'package:verticrowlabs_media_converter/infrastructure/models/mediatime.da
 Future<void> mediaDurationProbe(WidgetRef ref) async {
   final input = ref.watch(fileInputStringProvider);
   final durationProbe = '''
-ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 -sexagesimal $input''';
+ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 -sexagesimal "$input"''';
 
   final result = await Isolate.run(
     () => Process.runSync(
