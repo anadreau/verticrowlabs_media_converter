@@ -1,3 +1,6 @@
+import 'package:ffi/ffi.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
+
 ///[FileParser] Handles file input and output functions
 class FileParser {
   ///Takes a String and splits it into a list by backslash
@@ -22,16 +25,23 @@ class FileParser {
 
   ///Takes a String and keeps the old file name or
   ///replaces it with the new file name if one is given.
-  String filePathParser(String? fileInput, String? fileName) {
+  String filePathParser(
+    String? fileInput,
+    String? fileName,
+    MediaContainerType? mediaType,
+  ) {
+    final media = mediaType;
     final workingFile = fileNameParser(fileInput);
     final oldName = oldFileName(workingFile);
+    final oldNameIndex = oldName.lastIndexOf('.');
+
     if (fileName == null && fileInput != '') {
-      return '${rawPath(fileInput!)}\\$oldName';
+      return '${rawPath(fileInput!)}\\${oldName.substring(0, oldNameIndex)}.converted.${media!.containerType}';
     }
     if (fileName == null && fileInput == '') {
       return 'No file selected';
     } else {
-      return '${rawPath(fileInput!)}\\$fileName';
+      return '${rawPath(fileInput!)}\\$fileName.${media!.containerType}';
     }
   }
 }
