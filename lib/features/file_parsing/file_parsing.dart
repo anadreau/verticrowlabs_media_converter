@@ -25,8 +25,11 @@ class FileParser {
   String filePathParser(String? fileInput, String? fileName) {
     final workingFile = fileNameParser(fileInput);
     final oldName = oldFileName(workingFile);
-    if (fileName == null) {
+    if (fileName == null && fileInput != '') {
       return '${rawPath(fileInput!)}\\$oldName';
+    }
+    if (fileName == null && fileInput == '') {
+      return 'No file selected';
     } else {
       return '${rawPath(fileInput!)}\\$fileName';
     }

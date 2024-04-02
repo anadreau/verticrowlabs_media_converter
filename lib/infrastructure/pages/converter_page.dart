@@ -21,7 +21,7 @@ class ConverterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fileInput = ref.watch(fileInputStringProvider);
-    final outputFile = ref.watch(outputStringProvider) ?? 'No file selected';
+    final outputFile = ref.watch(outputStringProvider);
     final status = ref.watch(statusProvider);
     final convertButtonEnabled = ref.watch(buttonEnabledProvider);
     final validEndTime = ref.watch(maxTimeProvider);
