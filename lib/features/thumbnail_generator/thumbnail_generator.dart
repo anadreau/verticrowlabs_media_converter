@@ -51,9 +51,9 @@ Future<void> generateThumbnail(WidgetRef ref) async {
   );
   log('exitCode: ${result.exitCode}');
   if (result.exitCode == 0) {
-    log('Finished Generating Thumbnail: ${result.stdout}');
+    log('Finished Generating Thumbnail: ${result.stderr}');
     ref.read(thumbnailLoadedProvider.notifier).update((state) => true);
   } else {
-    log('Error in Generating Thumbnail: ${result.stderr}');
+    log('Error in Generating Thumbnail: ${result.stdout}');
   }
 }

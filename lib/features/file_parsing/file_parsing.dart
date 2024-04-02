@@ -1,4 +1,3 @@
-import 'package:ffi/ffi.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///[FileParser] Handles file input and output functions

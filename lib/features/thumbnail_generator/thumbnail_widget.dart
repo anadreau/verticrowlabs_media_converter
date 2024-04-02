@@ -13,7 +13,7 @@ class MediaThumbnailWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imagePath = ref.read(thumbnailPathProvider);
+    final imagePath = ref.watch(thumbnailPathProvider);
     final loaded = ref.watch(thumbnailLoadedProvider);
 
     switch (loaded) {
