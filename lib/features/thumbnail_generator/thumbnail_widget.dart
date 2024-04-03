@@ -20,8 +20,8 @@ class MediaThumbnailWidget extends ConsumerWidget {
       case true:
         return ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.file(
-            File('${imagePath.value}/thumbnail.jpg'),
+          child: Image.memory(
+            File('${imagePath.value}/thumbnail.jpg').readAsBytesSync(),
           ),
         );
       case false:
