@@ -83,7 +83,7 @@ Future<void> _convertMedia(WidgetRef ref) async {
     ref
         .read(conversionStatusProvider.notifier)
         .update((state) => ConversionStatus.done);
-    ref.read(fileNameProvider.notifier).update((state) => '');
+    ref.read(fileNameProvider.notifier).update((state) => null);
     ref.read(startRangeProvider.notifier).update((state) => 0.0);
     ref.read(maxTimeProvider.notifier).update((state) => '');
 
