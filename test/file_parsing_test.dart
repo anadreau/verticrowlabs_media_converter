@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 void main() {
   group('Testing FileParser', () {
@@ -22,14 +23,17 @@ void main() {
     });
     test('filePathParser: If fileName is null output path with old filename',
         () {
-      final parser = FileParser().filePathParser(r'C:\User\test.mp4', null);
-      expect(parser, r'C:\User\test.mp4');
-    });
-    test(
-        'filePathParser: If fileName is not-null, output path with new filename',
-        () {
+      const media = MediaContainerType.mp4;
       final parser =
-          FileParser().filePathParser(r'C:\User\test.mp4', 'newTest.mp4');
+          FileParser().filePathParser(r'C:\User\test.mp4', null, media);
+      expect(parser, r'C:\User\test.converted.mp4');
+    });
+    test('''
+filePathParser: If fileName is not-null, 
+        output path with new filename''', () {
+      const media = MediaContainerType.mp4;
+      final parser =
+          FileParser().filePathParser(r'C:\User\test.mp4', 'newTest', media);
       expect(parser, r'C:\User\newTest.mp4');
     });
   });
