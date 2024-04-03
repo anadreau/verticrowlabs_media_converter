@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing.dart';
+import 'package:verticrowlabs_media_converter/features/file_parsing/file_parser.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/container_type.dart';
 

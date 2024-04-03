@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:verticrowlabs_media_converter/features/install_ffmpeg/install_ffmpeg.dart';
-import 'package:verticrowlabs_media_converter/features/install_ffmpeg/verify_install.dart';
+import 'package:verticrowlabs_media_converter/features/install_ffmpeg/ffmpeg_installer.dart';
+
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/pages/converter_page.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/pages/installer_page.dart';
@@ -14,7 +14,7 @@ class MediaConverterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(verifyFfmpegInstallProvider);
+    FfmpegInstaller().verifyInstallation(ref);
     final ffmpegInstalled = ref.watch(ffmpegInstallStatusProvider);
     return switch (ffmpegInstalled) {
       InstallStatus.notInstalled => const InstallerPage(),
