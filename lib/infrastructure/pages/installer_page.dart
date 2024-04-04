@@ -107,13 +107,85 @@ class _InstallFfmpegButton extends ConsumerWidget {
         child: MaterialButton(
           onPressed: () {
             installer
-              ..createDir(ref)
-              ..downloadFfmpeg(ref)
-              ..extractFfmpeg(ref)
-              ..moveFfmpeg(ref)
-              ..cleanFfmpegDir(ref)
-              ..setPathVariable(ref)
-              ..updatePathVariable(ref);
+              ..createDir().then(
+                (value) {
+                  if (value == true) {
+                    ref
+                        .read(ffmpegInstallStatusProvider.notifier)
+                        .update((state) => InstallStatus.downloadPackage);
+                  } else {
+                    ref
+                        .read(ffmpegInstallStatusProvider.notifier)
+                        .update((state) => InstallStatus.error);
+                  }
+                },
+              )
+              ..downloadFfmpeg().then((value) {
+                if (value == true) {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.extractPackage);
+                } else {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.error);
+                }
+              })
+              ..extractFfmpeg().then((value) {
+                if (value == true) {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.movePackage);
+                } else {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.error);
+                }
+              })
+              ..moveFfmpeg().then((value) {
+                if (value == true) {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.cleanUpDir);
+                } else {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.error);
+                }
+              })
+              ..cleanFfmpegDir().then((value) {
+                if (value == true) {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.setPathVariable);
+                } else {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.error);
+                }
+              })
+              ..setPathVariable().then((value) {
+                if (value == true) {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.updatePathVariable);
+                } else {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.error);
+                }
+              })
+              ..updatePathVariable().then((value) {
+                if (value = true) {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.installed);
+                } else {
+                  ref
+                      .read(ffmpegInstallStatusProvider.notifier)
+                      .update((state) => InstallStatus.error);
+                }
+              });
           },
           child: const Row(
             children: [

@@ -4,7 +4,7 @@ import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_input.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
+import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/models/mediatime.dart';
 
 // ffprobe cmd to get duration:

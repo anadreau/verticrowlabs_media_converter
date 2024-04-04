@@ -5,11 +5,11 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
+import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/ffmpeg_cmd.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/models/mediatime.dart';
 
 ///[ConsumerWidget] Button that starts media conversion when pressed.
