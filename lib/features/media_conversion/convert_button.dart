@@ -22,7 +22,7 @@ class ConvertMediaButton extends ConsumerWidget {
     super.key,
   });
 
-  ///[buttonEnabled] if true [_convertMedia] is run when button is pressed.
+  ///[buttonEnabled] if true Media().convertMedia is run when button is pressed.
   ///if false, button is disabled.
   final bool buttonEnabled;
 
@@ -32,7 +32,10 @@ class ConvertMediaButton extends ConsumerWidget {
     final output = ref.watch(outputStringProvider);
     final scale = ref.watch(outputScaleCreator);
     final startTime = ref.watch(startRangeProvider);
-    final endTime = ref.watch(endRangeProvider);
+    late final endTime = ref.watch(endRangeProvider);
+    bool? boolResult;
+    int? exitCode;
+    dynamic stdOut;
 
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -51,43 +54,45 @@ class ConvertMediaButton extends ConsumerWidget {
                     startTime: startTime,
                     endTime: endTime,
                   );
-                  dynamic boolResult;
-                  dynamic exitCode;
-                  dynamic stdOut;
+                  ref
+                      .read(conversionStatusProvider.notifier)
+                      .update((state) => ConversionStatus.inProgress);
 
                   Media().convertMedia(conversionCmd).then((value) {
                     boolResult = value[0] as bool;
                     exitCode = value[1] as int;
                     stdOut = value[2] as dynamic;
+
+                    log('bool: $boolResult, exitCode: $exitCode, stdout: $stdOut');
+
+                    if (boolResult! == true) {
+                      ref
+                          .read(cmdLog.notifier)
+                          .update((state) => stdOut.toString());
+
+                      log('Process Result:$stdOut');
+                      //for some reason ffmpeg output is going to stderr
+
+                      ref
+                          .read(conversionStatusProvider.notifier)
+                          .update((state) => ConversionStatus.done);
+                      ref
+                          .read(fileNameProvider.notifier)
+                          .update((state) => null);
+                      ref
+                          .read(startRangeProvider.notifier)
+                          .update((state) => 0.0);
+                      ref.read(maxTimeProvider.notifier).update((state) => '');
+                    } else {
+                      ref
+                          .read(cmdLog.notifier)
+                          .update((state) => stdOut.toString());
+                      ref
+                          .read(conversionStatusProvider.notifier)
+                          .update((state) => ConversionStatus.error);
+                      log('Error');
+                    }
                   });
-
-                  log('bool: $boolResult, exitCode: $exitCode, stdout: $stdOut');
-
-                  if (boolResult == true) {
-                    ref
-                        .read(cmdLog.notifier)
-                        .update((state) => stdOut.toString());
-
-                    log('Process Result:$stdOut');
-                    //for some reason ffmpeg output is going to stderr
-
-                    ref
-                        .read(conversionStatusProvider.notifier)
-                        .update((state) => ConversionStatus.done);
-                    ref.read(fileNameProvider.notifier).update((state) => null);
-                    ref
-                        .read(startRangeProvider.notifier)
-                        .update((state) => 0.0);
-                    ref.read(maxTimeProvider.notifier).update((state) => '');
-                  } else {
-                    ref
-                        .read(cmdLog.notifier)
-                        .update((state) => stdOut.toString());
-                    ref
-                        .read(conversionStatusProvider.notifier)
-                        .update((state) => ConversionStatus.error);
-                    log('Error');
-                  }
                 }
               : null,
           child: const Text('Convert'),
