@@ -1,4 +1,5 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/ffmpeg_installer.dart';
 
 void main() {

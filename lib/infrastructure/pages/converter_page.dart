@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
-import 'package:verticrowlabs_media_converter/features/media_conversion/output_dialog.dart';
+import 'package:verticrowlabs_media_converter/features/media_conversion/ffmpeg_cmd.dart';
+import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/output_dialog.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 import 'package:verticrowlabs_media_converter/features/thumbnail_generator/thumbnail_widget.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
@@ -212,7 +213,9 @@ class _ConversionStatusWidget extends StatelessWidget {
                   showDialog<AlertDialog>(
                     context: context,
                     builder: (context) {
-                      return const OutputDialog();
+                      return OutputDialog(
+                        log: cmdLog,
+                      );
                     },
                   );
                 },

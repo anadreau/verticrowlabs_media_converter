@@ -1,4 +1,4 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parser.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
