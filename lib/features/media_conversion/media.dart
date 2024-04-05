@@ -3,18 +3,31 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
-import 'package:verticrowlabs_media_converter/features/media_conversion/ffmpeg_cmd.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///[Media] holds all functions and variables related
 ///to a piece of media that is being converted.
 class Media {
+  ///Variable for Container Codec type [MediaContainerType]
   MediaContainerType? format;
+
+  ///Variable for Conversion status [ConversionStatus]
   ConversionStatus? conversionStatus;
+
+  ///Variable for resolution of media [MediaScale]
   MediaScale? resolution;
+
+  ///Variable for Start time of media [double]
   double? startTime;
+
+  ///Variable for End time of media [double]
   double? endTime;
+
+  ///String containing original path of media [String?]
   String? originalFilePath;
+
+  ///String containing new path name including raw path and new name
+  ///of media [String?]
   String? newFilePath;
 
   ///converts the selected media file

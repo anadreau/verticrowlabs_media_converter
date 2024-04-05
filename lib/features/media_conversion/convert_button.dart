@@ -1,11 +1,8 @@
 import 'dart:developer';
-import 'dart:io';
-import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/ffmpeg_cmd.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
@@ -63,7 +60,9 @@ class ConvertMediaButton extends ConsumerWidget {
                     exitCode = value[1] as int;
                     stdOut = value[2] as dynamic;
 
-                    log('bool: $boolResult, exitCode: $exitCode, stdout: $stdOut');
+                    log(
+                      'bool: $boolResult, exitCode: $exitCode, stdout: $stdOut',
+                    );
 
                     if (boolResult! == true) {
                       ref
