@@ -1,9 +1,3 @@
-//TO-DO: #34 Implement video snipping. @anadreau
-
-//example: ffmpeg -i input.mp4 -ss 00:05:00 -to 00:06:00 output.mp4
-//example: ffmpeg -i input.mp4 -ss 00:00:00 -to 00:00:00 -vf scale=1920:1080
-// -c:v libx264 output.mp4
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
