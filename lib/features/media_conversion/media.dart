@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
@@ -79,3 +80,56 @@ ffmpeg -hide_banner -stats -i "$originalFilePath" -ss $startTime -to $endTime -v
     return ffmpegCmd;
   }
 }
+
+///Creator that holds the variable for file type to be converted to
+final containerTypeProvider = StateProvider((ref) => MediaContainerType.mp4);
+
+///[Provider] that returns [MediaContainerType] based on [containerTypeProvider]
+final mediaTypeProvider = Provider(
+  (ref) {
+    final type = ref.watch(containerTypeProvider);
+    final typeOutput = switch (type) {
+      MediaContainerType.avi => '.avi',
+      MediaContainerType.flv => '.flv',
+      MediaContainerType.mkv => '.mkv',
+      MediaContainerType.mov => '.mov',
+      MediaContainerType.mp4 => '.mp4',
+    };
+    return typeOutput;
+  },
+);
+
+///Creator that returns the status of the media conversion as a Status enum of
+///either notStarted, inProgress, done, or error
+final conversionStatusProvider =
+    StateProvider((ref) => ConversionStatus.notStarted);
+
+///Creator that takesthe value from conversionStatusCreator and returns a
+///String representing the status of the media file conversion.
+final statusProvider = StateProvider((ref) {
+  final status = ref.watch(conversionStatusProvider);
+
+  return switch (status) {
+    ConversionStatus.notStarted => ConversionStatus.notStarted.message,
+    ConversionStatus.inProgress => ConversionStatus.inProgress.message,
+    ConversionStatus.done => ConversionStatus.done.message,
+    ConversionStatus.error => ConversionStatus.error.message
+  };
+});
+
+///Creator that returns the chosen resolution as a MediaScale enum of either
+///low, medium, high.
+final outputScaleSelector = StateProvider((ref) => MediaScale.medium);
+
+///Creator that takes the value from outputScaleSelector and returns
+///a String representing the resolution
+///that the media file will be converted to.
+final outputScaleCreator = Provider((ref) {
+  final scale = ref.watch(outputScaleSelector);
+
+  return switch (scale) {
+    MediaScale.low => MediaScale.low.resolution,
+    MediaScale.medium => MediaScale.medium.resolution,
+    MediaScale.high => MediaScale.high.resolution
+  };
+});

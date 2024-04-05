@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/features/media_conversion/conversion_status.dart';
+import 'package:verticrowlabs_media_converter/features/media_conversion/media.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/media_snipping.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 import 'package:verticrowlabs_media_converter/features/thumbnail_generator/thumbnail_barrel.dart';
