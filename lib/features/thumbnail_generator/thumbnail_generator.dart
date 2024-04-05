@@ -34,7 +34,7 @@ Future<void> generateThumbnail(WidgetRef ref) async {
 
   //Cmd that generates the thumbnail
   final ffmpegCmd =
-      '''ffmpeg -hide_banner -i "$input" -vf "select='eq(pict_type,PICT_TYPE_I)'" -fps_mode vfr -update 1 -frames:v 5 -color_primaries bt709 -color_trc bt709 ${thumbnailPath.path}/thumbnail.jpg''';
+      '''ffmpeg -hide_banner -i "$input" -vf "select='eq(pict_type,PICT_TYPE_I)'" -fps_mode vfr -update 1 -frames:v 25 -color_primaries bt709 -color_trc bt709 ${thumbnailPath.path}/thumbnail.jpg''';
   log('ffmpegCmd: \n$ffmpegCmd');
   final result = await Isolate.run(
     () => Process.runSync(
