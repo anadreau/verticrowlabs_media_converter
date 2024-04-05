@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/ffmpeg_installer.dart';
-
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/pages/converter_page.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/pages/installer_page.dart';
 

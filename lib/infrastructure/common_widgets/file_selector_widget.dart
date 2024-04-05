@@ -6,7 +6,6 @@ import 'package:verticrowlabs_media_converter/features/media_conversion/media.da
 import 'package:verticrowlabs_media_converter/features/media_snipping/media_snipping.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 import 'package:verticrowlabs_media_converter/features/thumbnail_generator/thumbnail_barrel.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///[ConsumerWidget] that sets [fileInputStringProvider] when button is pressed.
 class FileSelector extends ConsumerWidget {

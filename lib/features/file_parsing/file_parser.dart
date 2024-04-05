@@ -1,4 +1,4 @@
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
+import 'package:verticrowlabs_media_converter/features/media_conversion/media.dart';
 
 ///[FileParser] Handles file input and output functions
 class FileParser {

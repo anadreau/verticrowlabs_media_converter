@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/ffmpeg_installer.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///Screen that is displayed if ffmpeg is not installed
 class InstallerPage extends ConsumerWidget {

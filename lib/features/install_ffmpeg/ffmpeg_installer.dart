@@ -4,7 +4,6 @@ import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///[FfmpegInstaller] handles functions to install and verify installation
 ///of ffmpeg
@@ -180,3 +179,41 @@ final ffmpegInstallStatusTrackerProvider = Provider<double>((ref) {
   };
   return installStatus;
 });
+
+///Enum for Installation status
+enum InstallStatus {
+  ///Installation status is not installed
+  notInstalled('Not Installed'),
+
+  ///Installation status is create directory
+  createDir('Creating Directory'),
+
+  ///Installation status is download package
+  downloadPackage('Downloading Package'),
+
+  ///Installation status is extract package
+  extractPackage('Extracting Package'),
+
+  ///Installation status is move package
+  movePackage('Moving Package'),
+
+  ///Installation status is clean up directory
+  cleanUpDir('Cleaning up Directory'),
+
+  ///Installation status is set path variable
+  setPathVariable('Setting Path Variable'),
+
+  ///Installation status is update path variable
+  updatePathVariable('Updating Path Variable'),
+
+  ///Installation status is installed
+  installed('Installation Complete'),
+
+  ///Installation status is returning an error
+  error('Installation error');
+
+  const InstallStatus(this.message);
+
+  ///Returns [InstallStatus] as [String]
+  final String message;
+}

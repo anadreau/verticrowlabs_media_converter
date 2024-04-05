@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/features/media_conversion/conversion_cmd.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 import 'package:verticrowlabs_media_converter/features/thumbnail_generator/thumbnail_widget.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/file_selector_widget.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/file_type_drop_down.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/common_widgets/output_dialog.dart';

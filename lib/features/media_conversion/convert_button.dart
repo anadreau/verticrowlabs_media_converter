@@ -3,11 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/features/media_conversion/ffmpeg_cmd.dart';
-import 'package:verticrowlabs_media_converter/features/media_conversion/media.dart';
 import 'package:verticrowlabs_media_converter/features/media_conversion/media_conversion_barrel.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 import 'package:verticrowlabs_media_converter/infrastructure/models/mediatime.dart';
 
 ///[ConsumerWidget] Button that starts media conversion when pressed.
@@ -113,44 +110,3 @@ final buttonEnabledProvider = StateProvider((ref) {
     return true;
   }
 });
-
-// Future<void> _convertMedia(WidgetRef ref) async {
-//   ref
-//       .read(conversionStatusProvider.notifier)
-//       .update((state) => ConversionStatus.inProgress);
-
-//   final cmd = ref.watch(conversionCmd);
-//   log('ffmpeg used: $cmd');
-
-//   final result = await Isolate.run(
-//     () => Process.run(
-//       'powershell.exe',
-//       ['-Command', updateEvironmentVariableCmd, ';', cmd, '| echo'],
-//       runInShell: true,
-//     ),
-//   );
-
-//   if (result.exitCode == 0) {
-//     ref.read(cmdLog.notifier).update((state) => result.stderr.toString());
-
-//     log('Process Result:${result.stdout}');
-//     //for some reason ffmpeg output is going to stderr
-//     log('Process err: ${result.stderr}');
-
-//     ref
-//         .read(conversionStatusProvider.notifier)
-//         .update((state) => ConversionStatus.done);
-//     ref.read(fileNameProvider.notifier).update((state) => null);
-//     ref.read(startRangeProvider.notifier).update((state) => 0.0);
-//     ref.read(maxTimeProvider.notifier).update((state) => '');
-
-//     //log('Finished');
-//   } else {
-//     log(result.stderr.toString());
-//     ref.read(cmdLog.notifier).update((state) => result.stderr.toString());
-//     ref
-//         .read(conversionStatusProvider.notifier)
-//         .update((state) => ConversionStatus.error);
-//     log('Error');
-//   }
-// }

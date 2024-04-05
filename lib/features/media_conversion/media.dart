@@ -4,7 +4,6 @@ import 'dart:isolate';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///[Media] holds all functions and variables related
 ///to a piece of media that is being converted.
@@ -133,3 +132,63 @@ final outputScaleCreator = Provider((ref) {
     MediaScale.high => MediaScale.high.resolution
   };
 });
+
+///Enum for Container Codec type
+enum MediaContainerType {
+  ///Container type is .mp4
+  mp4('mp4'),
+
+  ///Container type is .mkv
+  mkv('mkv'),
+
+  ///Container type is .mov
+  mov('mov'),
+
+  ///Container type is .avi
+  avi('avi'),
+
+  ///Container type is .flv
+  flv('flv');
+
+  const MediaContainerType(this.containerType);
+
+  ///Returns [MediaContainerType] as a [String]
+  final String containerType;
+}
+
+///Enum for Resolution quality
+enum MediaScale {
+  ///Resolution quality is 720p
+  medium('720'),
+
+  ///Resolution quality is 480p
+  low('480'),
+
+  ///Resolution quality is 1280p
+  high('1280');
+
+  const MediaScale(this.resolution);
+
+  ///Returns [MediaScale] as a [String]
+  final String resolution;
+}
+
+///Enum for conversion status
+enum ConversionStatus {
+  ///Conversion has not started
+  notStarted('Not Started'),
+
+  ///Conversion is in progress
+  inProgress('In Progress'),
+
+  ///Conversion is completed
+  done('Done'),
+
+  ///Conversion has returned an error
+  error('Error');
+
+  const ConversionStatus(this.message);
+
+  ///Returns [ConversionStatus] as a [String]
+  final String message;
+}
