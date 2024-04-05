@@ -11,7 +11,7 @@ import 'package:verticrowlabs_media_converter/features/media_snipping/time_range
 
 ///[Provider] that handles logic for which ffmpeg cmd is selected when
 ///convert_button is pressed.
-Provider<String> ffmpegCmd = Provider<String>((ref) {
+Provider<String> conversionCmd = Provider<String>((ref) {
   final input = ref.watch(fileInputStringProvider);
   final output = ref.watch(outputStringProvider);
   final scale = ref.watch(outputScaleCreator);

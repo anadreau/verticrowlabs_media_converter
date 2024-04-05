@@ -2,11 +2,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_parsing_barrel.dart';
-import 'package:verticrowlabs_media_converter/features/media_conversion/conversion_status.dart';
+import 'package:verticrowlabs_media_converter/features/media_conversion/media.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/media_snipping.dart';
 import 'package:verticrowlabs_media_converter/features/media_snipping/time_range_selector.dart';
 import 'package:verticrowlabs_media_converter/features/thumbnail_generator/thumbnail_barrel.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/common_enums.dart';
 
 ///[ConsumerWidget] that sets [fileInputStringProvider] when button is pressed.
 class FileSelector extends ConsumerWidget {
@@ -50,7 +49,7 @@ Future<void> _fileSelector(WidgetRef ref) async {
     dialogTitle: 'Chosose Media File to Convert.',
     type: FileType.media,
   );
-  if (path?.paths.first != null) {
-    ref.read(fileInputStringProvider.notifier).state = path!.paths.first;
+  if (path!.paths.first!.isNotEmpty) {
+    ref.read(fileInputStringProvider.notifier).state = path.paths.first;
   }
 }

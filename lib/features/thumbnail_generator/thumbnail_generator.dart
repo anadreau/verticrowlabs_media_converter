@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:verticrowlabs_media_converter/features/file_parsing/file_input.dart';
-import 'package:verticrowlabs_media_converter/infrastructure/common_variables/pwsh_cmd.dart';
+import 'package:verticrowlabs_media_converter/features/install_ffmpeg/installer_cmds.dart';
 
 ///[Provider] to track state of generated thumbnail.
 final thumbnailLoadedProvider = StateProvider((ref) => false);
@@ -34,7 +34,7 @@ Future<void> generateThumbnail(WidgetRef ref) async {
 
   //Cmd that generates the thumbnail
   final ffmpegCmd =
-      '''ffmpeg -hide_banner -i "$input" -vf "select='eq(pict_type,PICT_TYPE_I)'" -fps_mode vfr -ss 00:01:00 -vframes 1 ${thumbnailPath.path}/thumbnail.jpg''';
+      '''ffmpeg -hide_banner -i "$input" -vf "select='eq(pict_type,PICT_TYPE_I)'" -fps_mode vfr -update 1 -frames:v 25 -color_primaries bt709 -color_trc bt709 ${thumbnailPath.path}/thumbnail.jpg''';
   log('ffmpegCmd: \n$ffmpegCmd');
   final result = await Isolate.run(
     () => Process.runSync(
@@ -51,9 +51,9 @@ Future<void> generateThumbnail(WidgetRef ref) async {
   );
   log('exitCode: ${result.exitCode}');
   if (result.exitCode == 0) {
-    log('Finished Generating Thumbnail: ${result.stdout}');
+    log('Finished Generating Thumbnail: ${result.stderr}');
     ref.read(thumbnailLoadedProvider.notifier).update((state) => true);
   } else {
-    log('Error in Generating Thumbnail: ${result.stderr}');
+    log('Error in Generating Thumbnail: ${result.stdout}');
   }
 }

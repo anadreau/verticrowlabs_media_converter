@@ -13,15 +13,15 @@ class MediaThumbnailWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final imagePath = ref.read(thumbnailPathProvider);
+    final imagePath = ref.watch(thumbnailPathProvider);
     final loaded = ref.watch(thumbnailLoadedProvider);
 
     switch (loaded) {
       case true:
         return ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.file(
-            File('${imagePath.value}/thumbnail.jpg'),
+          child: Image.memory(
+            File('${imagePath.value}/thumbnail.jpg').readAsBytesSync(),
           ),
         );
       case false:
