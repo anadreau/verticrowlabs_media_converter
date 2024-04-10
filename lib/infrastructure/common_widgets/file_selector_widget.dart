@@ -36,7 +36,7 @@ class FileSelector extends ConsumerWidget {
           },
           child: Icon(
             Icons.folder,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),

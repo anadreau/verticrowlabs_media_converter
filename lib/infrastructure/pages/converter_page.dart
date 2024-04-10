@@ -167,7 +167,7 @@ class _FileOutputRow extends StatelessWidget {
               },
               child: Icon(
                 Icons.edit,
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ),

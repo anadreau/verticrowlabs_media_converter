@@ -25,7 +25,7 @@ class ConverterApp extends StatelessWidget {
       //paste functionality.
       home: SelectionArea(
         child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.onSurface,
           body: const DecoratedBox(
             decoration: BoxDecoration(
               image: DecorationImage(
