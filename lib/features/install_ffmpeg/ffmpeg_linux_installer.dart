@@ -30,5 +30,5 @@ class FfmpegLinuxInstaller {
   }
 
   /// outputs path if cmd is installed and added to path already.
-  final verifyLinuxInstallCmd = 'ffmpeg';
+  final verifyLinuxInstallCmd = 'apt';
 }
